@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Binding var rep: Rep
+    @Environment(\.scenePhase) private var scenePhase
+    let saveAction: ()->Void
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            RepTimeView(rep: rep)
+            
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .inactive { saveAction() }
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

@@ -14,6 +14,10 @@
 		271B60202845220E00BA0F5D /* RepTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B601F2845220E00BA0F5D /* RepTimerTests.swift */; };
 		271B602A2845220E00BA0F5D /* RepTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B60292845220E00BA0F5D /* RepTimerUITests.swift */; };
 		271B602C2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */; };
+		271B603B2845223B00BA0F5D /* RepModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603A2845223B00BA0F5D /* RepModel.swift */; };
+		271B603D2845229600BA0F5D /* RepTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603C2845229600BA0F5D /* RepTimeView.swift */; };
+		271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */; };
+		271B604228455BDE00BA0F5D /* RepStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B604128455BDE00BA0F5D /* RepStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		271B60252845220E00BA0F5D /* RepTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		271B60292845220E00BA0F5D /* RepTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerUITests.swift; sourceTree = "<group>"; };
 		271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		271B603A2845223B00BA0F5D /* RepModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepModel.swift; sourceTree = "<group>"; };
+		271B603C2845229600BA0F5D /* RepTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimeView.swift; sourceTree = "<group>"; };
+		271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalFormattingExtension.swift; sourceTree = "<group>"; };
+		271B604128455BDE00BA0F5D /* RepStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +102,9 @@
 		271B600D2845220D00BA0F5D /* RepTimer */ = {
 			isa = PBXGroup;
 			children = (
+				271B603E2845543400BA0F5D /* Extensions */,
+				271B60392845223000BA0F5D /* Views */,
+				271B60382845222300BA0F5D /* Models */,
 				271B600E2845220D00BA0F5D /* RepTimerApp.swift */,
 				271B60102845220D00BA0F5D /* ContentView.swift */,
 				271B60122845220E00BA0F5D /* Assets.xcassets */,
@@ -125,6 +136,31 @@
 				271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */,
 			);
 			path = RepTimerUITests;
+			sourceTree = "<group>";
+		};
+		271B60382845222300BA0F5D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				271B603A2845223B00BA0F5D /* RepModel.swift */,
+				271B604128455BDE00BA0F5D /* RepStore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		271B60392845223000BA0F5D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				271B603C2845229600BA0F5D /* RepTimeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		271B603E2845543400BA0F5D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +293,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271B603B2845223B00BA0F5D /* RepModel.swift in Sources */,
+				271B604228455BDE00BA0F5D /* RepStore.swift in Sources */,
+				271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */,
+				271B603D2845229600BA0F5D /* RepTimeView.swift in Sources */,
 				271B60112845220D00BA0F5D /* ContentView.swift in Sources */,
 				271B600F2845220D00BA0F5D /* RepTimerApp.swift in Sources */,
 			);
@@ -417,6 +457,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RepTimer/Preview Content\"";
+				DEVELOPMENT_TEAM = 9UR2WR6VNL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -445,6 +486,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RepTimer/Preview Content\"";
+				DEVELOPMENT_TEAM = 9UR2WR6VNL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
