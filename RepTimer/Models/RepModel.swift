@@ -53,6 +53,12 @@ class Rep: ObservableObject, Codable {
             repDuration.seconds.withLeadingZero
         )
     }
+    
+    func totalDigitsCount() -> Int {
+        return repDuration.hours.withLeadingZero.count +
+            repDuration.minutes.withLeadingZero.count +
+            repDuration.seconds.withLeadingZero.count
+    }
 
     @objc func updateTimer() {
         // Don't support times greater than a day
