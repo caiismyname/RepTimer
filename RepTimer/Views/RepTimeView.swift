@@ -40,6 +40,7 @@ struct RepTimeView_Previews: PreviewProvider {
     let rep = Rep()
     Group {
         RepTimeView(rep: rep)
+            .previewInterfaceOrientation(.portrait)
     }
   }
 }

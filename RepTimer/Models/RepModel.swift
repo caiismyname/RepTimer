@@ -47,17 +47,10 @@ class Rep: ObservableObject, Codable {
     
     func repDurationFormatted() -> String {
         print(startTime)
+        let displayHours = repDuration.hours == 0 ? "" : repDuration.hours.withLeadingZero + ":"
         return String(
-            repDuration.hours.withLeadingZero + ":" +
-            repDuration.minutes.withLeadingZero + ":" +
-            repDuration.seconds.withLeadingZero
+            displayHours + repDuration.minutes.withLeadingZero + ":" + repDuration.seconds.withLeadingZero
         )
-    }
-    
-    func totalDigitsCount() -> Int {
-        return repDuration.hours.withLeadingZero.count +
-            repDuration.minutes.withLeadingZero.count +
-            repDuration.seconds.withLeadingZero.count
     }
 
     @objc func updateTimer() {
