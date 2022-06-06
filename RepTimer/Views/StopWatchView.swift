@@ -10,21 +10,33 @@ import Foundation
 import SwiftUI
 
 
-struct RepTimeView: View {
-    @StateObject var rep: Rep
+struct StopWatchView: View {
+    @StateObject var stopwatch: StopWatch
     let colonWidth = 20
 
     var body: some View {
         VStack {
             Spacer()
-            Text(rep.repDurationFormatted())
+            Text(stopwatch.currentLap().displayFormatted)
                 .font(Font.monospaced(.system(size: 500))())
                 .minimumScaleFactor(0.001)
                 .padding()
+            Text(stopwatch.displayFormatted)
+                .font(Font.monospaced(.system(size:50))())
+                .minimumScaleFactor(1)
+                .padding()
             Spacer()
-            Button(action: {rep.restart()}) {
-                Text("Reset")
+            Button(action: {stopwatch.newLap()}) {
+                Text("Lap")
                     .font(Font.monospaced(.system(size:100))())
+                    .minimumScaleFactor(1)
+                    .padding(20)
+                    .foregroundColor(Color.white)
+                    .background(Color.black)
+            }.cornerRadius(12)
+            Button(action: {stopwatch.reset()}) {
+                Text("Reset")
+                    .font(Font.monospaced(.system(size:20))())
                     .minimumScaleFactor(1)
                     .padding(20)
                     .foregroundColor(Color.white)
@@ -37,9 +49,9 @@ struct RepTimeView: View {
 
 struct RepTimeView_Previews: PreviewProvider {
   static var previews: some View {
-    let rep = Rep()
+    let stopwatch = StopWatch()
     Group {
-        RepTimeView(rep: rep)
+        StopWatchView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)
     }
   }

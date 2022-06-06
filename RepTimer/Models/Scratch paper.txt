@@ -1,0 +1,31 @@
+//
+//  Scratch paper
+//  RepTimer
+//
+//  Created by David Cai on 6/4/22.
+//
+
+import UIKit
+
+
+Lap extends period {
+}
+
+
+stopwatch extends period {
+    laps [Lap] // implict that start of next lap is end of previous lap
+    
+    timer
+    update()
+}
+
+
+period {
+    startTime Date
+    duration TimeInterval
+    isActive bool
+    
+    durationFormatted()
+    
+}
+

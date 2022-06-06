@@ -13,8 +13,8 @@ struct RepTimerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(rep: $store.rep) {
-                RepStore.save(rep: store.rep) {result in
+            ContentView(stopwatch: $store.stopwatch) {
+                RepStore.save(rep: store.stopwatch) {result in
                     if case .failure(let error) = result {
                          fatalError(error.localizedDescription)
                      }
@@ -26,7 +26,7 @@ struct RepTimerApp: App {
                         case .failure(let error):
                             fatalError(error.localizedDescription)
                         case .success(let rep):
-                            store.rep = rep
+                            store.stopwatch = rep
                     }
                 }
             }

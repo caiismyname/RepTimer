@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var rep: Rep
+    @Binding var stopwatch: StopWatch
     @Environment(\.scenePhase) private var scenePhase
     let saveAction: ()->Void
     
     var body: some View {
         VStack {
-            RepTimeView(rep: rep)
+            StopWatchView(stopwatch: stopwatch)
             
         }
         .onChange(of: scenePhase) { phase in
