@@ -16,16 +16,26 @@ struct StopWatchView: View {
 
     var body: some View {
         VStack {
-            Spacer()
             VStack(alignment: .leading) {
-                Text(stopwatch.currentLap().displayFormatted)
-                    .font(Font.monospaced(.system(size: 500))())
-                    .minimumScaleFactor(0.001)
                 Text(stopwatch.displayFormatted)
                     .font(Font.monospaced(.system(size:40))())
                     .minimumScaleFactor(1)
+                    .padding([.leading, .top], 30)
+                if let lap = stopwatch.currentLap() {
+                    Text(lap.displayFormatted)
+                        .font(Font.monospaced(.system(size: 70))())
+                        .minimumScaleFactor(1)
+                        .padding(.leading, 26)
+                } else {
+                    Text("00:00.00")
+                        .font(Font.monospaced(.system(size: 70))())
+                        .minimumScaleFactor(1)
+                        .padding(.leading, 26)
+                }
+                List(stopwatch.reversedLaps().indices, id: \.self) { index in
+                    Text("Lap \(stopwatch.reversedLaps().count - index): \(stopwatch.reversedLaps()[index].displayFormatted)")
+                }.listStyle(.plain)
             }
-            Spacer()
             if stopwatch.status == PeriodStatus.inactive {
                 HStack {
                     Button(action: {stopwatch.start()}) {
@@ -87,7 +97,6 @@ struct StopWatchView: View {
                     }.cornerRadius(12)
                 }
             }
-            Spacer()
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
   }
 }

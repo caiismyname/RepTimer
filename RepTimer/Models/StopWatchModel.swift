@@ -26,7 +26,6 @@ class StopWatch: Period, ObservableObject {
         self.lastPollTime = Date()
         self.duration = TimeInterval(0)
         self.status = PeriodStatus.inactive
-        newLap(startTime: self.lastPollTime) // Start a new lap along with the overall timer
         timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(0.001),
             target: self,
@@ -34,6 +33,7 @@ class StopWatch: Period, ObservableObject {
             userInfo: nil,
             repeats: true
         )
+        RunLoop.main.add(timer, forMode: .common)
     }
 //
 //    required convenience init(from decoder: Decoder) throws {
@@ -52,8 +52,12 @@ class StopWatch: Period, ObservableObject {
 //    }
     
     
-    func currentLap() -> Lap {
-        return laps.last!
+    func currentLap() -> Lap? {
+        return laps.last
+    }
+    
+    func reversedLaps() -> [Lap] {
+        return laps.reversed()
     }
     
     func newLap(startTime: Date = Date()) {
@@ -84,7 +88,9 @@ class StopWatch: Period, ObservableObject {
         lastPollTime = now
         
         // Recalculate `duration` for the current lap
-        currentLap().update()
+        if let lap = currentLap() {
+            lap.update()
+        }
     }
   
     func start() {
@@ -92,20 +98,26 @@ class StopWatch: Period, ObservableObject {
         status = PeriodStatus.active
         
         newLap(startTime: lastPollTime)
-        currentLap().start()
+        if let lap = currentLap() {
+            lap.start()
+        }
     }
     
     func pause() {
         status = PeriodStatus.paused
         
-        currentLap().pause()
+        if let lap = currentLap() {
+            lap.pause()
+        }
     }
     
     func resume() {
         lastPollTime = Date()
         status = PeriodStatus.active
         
-        currentLap().resume()
+        if let lap = currentLap() {
+            lap.resume()
+        }
     }
     
     func reset() {

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class Lap: Period {
+class Lap: Period, Identifiable {
     var lastPollTime: Date
     var duration: TimeInterval
     var status: PeriodStatus
