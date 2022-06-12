@@ -23,7 +23,7 @@ extension Period {
     var displayFormatted: String {
         let displayHours = duration.hours == 0 ? "" : duration.hours.withLeadingZero + ":"
         return String(
-            displayHours + duration.minutes.withLeadingZero + ":" + duration.seconds.withLeadingZero
+            displayHours + duration.minutes.withLeadingZero + ":" + duration.seconds.withLeadingZero + "." + duration.miliseconds.withLeadingZero
         )
     }
 }

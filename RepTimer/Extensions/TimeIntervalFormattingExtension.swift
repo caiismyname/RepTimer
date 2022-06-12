@@ -19,6 +19,10 @@ extension TimeInterval {
     var seconds: Int {
         return Int(self) % 60
     }
+    
+    var miliseconds: Int {
+        return Int((self*100).truncatingRemainder(dividingBy: 100))
+    }
 }
 
 extension Int {

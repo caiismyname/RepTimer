@@ -28,7 +28,7 @@ class StopWatch: Period, ObservableObject {
         self.status = PeriodStatus.inactive
         newLap(startTime: self.lastPollTime) // Start a new lap along with the overall timer
         timer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(0.1),
+            timeInterval: TimeInterval(0.001),
             target: self,
             selector: (#selector(update)),
             userInfo: nil,
