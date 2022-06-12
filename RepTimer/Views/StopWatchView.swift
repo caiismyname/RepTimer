@@ -34,69 +34,76 @@ struct StopWatchView: View {
                 }
                 List(stopwatch.reversedLaps().indices, id: \.self) { index in
                     Text("Lap \(stopwatch.reversedLaps().count - index): \(stopwatch.reversedLaps()[index].displayFormatted)")
-                }.listStyle(.plain)
+                        .font(Font.monospaced(.system(size:20))())
+                }
+                    .listStyle(.plain)
+                    .padding([.leading, .trailing], 15)
             }
             if stopwatch.status == PeriodStatus.inactive {
                 HStack {
+                    Spacer()
+                    Button(action: {stopwatch.reset()}) {
+                        Text("Reset").font(.system(size:20))
+                            .frame(maxWidth: .infinity)
+                    }
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .cornerRadius(12)
                     Button(action: {stopwatch.start()}) {
-                        Button(action: {stopwatch.reset()}) {
-                            Text("Reset")
-                                .font(Font.monospaced(.system(size:20))())
-                                .minimumScaleFactor(1)
-                                .padding(20)
-                                .foregroundColor(Color.white)
-                                .background(Color.black)
-                        }.cornerRadius(12)
-                        Text("Start")
-                            .font(Font.monospaced(.system(size:20))())
-                            .minimumScaleFactor(1)
-                            .padding(.horizontal, 50)
-                            .padding(.vertical, 20)
-                            .foregroundColor(Color.white)
-                            .background(Color.black)
-                    }.cornerRadius(12)
+                        Text("Start").font(.system(size:20))
+                            .frame(maxWidth: .infinity)
+                    }
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .cornerRadius(12)
+                    Spacer()
                 }
             } else if stopwatch.status == PeriodStatus.active {
                 HStack {
+                    Spacer()
+                    Button(action: {stopwatch.pause()}) {
+                        Text("Pause").font(.system(size:20))
+                            .frame(maxWidth: .infinity)
+                    }
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .cornerRadius(12)
                     Button(action: {stopwatch.newLap()}) {
-                        Button(action: {stopwatch.pause()}) {
-                            Text("Pause")
-                                .font(Font.monospaced(.system(size:20))())
-                                .minimumScaleFactor(1)
-                                .padding(20)
-                                .foregroundColor(Color.white)
-                                .background(Color.black)
-                        }.cornerRadius(12)
-                        Text("Lap")
-                            .font(Font.monospaced(.system(size:20))())
-                            .minimumScaleFactor(1)
-                            .padding(.horizontal, 50)
-                            .padding(.vertical, 20)
-                            .foregroundColor(Color.white)
-                            .background(Color.black)
-                    }.cornerRadius(12)
+                        Text("Lap").font(.system(size:20))
+                            .frame(maxWidth: .infinity)
+                    }
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .cornerRadius(12)
+                    Spacer()
                 }
             } else if stopwatch.status == PeriodStatus.paused {
                 HStack {
+                    Spacer()
+                    Button(action: {stopwatch.reset()}) {
+                        Text("Reset").font(.system(size:20))
+                            .frame(maxWidth: .infinity)
+                    }
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .cornerRadius(12)
                     Button(action: {stopwatch.resume()}) {
-                        Button(action: {stopwatch.reset()}) {
-                            Text("Reset")
-                                .font(Font.monospaced(.system(size:20))())
-                                .minimumScaleFactor(1)
-                                .padding(20)
-                                .foregroundColor(Color.white)
-                                .background(Color.black)
-                        }.cornerRadius(12)
-                        Text("Resume")
-                            .font(Font.monospaced(.system(size:20))())
-                            .minimumScaleFactor(1)
-                            .padding(.horizontal, 50)
-                            .padding(.vertical, 20)
-                            .foregroundColor(Color.white)
-                            .background(Color.black)
-                    }.cornerRadius(12)
+                        Text("Resume").font(.system(size:20))
+                            .frame(maxWidth: .infinity)
+                    }
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .cornerRadius(12)
+                    Spacer()
                 }
             }
+            Spacer()
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
   }
 }
