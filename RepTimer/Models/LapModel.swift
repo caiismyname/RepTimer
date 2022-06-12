@@ -9,13 +9,42 @@ import Foundation
 import SwiftUI
 
 class Lap: Period {
-    var startTime: Date
+    var lastPollTime: Date
     var duration: TimeInterval
-    var isActive: Bool
+    var status: PeriodStatus
     
     init(startTime: Date) {
-        self.startTime = startTime
+        self.lastPollTime = startTime
         self.duration = TimeInterval(0)
-        self.isActive = true
+        self.status = PeriodStatus.inactive
+    }
+    
+    func update() {
+        // Only update if the period is active
+        guard status == PeriodStatus.active else {
+            return
+        }
+     
+        // Recalculate `duration` for the stopwatch
+        let now = Date()
+        let delta = now.timeIntervalSince(lastPollTime)
+        duration += delta
+        
+        // Reset lastPollTime
+        lastPollTime = now
+    }
+    
+    func start() {
+        lastPollTime = Date()
+        status = PeriodStatus.active
+    }
+    
+    func pause() {
+        status = PeriodStatus.paused
+    }
+    
+    func resume() {
+        lastPollTime = Date()
+        status = PeriodStatus.active
     }
 }

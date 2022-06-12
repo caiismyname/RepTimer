@@ -9,9 +9,14 @@ import Foundation
 import SwiftUI
 
 protocol Period {
-    var startTime: Date {get set}
+    var lastPollTime: Date {get set}
     var duration: TimeInterval {get set}
-    var isActive: Bool {get set}
+    var status: PeriodStatus {get set}
+    
+    func update()
+    func start()
+    func pause()
+    func resume()
 }
 
 extension Period {
@@ -21,4 +26,10 @@ extension Period {
             displayHours + duration.minutes.withLeadingZero + ":" + duration.seconds.withLeadingZero
         )
     }
+}
+
+enum PeriodStatus {
+    case inactive
+    case active
+    case paused
 }

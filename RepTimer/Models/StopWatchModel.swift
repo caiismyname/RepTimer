@@ -10,9 +10,9 @@ import SwiftUI
 
 
 class StopWatch: Period, ObservableObject {
-    @Published var startTime: Date
+    var lastPollTime: Date
     @Published var duration: TimeInterval
-    @Published var isActive: Bool
+    @Published var status: PeriodStatus
     
     @Published var laps: [Lap] = []
     var timer: Timer = Timer()
@@ -23,14 +23,14 @@ class StopWatch: Period, ObservableObject {
     
     init() {
         // Set a repeating timer to update the durations
-        self.startTime = Date()
+        self.lastPollTime = Date()
         self.duration = TimeInterval(0)
-        self.isActive = true
-        newLap(startTime: self.startTime) // Start a new lap along with the overall timer
+        self.status = PeriodStatus.inactive
+        newLap(startTime: self.lastPollTime) // Start a new lap along with the overall timer
         timer = Timer.scheduledTimer(
             timeInterval: TimeInterval(0.1),
             target: self,
-            selector: (#selector(updateTimer)),
+            selector: (#selector(update)),
             userInfo: nil,
             repeats: true
         )
@@ -50,37 +50,67 @@ class StopWatch: Period, ObservableObject {
 //        var container = encoder.container(keyedBy: CodingKeys.self)
 //        try container.encode(timerStartTime, forKey: .startTime)
 //    }
-
-    @objc func updateTimer() {
-        // Don't support times greater than a day
-        if duration >= 60 * 60 * 24  {
-            startTime = Date()
-        }
-        
-        // Recalculate `duration` for the stopwatch
-        duration = Date.now.timeIntervalSince(startTime)
-        
-        // Recalculate `duration` for the current lap
-        let currentLap = laps.last
-        currentLap?.duration = Date.now.timeIntervalSince(currentLap!.startTime)
-    }
+    
     
     func currentLap() -> Lap {
         return laps.last!
     }
     
-    func reset() {
-        startTime = Date()
-        laps = []
-        newLap(startTime: startTime)
+    func newLap(startTime: Date = Date()) {
+        laps.last?.status = PeriodStatus.inactive
+        laps.append(Lap(startTime: startTime))
+        laps.last?.status = PeriodStatus.active
     }
     
-    func newLap(startTime: Date = Date()) {
-        laps.last?.isActive = false
-        laps.append(Lap(startTime: startTime))
+
+    @objc func update() {
+        
+        // Only update if the period is active
+        guard status == PeriodStatus.active else {
+            return
+        }
+        
+        // Don't support times greater than a day
+//        if duration >= 60 * 60 * 24  {
+//            lastPollTime = Date()
+//        }
+        
+        // Recalculate `duration` for the stopwatch
+        let now = Date()
+        let delta = now.timeIntervalSince(lastPollTime)
+        duration += delta
+        
+        // Reset lastPollTime
+        lastPollTime = now
+        
+        // Recalculate `duration` for the current lap
+        currentLap().update()
+    }
+  
+    func start() {
+        lastPollTime = Date()
+        status = PeriodStatus.active
+        
+        newLap(startTime: lastPollTime)
+        currentLap().start()
     }
     
     func pause() {
+        status = PeriodStatus.paused
         
+        currentLap().pause()
+    }
+    
+    func resume() {
+        lastPollTime = Date()
+        status = PeriodStatus.active
+        
+        currentLap().resume()
+    }
+    
+    func reset() {
+        status = PeriodStatus.inactive
+        duration = TimeInterval(0)
+        laps = []
     }
 }
