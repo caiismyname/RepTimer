@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2703040D2856A8DD00763C06 /* StopWatchContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */; };
+		2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2703040E2856A9D300763C06 /* StopWatchesController.swift */; };
+		270304112856B0BA00763C06 /* MultipleStopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270304102856B0BA00763C06 /* MultipleStopWatchView.swift */; };
+		27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27096B52284CF471007E7FB6 /* PeriodModel.swift */; };
+		27096B55284D06CC007E7FB6 /* LapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27096B54284D06CC007E7FB6 /* LapModel.swift */; };
 		271B600F2845220D00BA0F5D /* RepTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B600E2845220D00BA0F5D /* RepTimerApp.swift */; };
 		271B60112845220D00BA0F5D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B60102845220D00BA0F5D /* ContentView.swift */; };
 		271B60132845220E00BA0F5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 271B60122845220E00BA0F5D /* Assets.xcassets */; };
@@ -14,8 +19,8 @@
 		271B60202845220E00BA0F5D /* RepTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B601F2845220E00BA0F5D /* RepTimerTests.swift */; };
 		271B602A2845220E00BA0F5D /* RepTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B60292845220E00BA0F5D /* RepTimerUITests.swift */; };
 		271B602C2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */; };
-		271B603B2845223B00BA0F5D /* RepModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603A2845223B00BA0F5D /* RepModel.swift */; };
-		271B603D2845229600BA0F5D /* RepTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603C2845229600BA0F5D /* RepTimeView.swift */; };
+		271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603A2845223B00BA0F5D /* StopWatchModel.swift */; };
+		271B603D2845229600BA0F5D /* SingleStopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603C2845229600BA0F5D /* SingleStopWatchView.swift */; };
 		271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */; };
 		271B604228455BDE00BA0F5D /* RepStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B604128455BDE00BA0F5D /* RepStore.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchContainerView.swift; sourceTree = "<group>"; };
+		2703040E2856A9D300763C06 /* StopWatchesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchesController.swift; sourceTree = "<group>"; };
+		270304102856B0BA00763C06 /* MultipleStopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleStopWatchView.swift; sourceTree = "<group>"; };
+		27096B52284CF471007E7FB6 /* PeriodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodModel.swift; sourceTree = "<group>"; };
+		27096B54284D06CC007E7FB6 /* LapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LapModel.swift; sourceTree = "<group>"; };
 		271B600B2845220D00BA0F5D /* RepTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		271B600E2845220D00BA0F5D /* RepTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerApp.swift; sourceTree = "<group>"; };
 		271B60102845220D00BA0F5D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,8 +58,8 @@
 		271B60252845220E00BA0F5D /* RepTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		271B60292845220E00BA0F5D /* RepTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerUITests.swift; sourceTree = "<group>"; };
 		271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		271B603A2845223B00BA0F5D /* RepModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepModel.swift; sourceTree = "<group>"; };
-		271B603C2845229600BA0F5D /* RepTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimeView.swift; sourceTree = "<group>"; };
+		271B603A2845223B00BA0F5D /* StopWatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchModel.swift; sourceTree = "<group>"; };
+		271B603C2845229600BA0F5D /* SingleStopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStopWatchView.swift; sourceTree = "<group>"; };
 		271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalFormattingExtension.swift; sourceTree = "<group>"; };
 		271B604128455BDE00BA0F5D /* RepStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,7 +151,10 @@
 		271B60382845222300BA0F5D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				271B603A2845223B00BA0F5D /* RepModel.swift */,
+				27096B52284CF471007E7FB6 /* PeriodModel.swift */,
+				2703040E2856A9D300763C06 /* StopWatchesController.swift */,
+				271B603A2845223B00BA0F5D /* StopWatchModel.swift */,
+				27096B54284D06CC007E7FB6 /* LapModel.swift */,
 				271B604128455BDE00BA0F5D /* RepStore.swift */,
 			);
 			path = Models;
@@ -150,7 +163,9 @@
 		271B60392845223000BA0F5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				271B603C2845229600BA0F5D /* RepTimeView.swift */,
+				2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */,
+				271B603C2845229600BA0F5D /* SingleStopWatchView.swift */,
+				270304102856B0BA00763C06 /* MultipleStopWatchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,11 +308,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				271B603B2845223B00BA0F5D /* RepModel.swift in Sources */,
+				27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */,
+				271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */,
+				2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */,
 				271B604228455BDE00BA0F5D /* RepStore.swift in Sources */,
+				2703040D2856A8DD00763C06 /* StopWatchContainerView.swift in Sources */,
+				270304112856B0BA00763C06 /* MultipleStopWatchView.swift in Sources */,
 				271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */,
-				271B603D2845229600BA0F5D /* RepTimeView.swift in Sources */,
+				271B603D2845229600BA0F5D /* SingleStopWatchView.swift in Sources */,
 				271B60112845220D00BA0F5D /* ContentView.swift in Sources */,
+				27096B55284D06CC007E7FB6 /* LapModel.swift in Sources */,
 				271B600F2845220D00BA0F5D /* RepTimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 
-struct StopWatchView: View {
+struct SingleStopWatchView: View {
     @StateObject var stopwatch: StopWatch
     let colonWidth = 20
 
@@ -112,7 +112,7 @@ struct RepTimeView_Previews: PreviewProvider {
   static var previews: some View {
     let stopwatch = StopWatch()
     Group {
-        StopWatchView(stopwatch: stopwatch)
+        SingleStopWatchView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)
     }
   }

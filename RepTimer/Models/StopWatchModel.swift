@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 
-class StopWatch: Period, ObservableObject {
+class StopWatch: Period, ObservableObject, Identifiable {
+    
+    let id: UUID = UUID()
     var lastPollTime: Date
     @Published var duration: TimeInterval
     @Published var status: PeriodStatus
