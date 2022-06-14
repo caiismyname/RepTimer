@@ -23,6 +23,13 @@ extension TimeInterval {
     var miliseconds: Int {
         return Int((self*100).truncatingRemainder(dividingBy: 100))
     }
+    
+    var formattedTime: String {
+        let displayHours = self.hours == 0 ? "" : self.hours.withLeadingZero + ":"
+        return String(
+            displayHours + self.minutes.withLeadingZero + ":" + self.seconds.withLeadingZero + "." + self.miliseconds.withLeadingZero
+        )
+    }
 }
 
 extension Int {

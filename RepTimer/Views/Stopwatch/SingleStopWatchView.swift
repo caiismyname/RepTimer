@@ -33,8 +33,16 @@ struct SingleStopWatchView: View {
                         .padding(.leading, 26)
                 }
                 List(stopwatch.reversedLaps().indices, id: \.self) { index in
-                    Text("Lap \(stopwatch.reversedLaps().count - index): \(stopwatch.reversedLaps()[index].displayFormatted)")
-                        .font(Font.monospaced(.system(size:20))())
+                    HStack {
+                        Text("Lap \(stopwatch.reversedLaps().count - index)")
+                            .font(Font.monospaced(.system(size:20))())
+                        Spacer()
+                        Text(stopwatch.reversedLaps()[index].displayFormatted)
+                            .font(Font.monospaced(.system(size:20))())
+                        Spacer()
+                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTime)
+                            .font(Font.monospaced(.system(size:20))())
+                    }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .leading)
                 }
                     .listStyle(.plain)
                     .padding([.leading, .trailing], 15)

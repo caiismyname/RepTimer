@@ -12,11 +12,13 @@ class Lap: Period, Identifiable {
     var lastPollTime: Date
     var duration: TimeInterval
     var status: PeriodStatus
+    var cumulativeTime: TimeInterval
     
     init(startTime: Date) {
         self.lastPollTime = startTime
         self.duration = TimeInterval(0)
         self.status = PeriodStatus.inactive
+        self.cumulativeTime = TimeInterval(0)
     }
     
     func update() {

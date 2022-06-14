@@ -21,11 +21,15 @@ protocol Period {
 
 extension Period {
     var displayFormatted: String {
-        let displayHours = duration.hours == 0 ? "" : duration.hours.withLeadingZero + ":"
-        return String(
-            displayHours + duration.minutes.withLeadingZero + ":" + duration.seconds.withLeadingZero + "." + duration.miliseconds.withLeadingZero
-        )
+        return duration.formattedTime
     }
+//
+//    func formatTime(time: TimeInterval) -> String {
+//        let displayHours = time.hours == 0 ? "" : time.hours.withLeadingZero + ":"
+//        return String(
+//            displayHours + time.minutes.withLeadingZero + ":" + time.seconds.withLeadingZero + "." + time.miliseconds.withLeadingZero
+//        )
+//    }
 }
 
 enum PeriodStatus {

@@ -64,6 +64,7 @@ class StopWatch: Period, ObservableObject, Identifiable {
     
     func newLap(startTime: Date = Date()) {
         laps.last?.status = PeriodStatus.inactive
+        laps.last?.cumulativeTime = self.duration
         laps.append(Lap(startTime: startTime))
         laps.last?.status = PeriodStatus.active
     }
