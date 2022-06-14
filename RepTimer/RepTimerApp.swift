@@ -10,11 +10,11 @@ import SwiftUI
 @main
 struct RepTimerApp: App {
 //    @StateObject private var store = RepStore()
-    @StateObject var controller: StopWatchesController = StopWatchesController()
+    @StateObject var stopwatchController: StopWatchesController = StopWatchesController()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(controller: controller)
+            ContentView(stopwatchController: stopwatchController)
 //                RepStore.save(rep: store.stopwatch) {result in
 //                    if case .failure(let error) = result {
 //                         fatalError(error.localizedDescription)

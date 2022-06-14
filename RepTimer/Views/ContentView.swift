@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var controller: StopWatchesController
+    @ObservedObject var stopwatchController: StopWatchesController
 //    @Environment(\.scenePhase) private var scenePhase
 //    let saveAction: ()->Void
     
     var body: some View {
-        StopWatchContainerView(controller: controller)
+        TabContainerView(
+            stopwatchController: stopwatchController
+        )
+        //        StopWatchContainerView(controller: controller)
 //        .onChange(of: scenePhase) { phase in
 //            if phase == .inactive { saveAction() }
 //        }

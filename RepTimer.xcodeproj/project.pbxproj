@@ -10,6 +10,8 @@
 		2703040D2856A8DD00763C06 /* StopWatchContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */; };
 		2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2703040E2856A9D300763C06 /* StopWatchesController.swift */; };
 		270304112856B0BA00763C06 /* MultipleStopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270304102856B0BA00763C06 /* MultipleStopWatchView.swift */; };
+		270304132858061600763C06 /* TabContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270304122858061600763C06 /* TabContainerView.swift */; };
+		270304172858097500763C06 /* TimerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270304162858097500763C06 /* TimerContainerView.swift */; };
 		27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27096B52284CF471007E7FB6 /* PeriodModel.swift */; };
 		27096B55284D06CC007E7FB6 /* LapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27096B54284D06CC007E7FB6 /* LapModel.swift */; };
 		271B600F2845220D00BA0F5D /* RepTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B600E2845220D00BA0F5D /* RepTimerApp.swift */; };
@@ -46,6 +48,8 @@
 		2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchContainerView.swift; sourceTree = "<group>"; };
 		2703040E2856A9D300763C06 /* StopWatchesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchesController.swift; sourceTree = "<group>"; };
 		270304102856B0BA00763C06 /* MultipleStopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleStopWatchView.swift; sourceTree = "<group>"; };
+		270304122858061600763C06 /* TabContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContainerView.swift; sourceTree = "<group>"; };
+		270304162858097500763C06 /* TimerContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerContainerView.swift; sourceTree = "<group>"; };
 		27096B52284CF471007E7FB6 /* PeriodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodModel.swift; sourceTree = "<group>"; };
 		27096B54284D06CC007E7FB6 /* LapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LapModel.swift; sourceTree = "<group>"; };
 		271B600B2845220D00BA0F5D /* RepTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +93,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		270304142858095600763C06 /* Stopwatch */ = {
+			isa = PBXGroup;
+			children = (
+				2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */,
+				271B603C2845229600BA0F5D /* SingleStopWatchView.swift */,
+				270304102856B0BA00763C06 /* MultipleStopWatchView.swift */,
+			);
+			path = Stopwatch;
+			sourceTree = "<group>";
+		};
+		270304152858096600763C06 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				270304162858097500763C06 /* TimerContainerView.swift */,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
 		271B60022845220D00BA0F5D = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +138,6 @@
 				271B60392845223000BA0F5D /* Views */,
 				271B60382845222300BA0F5D /* Models */,
 				271B600E2845220D00BA0F5D /* RepTimerApp.swift */,
-				271B60102845220D00BA0F5D /* ContentView.swift */,
 				271B60122845220E00BA0F5D /* Assets.xcassets */,
 				271B60142845220E00BA0F5D /* Preview Content */,
 			);
@@ -163,9 +184,10 @@
 		271B60392845223000BA0F5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */,
-				271B603C2845229600BA0F5D /* SingleStopWatchView.swift */,
-				270304102856B0BA00763C06 /* MultipleStopWatchView.swift */,
+				271B60102845220D00BA0F5D /* ContentView.swift */,
+				270304122858061600763C06 /* TabContainerView.swift */,
+				270304152858096600763C06 /* Timer */,
+				270304142858095600763C06 /* Stopwatch */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,12 +334,14 @@
 				271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */,
 				2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */,
 				271B604228455BDE00BA0F5D /* RepStore.swift in Sources */,
+				270304172858097500763C06 /* TimerContainerView.swift in Sources */,
 				2703040D2856A8DD00763C06 /* StopWatchContainerView.swift in Sources */,
 				270304112856B0BA00763C06 /* MultipleStopWatchView.swift in Sources */,
 				271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */,
 				271B603D2845229600BA0F5D /* SingleStopWatchView.swift in Sources */,
 				271B60112845220D00BA0F5D /* ContentView.swift in Sources */,
 				27096B55284D06CC007E7FB6 /* LapModel.swift in Sources */,
+				270304132858061600763C06 /* TabContainerView.swift in Sources */,
 				271B600F2845220D00BA0F5D /* RepTimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
