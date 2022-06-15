@@ -92,6 +92,7 @@ struct MultipleStopWatchView_Previews: PreviewProvider {
     Group {
         MultipleStopWatchView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)
+            .previewDevice("iPhone 13 Pro")
     }
   }
 }

@@ -35,6 +35,7 @@ struct TabView_Previews: PreviewProvider {
         Group {
             TabContainerView(stopwatchController: stopwatchController)
                 .previewInterfaceOrientation(.portrait)
+                .previewDevice("iPhone 13 Pro")
         }
     }
 }

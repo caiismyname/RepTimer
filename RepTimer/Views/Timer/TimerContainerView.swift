@@ -11,6 +11,16 @@ import SwiftUI
 struct TimerContainerView: View {
     
     var body: some View {
-        Text("timer")
+        TimerTimelineView()
+    }
+}
+
+struct TimerContainerView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            TimerContainerView()
+                .previewInterfaceOrientation(.portrait)
+                .previewDevice("iPhone 13 Pro")
+        }
     }
 }

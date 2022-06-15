@@ -122,6 +122,7 @@ struct RepTimeView_Previews: PreviewProvider {
     Group {
         SingleStopWatchView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)
+            .previewDevice("iPhone 13 Pro")
     }
   }
 }
