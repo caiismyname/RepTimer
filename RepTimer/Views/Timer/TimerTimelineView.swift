@@ -14,7 +14,6 @@ struct TimerTimelineView: View {
     
     // Compute Y Position for a given timer, returned as fraction of the full height of the timeline
     func computeYPos(timer: SingleTimer) -> Double {
-        print(timer.timeRemaining / controller.bottomDuration)
         return (timer.timeRemaining / controller.bottomDuration) * verticalFidelity
     }
     

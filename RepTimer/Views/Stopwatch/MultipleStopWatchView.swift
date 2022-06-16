@@ -12,7 +12,6 @@ import SwiftUI
 struct MultipleStopWatchView: View {
     @StateObject var stopwatch: StopWatch
     let secondaryTextSize = CGFloat(18)
-    let buttonPadding = CGFloat(10)
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -23,65 +22,7 @@ struct MultipleStopWatchView: View {
                 .font(Font.monospaced(.system(size: secondaryTextSize))())
                 .minimumScaleFactor(1)
                 .padding(.leading, 7)
-
-            if stopwatch.status == PeriodStatus.inactive {
-                HStack {
-                    Button(action: {stopwatch.reset()}) {
-                        Text("Reset").font(.system(size:secondaryTextSize))
-                            .frame(maxWidth: .infinity)
-                    }
-                        .padding(buttonPadding)
-                        .foregroundColor(Color.white)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                    Button(action: {stopwatch.start()}) {
-                        Text("Start").font(.system(size:secondaryTextSize))
-                            .frame(maxWidth: .infinity)
-                    }
-                        .padding(buttonPadding)
-                        .foregroundColor(Color.white)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                }.buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
-            } else if stopwatch.status == PeriodStatus.active {
-                HStack {
-                    Button(action: {stopwatch.pause()}) {
-                        Text("Pause").font(.system(size:secondaryTextSize))
-                            .frame(maxWidth: .infinity)
-                    }
-                        .padding(buttonPadding)
-                        .foregroundColor(Color.white)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                    Button(action: {stopwatch.newLap()}) {
-                        Text("Lap").font(.system(size:secondaryTextSize))
-                            .frame(maxWidth: .infinity)
-                    }
-                        .padding(buttonPadding)
-                        .foregroundColor(Color.white)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                }.buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
-            } else if stopwatch.status == PeriodStatus.paused {
-                HStack {
-                    Button(action: {stopwatch.reset()}) {
-                        Text("Reset").font(.system(size:secondaryTextSize))
-                            .frame(maxWidth: .infinity)
-                    }
-                        .padding(buttonPadding)
-                        .foregroundColor(Color.white)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                    Button(action: {stopwatch.resume()}) {
-                        Text("Resume").font(.system(size:secondaryTextSize))
-                            .frame(maxWidth: .infinity)
-                    }
-                        .padding(buttonPadding)
-                        .foregroundColor(Color.white)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                }.buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
-            }
+            StopWatchControlsView(stopwatch: stopwatch)
         }
     }
 }

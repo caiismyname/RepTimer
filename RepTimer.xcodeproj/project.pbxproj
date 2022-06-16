@@ -28,6 +28,7 @@
 		27740A8E285810C400514A13 /* SingleTimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A8D285810C400514A13 /* SingleTimerModel.swift */; };
 		27740A902858129B00514A13 /* TimerTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A8F2858129B00514A13 /* TimerTimelineView.swift */; };
 		27740A942858133C00514A13 /* TimerTimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A932858133C00514A13 /* TimerTimelineModel.swift */; };
+		27740A96285AC36C00514A13 /* StopWatchControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A95285AC36C00514A13 /* StopWatchControlsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		27740A8D285810C400514A13 /* SingleTimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTimerModel.swift; sourceTree = "<group>"; };
 		27740A8F2858129B00514A13 /* TimerTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTimelineView.swift; sourceTree = "<group>"; };
 		27740A932858133C00514A13 /* TimerTimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTimelineModel.swift; sourceTree = "<group>"; };
+		27740A95285AC36C00514A13 /* StopWatchControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchControlsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */,
 				271B603C2845229600BA0F5D /* SingleStopWatchView.swift */,
 				270304102856B0BA00763C06 /* MultipleStopWatchView.swift */,
+				27740A95285AC36C00514A13 /* StopWatchControlsView.swift */,
 			);
 			path = Stopwatch;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */,
 				271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */,
 				2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */,
+				27740A96285AC36C00514A13 /* StopWatchControlsView.swift in Sources */,
 				271B604228455BDE00BA0F5D /* RepStore.swift in Sources */,
 				270304172858097500763C06 /* TimerContainerView.swift in Sources */,
 				27740A902858129B00514A13 /* TimerTimelineView.swift in Sources */,
