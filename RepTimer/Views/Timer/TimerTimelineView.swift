@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct TimerTimelineView: View {
-    @StateObject var controller: TimerTimelineController = TimerTimelineController()
+    @StateObject var controller: TimelineController
+    @State var createTimerPopoverShowing = false
     let verticalFidelity = 20.0
     
     // Compute Y Position for a given timer, returned as fraction of the full height of the timeline
@@ -17,17 +18,22 @@ struct TimerTimelineView: View {
         return (timer.timeRemaining / controller.bottomDuration) * verticalFidelity
     }
     
-    func saveNewTimer() {
-        let newTimerDuration = Double(Int.random(in: 0..<100))
-        controller.addTimer(timeRemaining: TimeInterval(newTimerDuration))
+    func saveNewTimer(name: String, duration: TimeInterval) {
+        controller.addTimer(timeRemaining: duration, name: name)
+        createTimerPopoverShowing = false
     }
     
     var body: some View {
         VStack(alignment: .trailing)  {
-            Button(action: saveNewTimer) {
+            Button(action: {createTimerPopoverShowing = true}) {
                 Image(systemName: "plus.circle")
                     .font(.system(size: 30))
-                }.padding(.trailing, 20)
+                }
+            .padding(.trailing, 20)
+            .popover(isPresented: $createTimerPopoverShowing) {
+                CreateTimerView(saveFunc: saveNewTimer)
+            }
+                
             GeometryReader { proxy in
                 // Background grid
                 ForEach(0...10, id: \.self) {offset in
@@ -39,24 +45,23 @@ struct TimerTimelineView: View {
                 
                 // Plot each timer
                 ForEach(controller.timers, id: \.self) { timer in
-                    ZStack {
-                        Rectangle()
-                            .fill(Color(UIColor.green))
-                            .frame(width: 200, height: 20)
-                        Text("\(timer.timeRemaining)")
-                    }.position(x: proxy.size.width / 3, y: (proxy.size.height / verticalFidelity) * computeYPos(timer: timer))
+                    TimelineEntryView(
+                        timer: timer,
+                        proxy: proxy,
+                        verticalFidelity: verticalFidelity,
+                        bottomDuration: controller.bottomDuration
+                    )
                 }
             }
-                .border(Color.red)
         }
     }
 }
 
 struct TimerTimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        
+        let controller = TimelineController()
         Group {
-            TimerTimelineView()
+            TimerTimelineView(controller: controller)
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice("iPhone 13 Pro")
         }

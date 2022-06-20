@@ -9,12 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var stopwatchController: StopWatchesController
+    @ObservedObject var timelineController: TimelineController
 //    @Environment(\.scenePhase) private var scenePhase
 //    let saveAction: ()->Void
     
     var body: some View {
         TabContainerView(
-            stopwatchController: stopwatchController
+            stopwatchController: stopwatchController,
+            timelineController: timelineController
         )
         //        StopWatchContainerView(controller: controller)
 //        .onChange(of: scenePhase) { phase in

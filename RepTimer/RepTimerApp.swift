@@ -11,10 +11,14 @@ import SwiftUI
 struct RepTimerApp: App {
 //    @StateObject private var store = RepStore()
     @StateObject var stopwatchController: StopWatchesController = StopWatchesController()
+    @StateObject var timelineController: TimelineController = TimelineController()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(stopwatchController: stopwatchController)
+            ContentView(
+                stopwatchController: stopwatchController,
+                timelineController: timelineController
+            )
 //                RepStore.save(rep: store.stopwatch) {result in
 //                    if case .failure(let error) = result {
 //                         fatalError(error.localizedDescription)

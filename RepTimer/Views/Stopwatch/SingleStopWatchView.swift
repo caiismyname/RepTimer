@@ -40,7 +40,7 @@ struct SingleStopWatchView: View {
                         Text(stopwatch.reversedLaps()[index].displayFormatted)
                             .font(Font.monospaced(.system(size:20))())
                         Spacer()
-                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTime)
+                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTimeTwoMilli)
                             .font(Font.monospaced(.system(size:20))())
                     }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .leading)
                 }

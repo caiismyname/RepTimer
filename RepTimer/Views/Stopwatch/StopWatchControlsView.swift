@@ -23,7 +23,7 @@ struct StopWatchControlsView: View {
                 }
                     .padding(buttonPadding)
                     .foregroundColor(Color.white)
-                    .background(Color.black)
+                    .background(Color.red)
                     .cornerRadius(12)
                 Button(action: {stopwatch.start()}) {
                     Text("Start").font(.system(size:20))
@@ -31,7 +31,7 @@ struct StopWatchControlsView: View {
                 }
                     .padding(buttonPadding)
                     .foregroundColor(Color.white)
-                    .background(Color.black)
+                    .background(Color.green)
                     .cornerRadius(12)
                 Spacer()
             }
@@ -53,8 +53,8 @@ struct StopWatchControlsView: View {
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)
-                    .foregroundColor(Color.white)
-                    .background(Color.black)
+                    .foregroundColor(Color.black)
+                    .background(Color.white)
                     .cornerRadius(12)
                 Spacer()
             }
@@ -69,7 +69,7 @@ struct StopWatchControlsView: View {
                 }
                     .padding(buttonPadding)
                     .foregroundColor(Color.white)
-                    .background(Color.black)
+                    .background(Color.red)
                     .cornerRadius(12)
                 Button(action: {stopwatch.resume()}) {
                     Text("Resume").font(.system(size:20))
@@ -77,7 +77,7 @@ struct StopWatchControlsView: View {
                 }
                     .padding(buttonPadding)
                     .foregroundColor(Color.white)
-                    .background(Color.black)
+                    .background(Color.green)
                     .cornerRadius(12)
                 Spacer()
             }

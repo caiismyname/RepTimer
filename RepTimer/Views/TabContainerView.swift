@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TabContainerView: View {
     @StateObject var stopwatchController: StopWatchesController
+    @StateObject var timelineController: TimelineController
     
     var body: some View {
         TabView {
@@ -19,7 +20,7 @@ struct TabContainerView: View {
                         .font(.system(size: 30))
                     Text("Stopwatch")
                 }
-            TimerContainerView()
+            TimerContainerView(timelineController: timelineController)
                 .tabItem {
                     Image(systemName: "timer")
                         .font(.system(size: 30))
@@ -32,8 +33,11 @@ struct TabContainerView: View {
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
         let stopwatchController = StopWatchesController()
+        let timelineController = TimelineController()
         Group {
-            TabContainerView(stopwatchController: stopwatchController)
+            TabContainerView(
+                stopwatchController: stopwatchController,
+                timelineController: timelineController)
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice("iPhone 13 Pro")
         }
