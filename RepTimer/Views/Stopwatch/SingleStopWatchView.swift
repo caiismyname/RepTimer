@@ -19,17 +19,17 @@ struct SingleStopWatchView: View {
             VStack(alignment: .leading) {
                 Text(stopwatch.displayFormatted)
                     .font(Font.monospaced(.system(size:40))())
-                    .minimumScaleFactor(1)
+                    .minimumScaleFactor(0.001)
                     .padding([.leading, .top], 30)
                 if let lap = stopwatch.currentLap() {
                     Text(lap.displayFormatted)
                         .font(Font.monospaced(.system(size: 70))())
-                        .minimumScaleFactor(1)
+                        .minimumScaleFactor(0.001)
                         .padding(.leading, 26)
                 } else {
                     Text("00:00.00")
                         .font(Font.monospaced(.system(size: 70))())
-                        .minimumScaleFactor(1)
+                        .minimumScaleFactor(0.001)
                         .padding(.leading, 26)
                 }
                 List(stopwatch.reversedLaps().indices, id: \.self) { index in

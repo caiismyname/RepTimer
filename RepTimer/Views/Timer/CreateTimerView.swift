@@ -9,31 +9,62 @@ import Foundation
 import SwiftUI
 
 struct CreateTimerView: View {
+    enum Field: Hashable {
+        case name
+        case timeInput
+    }
+    
     @State private var name = ""
     @ObservedObject var keyboard = TimeInputKeyboardModel()
     var saveFunc: (_ name: String, _ duration: TimeInterval) -> ()
+    @State private var showTimeInput = true
 
     var body: some View {
-        VStack {
+
+        VStack (alignment: .center) {
             TextField(
                 "Timer name",
                 text: $name
             )
-                .border(.primary)
+                .font(Font.monospaced(.system(size: 25))())
+                .minimumScaleFactor(0.0001)
+                .border(.secondary)
                 .textFieldStyle(.roundedBorder)
-            
-            Text("\(keyboard.value.formattedTimeNoMilli)")
-            HStack {
-                TimeInputKeyboardView(model: keyboard)
-                Button(action: {saveFunc(name, keyboard.value)}) {
-                    Text("Create").font(.system(size:20))
-                        .frame(maxHeight: 160)
+                .onTapGesture {
+                    showTimeInput = false
                 }
-                    .foregroundColor(Color.white)
-                    .background(Color.black)
-                    .cornerRadius(12)
+                .onSubmit {
+                    showTimeInput = true
+                }
+                .padding(.top, 50)
+            Text("\(keyboard.value.formattedTimeNoMilli)")
+                .font(Font.monospaced(.system(size: 80))())
+                .minimumScaleFactor(0.0001)
+            Spacer()
+            if (showTimeInput) {
+                HStack {
+                    TimeInputKeyboardView(model: keyboard)
+                    Button(action: {saveFunc(name, keyboard.value)}) {
+                        Text("Save")
+                            .padding()
+                    }
+                        .frame(maxHeight: .infinity)
+                        .foregroundColor(.white)
+                        .background(.black)
+                        .cornerRadius(12)
+                }
+                .frame(height: 300)
+            } else {
+                Spacer()
             }
         }
+        .gesture(
+            // Capturing "tap outside the textinput to dismiss" intent and dismissing
+            TapGesture().onEnded { _ in
+                showTimeInput = true
+                hideKeyboard()
+            }
+        )
     }
 }
 

@@ -13,17 +13,17 @@ struct TimeInputKeyboardView: View {
     let keyboard = "123|456|789| 0<"
     
     var body: some View {
-      let lines = keyboard.split(separator: "|")
-      VStack {
-        ForEach(lines, id: \.self) { line in
-          HStack {
-            let keyArray = line.map { String($0) }
-            ForEach(keyArray, id: \.self) { digit in
-                TimeInputKeyView(model: model, digit: digit)
+        let lines = keyboard.split(separator: "|")
+        VStack {
+            ForEach(lines, id: \.self) { line in
+                HStack {
+                    let keyArray = line.map { String($0) }
+                    ForEach(keyArray, id: \.self) { digit in
+                        TimeInputKeyView(model: model, digit: digit)
+                    }
+                }
             }
-          }
         }
-      }
     }
 }
 

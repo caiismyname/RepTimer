@@ -23,16 +23,13 @@ struct TimeInputKeyView: View {
                     .frame(maxWidth: .infinity)
             default:
                 Text(digit)
-                  .aspectRatio(1.0, contentMode: .fit)
-                  .frame(maxWidth: .infinity)
+                    .font(Font.monospaced(.system(size: 30))())
+                    .aspectRatio(1.0, contentMode: .fit)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             
         }
             .padding(6)
-            .background {
-              RoundedRectangle(cornerRadius: 5.0)
-                .stroke()
-            }
             .foregroundColor(Color(UIColor.label))
     }
 }

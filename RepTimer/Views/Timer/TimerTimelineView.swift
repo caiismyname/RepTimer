@@ -24,33 +24,37 @@ struct TimerTimelineView: View {
     }
     
     var body: some View {
-        VStack(alignment: .trailing)  {
-            Button(action: {createTimerPopoverShowing = true}) {
-                Image(systemName: "plus.circle")
-                    .font(.system(size: 30))
+        ZStack {
+            Color.black
+            VStack(alignment: .trailing)  {
+                Button(action: {createTimerPopoverShowing = true}) {
+                    Image(systemName: "plus.circle")
+                        .font(.system(size: 30))
+                    }
+                .padding(.trailing, 20)
+                .popover(isPresented: $createTimerPopoverShowing) {
+                    CreateTimerView(saveFunc: saveNewTimer)
+                        .padding()
                 }
-            .padding(.trailing, 20)
-            .popover(isPresented: $createTimerPopoverShowing) {
-                CreateTimerView(saveFunc: saveNewTimer)
-            }
-                
-            GeometryReader { proxy in
-                // Background grid
-                ForEach(0...10, id: \.self) {offset in
-                    Rectangle()
-                        .fill(Color(UIColor.blue))
-                        .frame(width: proxy.size.height, height: 1)
-                        .position(x: 0, y: (proxy.size.height / 10) * CGFloat(offset))
-                }
-                
-                // Plot each timer
-                ForEach(controller.timers, id: \.self) { timer in
-                    TimelineEntryView(
-                        timer: timer,
-                        proxy: proxy,
-                        verticalFidelity: verticalFidelity,
-                        bottomDuration: controller.bottomDuration
-                    )
+                    
+                GeometryReader { proxy in
+                    // Background grid
+                    ForEach(0...10, id: \.self) {offset in
+                        Rectangle()
+                            .fill(Color(UIColor.gray))
+                            .frame(width: proxy.size.width, height: 1)
+                            .position(x: proxy.size.width / 2, y: (proxy.size.height / 10) * CGFloat(offset))
+                    }
+                    
+                    // Plot each timer
+                    ForEach(controller.timers, id: \.self) { timer in
+                        TimelineEntryView(
+                            timer: timer,
+                            proxy: proxy,
+                            verticalFidelity: verticalFidelity,
+                            bottomDuration: controller.bottomDuration
+                        )
+                    }
                 }
             }
         }

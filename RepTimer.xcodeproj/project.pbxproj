@@ -34,6 +34,7 @@
 		27740A9E28611DAB00514A13 /* TimeInputKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */; };
 		27740AA028611E8100514A13 /* TimeInputKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9F28611E8100514A13 /* TimeInputKeyView.swift */; };
 		27740AA228611EC500514A13 /* TimeInputKeyboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */; };
+		27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardView.swift; sourceTree = "<group>"; };
 		27740A9F28611E8100514A13 /* TimeInputKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyView.swift; sourceTree = "<group>"; };
 		27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardModel.swift; sourceTree = "<group>"; };
+		27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */,
+				27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */,
+				27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */,
 				271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */,
 				27740AA028611E8100514A13 /* TimeInputKeyView.swift in Sources */,
 				2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */,
@@ -575,6 +579,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -604,6 +609,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
