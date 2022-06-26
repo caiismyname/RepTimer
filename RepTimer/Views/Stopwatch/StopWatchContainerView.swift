@@ -24,17 +24,19 @@ struct StopWatchContainerView: View {
             if (controller.count == 1) {
                 SingleStopWatchView(stopwatch: controller[0])
             } else {
-                List (controller.indices, id:\.self) { idx in
-                    MultipleStopWatchView(stopwatch: controller[idx])
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        self.popoverStopwatchIdx = idx
-                        self.isDetailPopupShowing = true
+                List {
+                    ForEach(controller.indices, id:\.self) { idx in
+                        MultipleStopWatchView(stopwatch: controller[idx])
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            self.popoverStopwatchIdx = idx
+                            self.isDetailPopupShowing = true
+                        }
+                    }
+                    .onDelete { indexSet in
+                        controller.remove(atOffsets: indexSet)
                     }
                 }
-//                .onDelete { indexSet in
-//                    controller.stopwatches.remove(atOffsets: indexSet)
-//                }
                 .listStyle(.plain)
                 .popover(isPresented: self.$isDetailPopupShowing) {
                     SingleStopWatchView(stopwatch: controller[popoverStopwatchIdx]).padding()
