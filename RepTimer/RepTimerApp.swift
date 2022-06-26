@@ -10,13 +10,11 @@ import SwiftUI
 @main
 struct RepTimerApp: App {
 //    @StateObject private var store = RepStore()
-    @StateObject var stopwatchController: StopWatchesController = StopWatchesController()
     @StateObject var timelineController: TimelineController = TimelineController()
     
     var body: some Scene {
         WindowGroup {
             ContentView(
-                stopwatchController: stopwatchController,
                 timelineController: timelineController
             )
 //                RepStore.save(rep: store.stopwatch) {result in

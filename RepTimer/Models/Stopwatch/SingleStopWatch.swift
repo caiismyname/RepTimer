@@ -77,11 +77,6 @@ class SingleStopWatch: Period, ObservableObject, Identifiable {
             return
         }
         
-        // Don't support times greater than a day
-//        if duration >= 60 * 60 * 24  {
-//            lastPollTime = Date()
-//        }
-        
         // Recalculate `duration` for the stopwatch
         let now = Date()
         let delta = now.timeIntervalSince(lastPollTime)

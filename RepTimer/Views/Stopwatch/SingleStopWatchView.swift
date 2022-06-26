@@ -11,7 +11,7 @@ import SwiftUI
 
 
 struct SingleStopWatchView: View {
-    @StateObject var stopwatch: SingleStopWatch
+    @ObservedObject var stopwatch: SingleStopWatch
     let colonWidth = 20
 
     var body: some View {
@@ -57,13 +57,13 @@ struct SingleStopWatchView: View {
 }
 
 struct RepTimeView_Previews: PreviewProvider {
-  static var previews: some View {
-    let stopwatch = SingleStopWatch()
-    Group {
-        SingleStopWatchView(stopwatch: stopwatch)
-            .previewInterfaceOrientation(.portrait)
-            .previewDevice("iPhone 13 Pro")
+    @State var stopwatch = SingleStopWatch()
+    static var previews: some View {
+        Group {
+            SingleStopWatchView(stopwatch: SingleStopWatch())
+                .previewInterfaceOrientation(.portrait)
+                .previewDevice("iPhone 13 Pro")
+        }
     }
-  }
 }
 
