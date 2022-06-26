@@ -21,18 +21,12 @@ protocol Period {
 
 extension Period {
     var displayFormatted: String {
+        // Default format, but you can specify your own using the extension
         return duration.formattedTimeTwoMilliLeadingZero
     }
-//
-//    func formatTime(time: TimeInterval) -> String {
-//        let displayHours = time.hours == 0 ? "" : time.hours.withLeadingZero + ":"
-//        return String(
-//            displayHours + time.minutes.withLeadingZero + ":" + time.seconds.withLeadingZero + "." + time.miliseconds.withLeadingZero
-//        )
-//    }
 }
 
-enum PeriodStatus {
+enum PeriodStatus: Codable {
     case inactive
     case active
     case paused

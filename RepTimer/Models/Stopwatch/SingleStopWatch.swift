@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 
-class SingleStopWatch: Period, ObservableObject, Identifiable {
-    
-    let id: UUID = UUID()
+class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
+    var id: UUID = UUID()
     var lastPollTime: Date
     @Published var duration: TimeInterval
     @Published var status: PeriodStatus
@@ -24,35 +23,12 @@ class SingleStopWatch: Period, ObservableObject, Identifiable {
     }
     
     init() {
-        // Set a repeating timer to update the durations
         self.lastPollTime = Date()
         self.duration = TimeInterval(0)
         self.status = PeriodStatus.inactive
-        timer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(0.001),
-            target: self,
-            selector: (#selector(update)),
-            userInfo: nil,
-            repeats: true
-        )
-        RunLoop.main.add(timer, forMode: .common)
     }
-//
-//    required convenience init(from decoder: Decoder) throws {
-//        // TODO Broken
-//        self.init()
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        let decodedStartTime = try values.decode(Date.self, forKey: .startTime)
-//        print(decodedStartTime)
-//
-//        self.timerStartTime = decodedStartTime
-//    }
-//
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(timerStartTime, forKey: .startTime)
-//    }
     
+// MARK: — Behavior funcs
     
     func currentLap() -> Lap? {
         return laps.last
@@ -68,7 +44,6 @@ class SingleStopWatch: Period, ObservableObject, Identifiable {
         laps.append(Lap(startTime: startTime))
         laps.last?.status = PeriodStatus.active
     }
-    
 
     @objc func update() {
         
@@ -99,6 +74,19 @@ class SingleStopWatch: Period, ObservableObject, Identifiable {
         if let lap = currentLap() {
             lap.start()
         }
+        
+        startTimer()
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: TimeInterval(0.001),
+            target: self,
+            selector: (#selector(update)),
+            userInfo: nil,
+            repeats: true
+        )
+        RunLoop.main.add(timer, forMode: .common)
     }
     
     func pause() {
@@ -122,5 +110,36 @@ class SingleStopWatch: Period, ObservableObject, Identifiable {
         status = PeriodStatus.inactive
         duration = TimeInterval(0)
         laps = []
+    }
+    
+    // MARK: — Codable
+    private enum CoderKeys: String, CodingKey {
+        case id
+        case lastPollTime
+        case duration
+        case status
+        case laps
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CoderKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(lastPollTime, forKey: .lastPollTime)
+        try container.encode(duration, forKey: .duration)
+        try container.encode(status, forKey: .status)
+        try container.encode(laps, forKey: .laps)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CoderKeys.self)
+        id = try values.decode(UUID.self, forKey: .id)
+        lastPollTime = try values.decode(Date.self, forKey: .lastPollTime)
+        duration = try values.decode(TimeInterval.self, forKey: .duration)
+        status = try values.decode(PeriodStatus.self, forKey: .status)
+        laps = try values.decode([Lap].self, forKey: .laps)
+        
+        if status != PeriodStatus.inactive {
+            startTimer()
+        }
     }
 }
