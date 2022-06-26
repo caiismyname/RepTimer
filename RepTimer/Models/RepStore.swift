@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class RepStore: ObservableObject {
-    @Published var stopwatch: StopWatch = StopWatch()
+    @Published var stopwatch: SingleStopWatch = SingleStopWatch()
     
     private static func fileURL() throws -> URL {
         try FileManager.default.url(for: .documentDirectory,
@@ -19,7 +19,7 @@ class RepStore: ObservableObject {
          .appendingPathComponent("timer.data")
     }
     
-    static func load(completion: @escaping (Result<StopWatch, Error>) -> Void) {
+    static func load(completion: @escaping (Result<SingleStopWatch, Error>) -> Void) {
 //        DispatchQueue.global(qos: .background).async {
 //            do {
 //                let fileURL = try fileURL()
@@ -44,7 +44,7 @@ class RepStore: ObservableObject {
 //        }
     }
     
-    static func save(rep: StopWatch, completion: @escaping (Result<Int, Error>) -> Void) {
+    static func save(rep: SingleStopWatch, completion: @escaping (Result<Int, Error>) -> Void) {
 //        DispatchQueue.global(qos: .background).async {
 //           do {
 //               let data = try JSONEncoder().encode(rep)

@@ -11,16 +11,19 @@ import SwiftUI
 
 
 struct SingleStopWatchView: View {
-    @StateObject var stopwatch: StopWatch
+    @StateObject var stopwatch: SingleStopWatch
     let colonWidth = 20
 
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
+                // Total time
                 Text(stopwatch.displayFormatted)
                     .font(Font.monospaced(.system(size:40))())
                     .minimumScaleFactor(0.001)
                     .padding([.leading, .top], 30)
+                
+                // Current lap
                 if let lap = stopwatch.currentLap() {
                     Text(lap.displayFormatted)
                         .font(Font.monospaced(.system(size: 70))())
@@ -40,7 +43,7 @@ struct SingleStopWatchView: View {
                         Text(stopwatch.reversedLaps()[index].displayFormatted)
                             .font(Font.monospaced(.system(size:20))())
                         Spacer()
-                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTimeTwoMilli)
+                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTimeTwoMilliLeadingZero)
                             .font(Font.monospaced(.system(size:20))())
                     }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .leading)
                 }
@@ -55,7 +58,7 @@ struct SingleStopWatchView: View {
 
 struct RepTimeView_Previews: PreviewProvider {
   static var previews: some View {
-    let stopwatch = StopWatch()
+    let stopwatch = SingleStopWatch()
     Group {
         SingleStopWatchView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)

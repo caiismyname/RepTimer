@@ -33,13 +33,22 @@ struct TimelineEntryView: View {
                 .fill(Color(UIColor.white))
                 .cornerRadius(12)
                 .frame(width: computeWidth(), height: computeHeight())
-            VStack {
-                if timer.name != "" {
+            HStack {
+                if (timer.name != "") {
                     Text(timer.name)
-                        .font(Font.monospaced(.system(size:15))())
+                        .font(Font.monospaced(.system(size:20))())
+                        .foregroundColor(Color.black)
                 }
-                Text(timer.timeRemaining.formattedTimeNoMilli)
-                    .font(Font.monospaced(.system(size:15))())
+                if (timer.status == TimerStatus.active) {
+                    // Round up so time hits 0:00 when the pill hits the top of the screen
+                    Text(timer.timeRemaining.formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond)
+                        .font(Font.monospaced(.system(size:20))())
+                        .foregroundColor(Color.black)
+                } else if (timer.status == TimerStatus.ended) {
+                    Text(timer.timeRemaining.formattedTimeNoMilliNoLeadingZero)
+                        .font(Font.monospaced(.system(size:20))())
+                        .foregroundColor(Color.black)
+                }
             }.padding()
         }.position(
             x: proxy.size.width / 2,
@@ -54,7 +63,6 @@ struct TimelineEntryView_Previews: PreviewProvider {
     
     Group {
         ZStack {
-            Color.black
             GeometryReader{ proxy in
                 TimelineEntryView(
                     timer: timer,
@@ -62,10 +70,12 @@ struct TimelineEntryView_Previews: PreviewProvider {
                     verticalFidelity: 20.0,
                     bottomDuration: 4.0
                 )
-                    .previewInterfaceOrientation(.portrait)
-                    .previewDevice("iPhone 13 Pro")
+                    
             }.border(Color.red)
         }
+            .previewInterfaceOrientation(.portrait)
+            .previewDevice("iPhone 13 Pro")
+            .preferredColorScheme(.dark)
     }
   }
 }

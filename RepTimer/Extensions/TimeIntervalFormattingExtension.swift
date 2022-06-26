@@ -24,18 +24,35 @@ extension TimeInterval {
         return Int((self*100).truncatingRemainder(dividingBy: 100))
     }
     
-    var formattedTimeTwoMilli: String {
+    var formattedTimeTwoMilliLeadingZero: String {
         let displayHours = self.hours == 0 ? "" : self.hours.withLeadingZero + ":"
         return String(
             displayHours + self.minutes.withLeadingZero + ":" + self.seconds.withLeadingZero + "." + self.miliseconds.withLeadingZero
         )
     }
     
-    var formattedTimeNoMilli: String {
+    var formattedTimeOneMilliLeadingZero: String {
+        let displayHours = self.hours == 0 ? "" : self.hours.withLeadingZero + ":"
+        return String(
+            displayHours + self.minutes.withLeadingZero + ":" + self.seconds.withLeadingZero + "." + self.miliseconds.withLeadingZero
+        )
+    }
+    
+    var formattedTimeNoMilliLeadingZero: String {
         let displayHours = self.hours == 0 ? "" : self.hours.withLeadingZero + ":"
         return String(
             displayHours + self.minutes.withLeadingZero + ":" + self.seconds.withLeadingZero
         )
+    }
+    
+    var formattedTimeNoMilliNoLeadingZero: String {
+        let displayHours = self.hours == 0 ? "" : String(self.hours) + ":"
+        return displayHours + String(self.minutes) + ":" + self.seconds.withLeadingZero
+    }
+    
+    var formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond: String {
+        let displayHours = self.hours == 0 ? "" : String(self.hours) + ":"
+        return displayHours + String(self.minutes) + ":" + (self.seconds + 1).withLeadingZero
     }
 }
 

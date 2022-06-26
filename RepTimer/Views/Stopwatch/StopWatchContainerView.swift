@@ -10,13 +10,19 @@ import SwiftUI
 
 struct StopWatchContainerView: View {
     @StateObject var controller: StopWatchesController
+    @State private var isDetailPopupShowing = false
+    @State private var popoverStopwatchID = UUID()
 
     var body: some View {
         VStack (alignment: .trailing) {
             Button(action: {controller.addStopwatch()}) {
                 Image(systemName: "plus.circle")
                     .font(.system(size: 30))
-            }.padding(.trailing, 20)
+            }
+            .padding(.trailing, 20)
+            .popover(isPresented: self.$isDetailPopupShowing) {
+                SingleStopWatchView(stopwatch: controller.getStopwatch(id: popoverStopwatchID) ?? SingleStopWatch()).padding()
+            }
 
             if (controller.stopwatches.count == 1) {
                 SingleStopWatchView(stopwatch: controller.stopwatches[0])
@@ -24,11 +30,18 @@ struct StopWatchContainerView: View {
                 List {
                     ForEach(controller.stopwatches) { stopwatch in
                         MultipleStopWatchView(stopwatch: stopwatch)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            print(isDetailPopupShowing)
+                            self.popoverStopwatchID = stopwatch.id
+                            isDetailPopupShowing = true
+                        }
                     }
                     .onDelete { indexSet in
                         controller.stopwatches.remove(atOffsets: indexSet)
                     }
-                }.listStyle(.plain)
+                }
+                .listStyle(.plain)
             }
         }
     }

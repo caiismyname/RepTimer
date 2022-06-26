@@ -19,43 +19,46 @@ struct TimerTimelineView: View {
     }
     
     func saveNewTimer(name: String, duration: TimeInterval) {
-        controller.addTimer(timeRemaining: duration, name: name)
-        createTimerPopoverShowing = false
+        if duration > 0.0 {
+            controller.addTimer(timeRemaining: duration, name: name)
+            createTimerPopoverShowing = false
+        }
     }
     
     var body: some View {
-        ZStack {
-            Color.black
-            VStack(alignment: .trailing)  {
-                Button(action: {createTimerPopoverShowing = true}) {
-                    Image(systemName: "plus.circle")
-                        .font(.system(size: 30))
-                    }
-                .padding(.trailing, 20)
-                .popover(isPresented: $createTimerPopoverShowing) {
-                    CreateTimerView(saveFunc: saveNewTimer)
-                        .padding()
+        VStack(alignment: .trailing)  {
+            Button(action: {createTimerPopoverShowing = true}) {
+                Image(systemName: "plus.circle")
+                    .font(.system(size: 30))
                 }
-                    
-                GeometryReader { proxy in
-                    // Background grid
-                    ForEach(0...10, id: \.self) {offset in
-                        Rectangle()
-                            .fill(Color(UIColor.gray))
-                            .frame(width: proxy.size.width, height: 1)
-                            .position(x: proxy.size.width / 2, y: (proxy.size.height / 10) * CGFloat(offset))
-                    }
-                    
-                    // Plot each timer
-                    ForEach(controller.timers, id: \.self) { timer in
-                        TimelineEntryView(
-                            timer: timer,
-                            proxy: proxy,
-                            verticalFidelity: verticalFidelity,
-                            bottomDuration: controller.bottomDuration
-                        )
-                    }
+            .padding(.trailing, 20)
+            .popover(isPresented: $createTimerPopoverShowing) {
+                CreateTimerView(saveFunc: saveNewTimer)
+                    .padding()
+            }
+                
+            GeometryReader { proxy in
+                // Background grid
+                ForEach(0...10, id: \.self) {offset in
+                    Rectangle()
+                        .fill(Color(UIColor.gray))
+                        .frame(width: proxy.size.width, height: 1)
+                        .position(x: proxy.size.width / 2, y: (proxy.size.height / 10) * CGFloat(offset))
                 }
+                
+                // Plot each timer
+                ForEach(controller.timers, id: \.self) { timer in
+                    TimelineEntryView(
+                        timer: timer,
+                        proxy: proxy,
+                        verticalFidelity: verticalFidelity,
+                        bottomDuration: controller.bottomDuration
+                    )
+                }
+            }
+            .contentShape(Rectangle()) // Enables tap gestures to be recognized on non-opaque elements
+            .onTapGesture(count: 2) {
+                createTimerPopoverShowing = true
             }
         }
     }
@@ -68,6 +71,7 @@ struct TimerTimelineView_Previews: PreviewProvider {
             TimerTimelineView(controller: controller)
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice("iPhone 13 Pro")
+                .preferredColorScheme(.dark)
         }
     }
 }

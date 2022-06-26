@@ -10,8 +10,9 @@ import SwiftUI
 
 // This is how a single StopWatch looks when there are multiple of them in a container.
 struct MultipleStopWatchView: View {
-    @StateObject var stopwatch: StopWatch
+    @StateObject var stopwatch: SingleStopWatch
     let secondaryTextSize = CGFloat(18)
+    @State private var detailPopupShowing = false
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -29,7 +30,7 @@ struct MultipleStopWatchView: View {
 
 struct MultipleStopWatchView_Previews: PreviewProvider {
   static var previews: some View {
-    let stopwatch = StopWatch()
+    let stopwatch = SingleStopWatch()
     Group {
         MultipleStopWatchView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)

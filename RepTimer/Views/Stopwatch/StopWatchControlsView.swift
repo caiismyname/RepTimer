@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct StopWatchControlsView: View {
-    @StateObject var stopwatch: StopWatch
+    @StateObject var stopwatch: SingleStopWatch
     let buttonPadding = CGFloat(10)
 
     var body: some View {
@@ -89,7 +89,7 @@ struct StopWatchControlsView: View {
 
 struct StopWatchControlsView_Previews: PreviewProvider {
   static var previews: some View {
-    let stopwatch = StopWatch()
+    let stopwatch = SingleStopWatch()
     Group {
         StopWatchControlsView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)

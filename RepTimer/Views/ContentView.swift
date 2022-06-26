@@ -17,7 +17,7 @@ struct ContentView: View {
         TabContainerView(
             stopwatchController: stopwatchController,
             timelineController: timelineController
-        )
+        ).preferredColorScheme(.dark)
         //        StopWatchContainerView(controller: controller)
 //        .onChange(of: scenePhase) { phase in
 //            if phase == .inactive { saveAction() }
@@ -25,8 +25,11 @@ struct ContentView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let stopwatch = StopWatchesController()
+        let timeline = TimelineController()
+        ContentView(stopwatchController: stopwatch, timelineController: timeline)
+            .previewDevice("iPhone 13 Pro")
+    }
+}

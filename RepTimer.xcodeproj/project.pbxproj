@@ -21,7 +21,7 @@
 		271B60202845220E00BA0F5D /* RepTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B601F2845220E00BA0F5D /* RepTimerTests.swift */; };
 		271B602A2845220E00BA0F5D /* RepTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B60292845220E00BA0F5D /* RepTimerUITests.swift */; };
 		271B602C2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */; };
-		271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603A2845223B00BA0F5D /* StopWatchModel.swift */; };
+		271B603B2845223B00BA0F5D /* SingleStopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603A2845223B00BA0F5D /* SingleStopWatch.swift */; };
 		271B603D2845229600BA0F5D /* SingleStopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603C2845229600BA0F5D /* SingleStopWatchView.swift */; };
 		271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */; };
 		271B604228455BDE00BA0F5D /* RepStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B604128455BDE00BA0F5D /* RepStore.swift */; };
@@ -35,6 +35,8 @@
 		27740AA028611E8100514A13 /* TimeInputKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9F28611E8100514A13 /* TimeInputKeyView.swift */; };
 		27740AA228611EC500514A13 /* TimeInputKeyboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */; };
 		27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */; };
+		27E3F7362867722400DECF15 /* timerDoneSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F7352867722400DECF15 /* timerDoneSound.m4a */; };
+		27E3F73C2867A0E500DECF15 /* done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F73B2867A0E500DECF15 /* done.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +74,7 @@
 		271B60252845220E00BA0F5D /* RepTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		271B60292845220E00BA0F5D /* RepTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerUITests.swift; sourceTree = "<group>"; };
 		271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		271B603A2845223B00BA0F5D /* StopWatchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchModel.swift; sourceTree = "<group>"; };
+		271B603A2845223B00BA0F5D /* SingleStopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStopWatch.swift; sourceTree = "<group>"; };
 		271B603C2845229600BA0F5D /* SingleStopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStopWatchView.swift; sourceTree = "<group>"; };
 		271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalFormattingExtension.swift; sourceTree = "<group>"; };
 		271B604128455BDE00BA0F5D /* RepStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepStore.swift; sourceTree = "<group>"; };
@@ -86,6 +88,8 @@
 		27740A9F28611E8100514A13 /* TimeInputKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyView.swift; sourceTree = "<group>"; };
 		27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardModel.swift; sourceTree = "<group>"; };
 		27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
+		27E3F7352867722400DECF15 /* timerDoneSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = timerDoneSound.m4a; sourceTree = "<group>"; };
+		27E3F73B2867A0E500DECF15 /* done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = done.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 		271B600D2845220D00BA0F5D /* RepTimer */ = {
 			isa = PBXGroup;
 			children = (
+				27E3F73B2867A0E500DECF15 /* done.caf */,
 				271B603E2845543400BA0F5D /* Extensions */,
 				271B60392845223000BA0F5D /* Views */,
 				271B60382845222300BA0F5D /* Models */,
@@ -187,6 +192,7 @@
 		271B60282845220E00BA0F5D /* RepTimerUITests */ = {
 			isa = PBXGroup;
 			children = (
+				27E3F7352867722400DECF15 /* timerDoneSound.m4a */,
 				271B60292845220E00BA0F5D /* RepTimerUITests.swift */,
 				271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */,
 			);
@@ -239,7 +245,7 @@
 			children = (
 				27096B52284CF471007E7FB6 /* PeriodModel.swift */,
 				2703040E2856A9D300763C06 /* StopWatchesController.swift */,
-				271B603A2845223B00BA0F5D /* StopWatchModel.swift */,
+				271B603A2845223B00BA0F5D /* SingleStopWatch.swift */,
 				27096B54284D06CC007E7FB6 /* LapModel.swift */,
 			);
 			path = Stopwatch;
@@ -367,6 +373,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				271B60162845220E00BA0F5D /* Preview Assets.xcassets in Resources */,
+				27E3F7362867722400DECF15 /* timerDoneSound.m4a in Resources */,
+				27E3F73C2867A0E500DECF15 /* done.caf in Resources */,
 				271B60132845220E00BA0F5D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,7 +402,7 @@
 			files = (
 				27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */,
 				27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */,
-				271B603B2845223B00BA0F5D /* StopWatchModel.swift in Sources */,
+				271B603B2845223B00BA0F5D /* SingleStopWatch.swift in Sources */,
 				27740AA028611E8100514A13 /* TimeInputKeyView.swift in Sources */,
 				2703040F2856A9D300763C06 /* StopWatchesController.swift in Sources */,
 				27740A96285AC36C00514A13 /* StopWatchControlsView.swift in Sources */,

@@ -21,7 +21,7 @@ protocol Period {
 
 extension Period {
     var displayFormatted: String {
-        return duration.formattedTimeTwoMilli
+        return duration.formattedTimeTwoMilliLeadingZero
     }
 //
 //    func formatTime(time: TimeInterval) -> String {

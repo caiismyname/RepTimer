@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 
-class StopWatch: Period, ObservableObject, Identifiable {
+class SingleStopWatch: Period, ObservableObject, Identifiable {
     
     let id: UUID = UUID()
     var lastPollTime: Date

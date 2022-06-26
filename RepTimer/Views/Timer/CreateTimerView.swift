@@ -37,7 +37,7 @@ struct CreateTimerView: View {
                     showTimeInput = true
                 }
                 .padding(.top, 50)
-            Text("\(keyboard.value.formattedTimeNoMilli)")
+            Text("\(keyboard.value.formattedTimeNoMilliLeadingZero)")
                 .font(Font.monospaced(.system(size: 80))())
                 .minimumScaleFactor(0.0001)
             Spacer()
