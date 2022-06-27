@@ -10,18 +10,13 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var timelineController: TimelineController
     @ObservedObject var stopwatchesController: StopwatchesController
-//    @Environment(\.scenePhase) private var scenePhase
-//    let saveAction: ()->Void
     
     var body: some View {
         TabContainerView(
             timelineController: timelineController,
             stopwatchesController: stopwatchesController
-        ).preferredColorScheme(.dark)
-        //        StopWatchContainerView(controller: controller)
-//        .onChange(of: scenePhase) { phase in
-//            if phase == .inactive { saveAction() }
-//        }
+        )
+        .preferredColorScheme(.dark)
     }
 }
 

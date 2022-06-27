@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct RepTimerApp: App {
 //    @StateObject private var store = RepStore()
-    @StateObject var timelineController = TimelineController()
-    @StateObject var stopwatchesController = StopwatchesController()
+    @StateObject private var timelineController = TimelineController()
+    @StateObject private var stopwatchesController = StopwatchesController()
+    @Environment(\.scenePhase) private var scenePhase // Used for detecting when this scene is backgrounded and isn't currently visible.
     
     var body: some Scene {
         WindowGroup {
@@ -19,6 +20,22 @@ struct RepTimerApp: App {
                 timelineController: timelineController,
                 stopwatchesController: stopwatchesController
             )
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .background {
+                    stopwatchesController.save()
+                }
+            }
+            .onAppear {
+                stopwatchesController.loadStopwatches { result in
+                    switch result {
+                    case .success (let loadedStopwatches):
+                        self.stopwatchesController.stopwatches = loadedStopwatches
+                        self.stopwatchesController.startAllTimers()
+                    case .failure (let error):
+                        fatalError(error.localizedDescription)
+                    }
+                }
+            }
 //                RepStore.save(rep: store.stopwatch) {result in
 //                    if case .failure(let error) = result {
 //                         fatalError(error.localizedDescription)
