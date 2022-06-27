@@ -10,12 +10,14 @@ import SwiftUI
 @main
 struct RepTimerApp: App {
 //    @StateObject private var store = RepStore()
-    @StateObject var timelineController: TimelineController = TimelineController()
+    @StateObject var timelineController = TimelineController()
+    @StateObject var stopwatchesController = StopwatchesController()
     
     var body: some Scene {
         WindowGroup {
             ContentView(
-                timelineController: timelineController
+                timelineController: timelineController,
+                stopwatchesController: stopwatchesController
             )
 //                RepStore.save(rep: store.stopwatch) {result in
 //                    if case .failure(let error) = result {

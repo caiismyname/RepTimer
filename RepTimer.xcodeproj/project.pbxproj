@@ -36,6 +36,7 @@
 		27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */; };
 		27E3F7362867722400DECF15 /* timerDoneSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F7352867722400DECF15 /* timerDoneSound.m4a */; };
 		27E3F73C2867A0E500DECF15 /* done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F73B2867A0E500DECF15 /* done.caf */; };
+		27E3F73E2869274B00DECF15 /* StopwatchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73D2869274B00DECF15 /* StopwatchesController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		27E3F7352867722400DECF15 /* timerDoneSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = timerDoneSound.m4a; sourceTree = "<group>"; };
 		27E3F73B2867A0E500DECF15 /* done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = done.caf; sourceTree = "<group>"; };
+		27E3F73D2869274B00DECF15 /* StopwatchesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 		27740A922858130200514A13 /* Stopwatch */ = {
 			isa = PBXGroup;
 			children = (
+				27E3F73D2869274B00DECF15 /* StopwatchesController.swift */,
 				27096B52284CF471007E7FB6 /* PeriodModel.swift */,
 				271B603A2845223B00BA0F5D /* SingleStopWatch.swift */,
 				27096B54284D06CC007E7FB6 /* LapModel.swift */,
@@ -418,6 +421,7 @@
 				27740A8E285810C400514A13 /* SingleTimerModel.swift in Sources */,
 				270304132858061600763C06 /* TabContainerView.swift in Sources */,
 				27740AA228611EC500514A13 /* TimeInputKeyboardModel.swift in Sources */,
+				27E3F73E2869274B00DECF15 /* StopwatchesController.swift in Sources */,
 				271B600F2845220D00BA0F5D /* RepTimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

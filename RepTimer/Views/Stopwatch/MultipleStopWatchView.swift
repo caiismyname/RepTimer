@@ -10,7 +10,7 @@ import SwiftUI
 
 // This is how a single StopWatch looks when there are multiple of them in a container.
 struct MultipleStopWatchView: View {
-    @StateObject var stopwatch: SingleStopWatch
+    @ObservedObject var stopwatch: SingleStopWatch
     let secondaryTextSize = CGFloat(18)
     @State private var detailPopupShowing = false
     

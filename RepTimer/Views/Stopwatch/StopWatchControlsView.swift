@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct StopWatchControlsView: View {
-    @StateObject var stopwatch: SingleStopWatch
+    @ObservedObject var stopwatch: SingleStopWatch
     let buttonPadding = CGFloat(10)
 
     var body: some View {

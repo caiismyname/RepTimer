@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TimelineEntryView: View {
-    @StateObject var timer: SingleTimer
+    @ObservedObject var timer: SingleTimer
     let proxy: GeometryProxy
     let verticalFidelity: Double
     let bottomDuration: Double

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TimerContainerView: View {
-    @StateObject var timelineController: TimelineController
+    @ObservedObject var timelineController: TimelineController
     
     var body: some View {
         TimerTimelineView(controller: timelineController)

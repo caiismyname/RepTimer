@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TimerTimelineView: View {
-    @StateObject var controller: TimelineController
+    @ObservedObject var controller: TimelineController
     @State var createTimerPopoverShowing = false
     let verticalFidelity = 20.0
     

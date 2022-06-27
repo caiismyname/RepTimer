@@ -15,7 +15,7 @@ struct CreateTimerView: View {
     }
     
     @State private var name = ""
-    @ObservedObject var keyboard = TimeInputKeyboardModel()
+    @StateObject var keyboard = TimeInputKeyboardModel()
     var saveFunc: (_ name: String, _ duration: TimeInterval) -> ()
     @State private var showTimeInput = true
 
