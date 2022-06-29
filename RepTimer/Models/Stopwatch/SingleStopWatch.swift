@@ -80,7 +80,7 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     
     func startTimer() {
         timer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(0.001),
+            timeInterval: TimeInterval(0.01),
             target: self,
             selector: (#selector(update)),
             userInfo: nil,
