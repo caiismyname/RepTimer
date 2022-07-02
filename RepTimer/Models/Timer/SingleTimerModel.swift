@@ -46,14 +46,6 @@ class SingleTimer: ObservableObject {
         )
         RunLoop.main.add(timer, forMode: .common)
         
-        // Request notification permissions
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if let error = error {
-                // Handle the error here.
-            }
-        }
-        
         // Temp
         start()
     }
@@ -91,19 +83,30 @@ class SingleTimer: ObservableObject {
         content.title = self.name
         content.body = "Your \(self.name) timer (\(self.duration.formattedTimeNoMilliLeadingZero)) is done."
         content.sound = UNNotificationSound.default
+        content.userInfo = ["timerId": self.id]
+        content.categoryIdentifier = "TIMER_END"
         
         // Create the request
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        print("notif id \(uuidString)")
 
         // Schedule the request with the system.
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.add(request) { (error) in
-           if error != nil {
-              print(error)
-           }
-        }
+//        let notificationCenter = UNUserNotificationCenter.current()
+//        notificationCenter.add(request) { (error) in
+//           if error != nil {
+//               print("error scheduling notif")
+//              print(error)
+//           }
+//        }
+        
+        let center = UNUserNotificationCenter.current()
+        print(center)
+        center.add(request, withCompletionHandler: { x in print(x)})
     }
+    
+    
     
     func start() {
         lastPollTime = Date()

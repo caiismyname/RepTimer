@@ -17,11 +17,10 @@ struct MultipleStopWatchView: View {
     var body: some View {
         VStack (alignment: .leading) {
             Text(stopwatch.displayFormatted)
-                .font(Font.monospaced(.system(size: 50))())
-                .minimumScaleFactor(0.01)
+            .font(.system(size: 50, weight: .regular , design: .monospaced))
+            .minimumScaleFactor(0.01)
             Text("\(stopwatch.laps.count) laps")
                 .font(Font.monospaced(.system(size: secondaryTextSize))())
-                .minimumScaleFactor(1)
                 .padding(.leading, 7)
             StopWatchControlsView(stopwatch: stopwatch)
         }

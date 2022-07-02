@@ -53,6 +53,7 @@ struct StopWatchContainer_Previews: PreviewProvider {
         StopWatchContainerView(controller: controller)
         .previewInterfaceOrientation(.portrait)
         .previewDevice("iPhone 13 Pro")
+        .preferredColorScheme(.dark)
     }
   }
 }

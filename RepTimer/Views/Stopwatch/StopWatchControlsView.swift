@@ -40,14 +40,6 @@ struct StopWatchControlsView: View {
         } else if stopwatch.status == PeriodStatus.active {
             HStack {
                 Spacer()
-                Button(action: {stopwatch.pause()}) {
-                    Text("Pause").font(.system(size:20))
-                        .frame(maxWidth: .infinity)
-                }
-                    .padding(buttonPadding)
-                    .foregroundColor(Color.white)
-                    .background(Color.black)
-                    .cornerRadius(12)
                 Button(action: {stopwatch.newLap()}) {
                     Text("Lap").font(.system(size:20))
                         .frame(maxWidth: .infinity)
@@ -55,6 +47,14 @@ struct StopWatchControlsView: View {
                     .padding(buttonPadding)
                     .foregroundColor(Color.black)
                     .background(Color.white)
+                    .cornerRadius(12)
+                Button(action: {stopwatch.pause()}) {
+                    Text("Pause").font(.system(size:20))
+                        .frame(maxWidth: .infinity)
+                }
+                    .padding(buttonPadding)
+                    .foregroundColor(Color.white)
+                    .background(Color.gray)
                     .cornerRadius(12)
                 Spacer()
             }
@@ -94,6 +94,7 @@ struct StopWatchControlsView_Previews: PreviewProvider {
         StopWatchControlsView(stopwatch: stopwatch)
             .previewInterfaceOrientation(.portrait)
             .previewDevice("iPhone 13 Pro")
+            .preferredColorScheme(.dark)
     }
   }
 }

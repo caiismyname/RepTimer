@@ -18,41 +18,53 @@ struct SingleStopWatchView: View {
         VStack {
             VStack(alignment: .leading) {
                 // Total time
-                Text(stopwatch.displayFormatted)
-                    .font(Font.monospaced(.system(size:40))())
-                    .minimumScaleFactor(0.001)
-                    .padding([.leading, .top], 30)
+                Text(stopwatch.duration.formattedTimeOneMilliLeadingZero)
+                    .font(.system(size: 40, weight: .regular , design: .monospaced))
+                    .minimumScaleFactor(0.01)
+                    .padding(.leading, 10)
                 
                 // Current lap
                 if let lap = stopwatch.currentLap() {
                     Text(lap.displayFormatted)
                         .font(Font.monospaced(.system(size: 70))())
-                        .minimumScaleFactor(0.001)
-                        .padding(.leading, 26)
+                        .minimumScaleFactor(0.01)
+                        .padding(.leading, 8)
                 } else {
                     Text("00:00.00")
-                        .font(Font.monospaced(.system(size: 70))())
-                        .minimumScaleFactor(0.001)
-                        .padding(.leading, 26)
+                        .font(.system(size: 200, weight: .regular , design: .monospaced))
+                        .minimumScaleFactor(0.01)
+                        .padding(.leading, 8)
                 }
+                Spacer()
+                HStack {
+                    Text("Lap")
+                    Spacer()
+                    Text("Lap Time")
+                    Spacer()
+                    Text("Cumulative")
+                }
+                .font(.system(size: 20, weight: .regular , design: .monospaced))
+                .minimumScaleFactor(0.01)
+                .padding([.leading, .trailing], 15)
                 List(stopwatch.reversedLaps().indices, id: \.self) { index in
                     HStack {
-                        Text("Lap \(stopwatch.reversedLaps().count - index)")
-                            .font(Font.monospaced(.system(size:20))())
+                        Text("\(stopwatch.reversedLaps().count - index)")
                         Spacer()
                         Text(stopwatch.reversedLaps()[index].displayFormatted)
-                            .font(Font.monospaced(.system(size:20))())
                         Spacer()
                         Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTimeTwoMilliLeadingZero)
-                            .font(Font.monospaced(.system(size:20))())
-                    }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .leading)
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .leading)
+                    .font(.system(size: 20, weight: .regular , design: .monospaced))
+                    .minimumScaleFactor(0.01)
                 }
                     .listStyle(.plain)
                     .padding([.leading, .trailing], 15)
             }
             StopWatchControlsView(stopwatch: stopwatch)
             Spacer()
-        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
+        }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
   }
 }
 
@@ -62,7 +74,8 @@ struct RepTimeView_Previews: PreviewProvider {
         Group {
             SingleStopWatchView(stopwatch: SingleStopWatch())
                 .previewInterfaceOrientation(.portrait)
-                .previewDevice("iPhone 13 Pro")
+                .previewDevice("iPhone 8")
+                .preferredColorScheme(.dark)
         }
     }
 }
