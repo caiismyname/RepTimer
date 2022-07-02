@@ -27,7 +27,8 @@ extension Period {
 }
 
 enum PeriodStatus: Codable {
-    case inactive
+    case inactive // before it starts
     case active
     case paused
+    case ended // after it's been reset
 }

@@ -15,27 +15,46 @@ struct SingleStopWatchView: View {
     let colonWidth = 20
 
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
+            if stopwatch.status != PeriodStatus.ended {  // Normal operation
                 // Total time
-                Text(stopwatch.duration.formattedTimeOneMilliLeadingZero)
-                    .font(.system(size: 40, weight: .regular , design: .monospaced))
-                    .minimumScaleFactor(0.01)
-                    .padding(.leading, 10)
+                Text(stopwatch.status == PeriodStatus.paused
+                     ? stopwatch.duration.formattedTimeTwoMilliLeadingZero
+                     : stopwatch.duration.formattedTimeOneMilliLeadingZero)
+                .font(.system(size: 40, weight: .regular , design: .monospaced))
+                .minimumScaleFactor(0.01)
+                .padding(.leading, 10)
                 
                 // Current lap
                 if let lap = stopwatch.currentLap() {
                     Text(lap.displayFormatted)
-                        .font(Font.monospaced(.system(size: 70))())
-                        .minimumScaleFactor(0.01)
-                        .padding(.leading, 8)
+                    .font(Font.monospaced(.system(size: 70))())
+                    .minimumScaleFactor(0.01)
+                    .padding(.leading, 8)
                 } else {
                     Text("00:00.00")
-                        .font(.system(size: 200, weight: .regular , design: .monospaced))
-                        .minimumScaleFactor(0.01)
-                        .padding(.leading, 8)
+                    .font(.system(size: 70, weight: .regular , design: .monospaced))
+                    .minimumScaleFactor(0.01)
+                    .padding(.leading, 8)
                 }
-                Spacer()
+            } else { // Historial view
+                // Start datetime
+                Text(stopwatch.createDate.formatted())
+                .font(.system(size: 25, weight: .regular , design: .monospaced))
+                .minimumScaleFactor(0.1)
+                .padding(.leading, 10)
+                
+                // Total time
+                Text(stopwatch.duration.formattedTimeTwoMilliLeadingZero)
+                .font(Font.monospaced(.system(size: 70))())
+                .minimumScaleFactor(0.1)
+                .padding(.leading, 8)
+            }
+            
+            Spacer()
+            
+            // List of laps
+            Group {
                 HStack {
                     Text("Lap")
                     Spacer()
@@ -43,29 +62,33 @@ struct SingleStopWatchView: View {
                     Spacer()
                     Text("Cumulative")
                 }
-                .font(.system(size: 20, weight: .regular , design: .monospaced))
-                .minimumScaleFactor(0.01)
-                .padding([.leading, .trailing], 15)
+                .font(.system(size: 20, weight: .bold , design: .monospaced))
+                
                 List(stopwatch.reversedLaps().indices, id: \.self) { index in
                     HStack {
                         Text("\(stopwatch.reversedLaps().count - index)")
                         Spacer()
                         Text(stopwatch.reversedLaps()[index].displayFormatted)
                         Spacer()
-                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0 ? "        " :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTimeTwoMilliLeadingZero)
+                        Text(stopwatch.reversedLaps()[index].cumulativeTime == 0.0
+                             ? (stopwatch.status == PeriodStatus.ended
+                                    ? stopwatch.duration.formattedTimeTwoMilliLeadingZero
+                                    : "        "
+                                )
+                             :  stopwatch.reversedLaps()[index].cumulativeTime.formattedTimeTwoMilliLeadingZero)
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .leading)
-                    .font(.system(size: 20, weight: .regular , design: .monospaced))
-                    .minimumScaleFactor(0.01)
                 }
-                    .listStyle(.plain)
-                    .padding([.leading, .trailing], 15)
+                .listStyle(.plain)
             }
+            .font(.system(size: 20, weight: .regular , design: .monospaced))
+            .minimumScaleFactor(0.01)
+            .padding([.leading, .trailing], 15)
             StopWatchControlsView(stopwatch: stopwatch)
             Spacer()
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
-  }
+    }
 }
 
 struct RepTimeView_Previews: PreviewProvider {

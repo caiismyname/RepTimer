@@ -27,9 +27,11 @@ struct RepTimerApp: App {
             }
             .onAppear {
                 stopwatchesController.loadStopwatches { result in
+                    print(result)
                     switch result {
-                    case .success (let loadedStopwatches):
-                        self.stopwatchesController.stopwatches = loadedStopwatches
+                    case .success (let values):
+                        self.stopwatchesController.stopwatches = values["stopwatches"]!
+                        self.stopwatchesController.pastStopwatches = values["pastStopwatches"]!
                         self.stopwatchesController.startAllTimers()
                     case .failure (let error):
                         fatalError(error.localizedDescription)

@@ -17,7 +17,7 @@ struct StopWatchControlsView: View {
         if stopwatch.status == PeriodStatus.inactive {
             HStack {
                 Spacer()
-                Button(action: {stopwatch.reset()}) {
+                Button(action: {}) {
                     Text("Reset").font(.system(size:20))
                         .frame(maxWidth: .infinity)
                 }
@@ -83,6 +83,8 @@ struct StopWatchControlsView: View {
             }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
                 .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
+        } else if stopwatch.status == PeriodStatus.ended {
+            // No controls if the stopwatch has ended
         }
     }
 }

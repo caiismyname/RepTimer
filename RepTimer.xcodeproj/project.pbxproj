@@ -37,6 +37,7 @@
 		27E3F7362867722400DECF15 /* timerDoneSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F7352867722400DECF15 /* timerDoneSound.m4a */; };
 		27E3F73C2867A0E500DECF15 /* done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F73B2867A0E500DECF15 /* done.caf */; };
 		27E3F73E2869274B00DECF15 /* StopwatchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73D2869274B00DECF15 /* StopwatchesController.swift */; };
+		27E3F7402870AE2800DECF15 /* StopWatchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73F2870AE2800DECF15 /* StopWatchHistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		27E3F7352867722400DECF15 /* timerDoneSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = timerDoneSound.m4a; sourceTree = "<group>"; };
 		27E3F73B2867A0E500DECF15 /* done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = done.caf; sourceTree = "<group>"; };
 		27E3F73D2869274B00DECF15 /* StopwatchesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchesController.swift; sourceTree = "<group>"; };
+		27E3F73F2870AE2800DECF15 /* StopWatchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				271B603C2845229600BA0F5D /* SingleStopWatchView.swift */,
 				270304102856B0BA00763C06 /* MultipleStopWatchView.swift */,
 				27740A95285AC36C00514A13 /* StopWatchControlsView.swift */,
+				27E3F73F2870AE2800DECF15 /* StopWatchHistoryView.swift */,
 			);
 			path = Stopwatch;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				270304112856B0BA00763C06 /* MultipleStopWatchView.swift in Sources */,
 				271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */,
 				271B603D2845229600BA0F5D /* SingleStopWatchView.swift in Sources */,
+				27E3F7402870AE2800DECF15 /* StopWatchHistoryView.swift in Sources */,
 				271B60112845220D00BA0F5D /* ContentView.swift in Sources */,
 				27096B55284D06CC007E7FB6 /* LapModel.swift in Sources */,
 				27740A942858133C00514A13 /* TimelineControllerModel.swift in Sources */,

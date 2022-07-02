@@ -12,6 +12,8 @@ import SwiftUI
 class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     var id: UUID = UUID()
     var lastPollTime: Date
+    var createDate: Date
+    var resetCallback = {}
     @Published var duration: TimeInterval
     @Published var status: PeriodStatus
     
@@ -23,7 +25,9 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     }
     
     init() {
-        self.lastPollTime = Date()
+        let now = Date()
+        self.lastPollTime = now
+        self.createDate = now
         self.duration = TimeInterval(0)
         self.status = PeriodStatus.inactive
     }
@@ -39,7 +43,7 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     }
     
     func newLap(startTime: Date = Date()) {
-        laps.last?.status = PeriodStatus.inactive
+        laps.last?.status = PeriodStatus.ended
         laps.last?.cumulativeTime = self.duration
         laps.append(Lap(startTime: startTime))
         laps.last?.status = PeriodStatus.active
@@ -67,7 +71,9 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     }
   
     func start() {
-        lastPollTime = Date()
+        let now = Date()
+        lastPollTime = now
+        createDate = now
         status = PeriodStatus.active
         
         newLap(startTime: lastPollTime)
@@ -107,15 +113,15 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     }
     
     func reset() {
-        status = PeriodStatus.inactive
-        duration = TimeInterval(0)
-        laps = []
+        status = PeriodStatus.ended
+        self.resetCallback()
     }
     
     // MARK: — Codable
     private enum CoderKeys: String, CodingKey {
         case id
         case lastPollTime
+        case createDate
         case duration
         case status
         case laps
@@ -125,6 +131,7 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
         var container = encoder.container(keyedBy: CoderKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(lastPollTime, forKey: .lastPollTime)
+        try container.encode(createDate, forKey: .createDate)
         try container.encode(duration, forKey: .duration)
         try container.encode(status, forKey: .status)
         try container.encode(laps, forKey: .laps)
@@ -134,6 +141,7 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
         let values = try decoder.container(keyedBy: CoderKeys.self)
         id = try values.decode(UUID.self, forKey: .id)
         lastPollTime = try values.decode(Date.self, forKey: .lastPollTime)
+        createDate = try values.decode(Date.self, forKey: .createDate)
         duration = try values.decode(TimeInterval.self, forKey: .duration)
         status = try values.decode(PeriodStatus.self, forKey: .status)
         laps = try values.decode([Lap].self, forKey: .laps)

@@ -9,10 +9,41 @@ import Foundation
 
 class StopwatchesController: Codable, ObservableObject {
     @Published var stopwatches: [SingleStopWatch]
+    var pastStopwatches: [SingleStopWatch]
     private let dataFileName = "Stopwatches" // The archived file name, name saved to Documents folder.
     
     init() {
-        self.stopwatches = [SingleStopWatch()]
+        self.stopwatches = [SingleStopWatch()] // no resetCallback on this one...
+        self.pastStopwatches = []
+    }
+    
+    func resetCallback() {
+        for s in stopwatches {
+            if s.status == PeriodStatus.ended {
+                pastStopwatches.append(s)
+            }
+        }
+        
+        pastStopwatches.sort() { lhs, rhs in
+            return lhs.createDate > rhs.createDate
+        }
+    
+        stopwatches = stopwatches.map { s in
+            if s.status != PeriodStatus.ended {
+                return s
+            } else {
+                let newStopwatch = SingleStopWatch()
+                newStopwatch.resetCallback = {self.resetCallback()}
+                return newStopwatch
+            }
+        }
+        
+    }
+    
+    func newStopwatch() {
+        let s = SingleStopWatch()
+        s.resetCallback = {self.resetCallback()}
+        self.stopwatches.append(s)
     }
     
     func startAllTimers() {
@@ -24,16 +55,19 @@ class StopwatchesController: Codable, ObservableObject {
     // MARK: — Codable
     private enum CoderKeys: String, CodingKey {
         case stopwatches
+        case pastStopwatches
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CoderKeys.self)
         try container.encode(stopwatches, forKey: .stopwatches)
+        try container.encode(pastStopwatches, forKey: .pastStopwatches)
     }
     
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CoderKeys.self)
         stopwatches = try values.decode([SingleStopWatch].self, forKey: .stopwatches)
+        pastStopwatches = try values.decode([SingleStopWatch].self, forKey: .pastStopwatches)
     }
     
     private func documentsDirectory() -> URL {
@@ -49,7 +83,7 @@ class StopwatchesController: Codable, ObservableObject {
 
     func save() {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(stopwatches) {
+        if let encoded = try? encoder.encode(["stopwatches": stopwatches, "pastStopwatches": pastStopwatches]) {
             do {
                 // Save the 'Stopwatches' data file to the Documents directory.
                 try encoded.write(to: dataModelURL())
@@ -59,22 +93,32 @@ class StopwatchesController: Codable, ObservableObject {
         }
     }
     
-    func loadStopwatches(completion: @escaping (Result<[SingleStopWatch], Error>) -> Void) {
+    func loadStopwatches(completion: @escaping (Result<[String: [SingleStopWatch]], Error>) -> Void) {
+        // MARK: Uncomment this block to reset the saved on-disk stopwatches
+//        DispatchQueue.main.async {
+//            let firstStopwatch = SingleStopWatch()
+//            firstStopwatch.resetCallback = {self.resetCallback()}
+//            completion(.success(["stopwatches": [firstStopwatch], "pastStopwatches": []]))
+//        }
+
+
         DispatchQueue.global(qos: .background).async {
             do {
                 let fileURL = self.dataModelURL()
                 // If loading fails
                 guard let file = try? FileHandle(forReadingFrom: fileURL) else {
                     DispatchQueue.main.async {
-                        completion(.success([SingleStopWatch()]))
+                        let firstStopwatch = SingleStopWatch()
+                        firstStopwatch.resetCallback = {self.resetCallback()}
+                        completion(.success(["stopwatches": [firstStopwatch], "pastStopwatches": []]))
                     }
                     return
                 }
 
                 // Successful loading
-                let loadedStopwatches = try JSONDecoder().decode([SingleStopWatch].self, from: file.availableData)
+                let results = try JSONDecoder().decode([String: [SingleStopWatch]].self, from: file.availableData)
                 DispatchQueue.main.async {
-                    completion(.success(loadedStopwatches))
+                    completion(.success(results))
                 }
             } catch {
                 DispatchQueue.main.async {

@@ -16,9 +16,20 @@ struct MultipleStopWatchView: View {
     
     var body: some View {
         VStack (alignment: .leading) {
+            if stopwatch.status != PeriodStatus.inactive {
+                Text("Started at \(stopwatch.createDate.formatted())")
+                .font(.system(size: 15, weight: .regular , design: .monospaced))
+                .minimumScaleFactor(0.01)
+            } else {
+                Text(" ")
+                .font(.system(size: 15, weight: .regular , design: .monospaced))
+                .minimumScaleFactor(0.01)
+            }
+            
             Text(stopwatch.displayFormatted)
             .font(.system(size: 50, weight: .regular , design: .monospaced))
             .minimumScaleFactor(0.01)
+            
             Text("\(stopwatch.laps.count) laps")
                 .font(Font.monospaced(.system(size: secondaryTextSize))())
                 .padding(.leading, 7)
