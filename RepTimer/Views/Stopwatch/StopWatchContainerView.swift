@@ -13,6 +13,7 @@ struct StopWatchContainerView: View {
     @State var isDetailPopupShowing = false
     @State var popoverStopwatchIdx = 0
     @State var isHistoryPopupShowing = false
+    let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
     var body: some View {
         VStack (alignment: .trailing) {
@@ -22,6 +23,7 @@ struct StopWatchContainerView: View {
                 }
                 Button(action: {
                     controller.newStopwatch()
+                    haptic.impactOccurred()
                 }) {
                     Image(systemName: "plus.circle")
                 }

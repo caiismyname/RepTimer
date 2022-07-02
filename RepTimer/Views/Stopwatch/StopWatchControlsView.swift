@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-
 struct StopWatchControlsView: View {
     @ObservedObject var stopwatch: SingleStopWatch
     let buttonPadding = CGFloat(10)
+    let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
     var body: some View {
         if stopwatch.status == PeriodStatus.inactive {
@@ -25,7 +25,10 @@ struct StopWatchControlsView: View {
                     .foregroundColor(Color.white)
                     .background(Color.red)
                     .cornerRadius(12)
-                Button(action: {stopwatch.start()}) {
+                Button(action: {
+                    stopwatch.start()
+                    haptic.impactOccurred()
+                }) {
                     Text("Start").font(.system(size:20))
                         .frame(maxWidth: .infinity)
                 }
@@ -40,7 +43,10 @@ struct StopWatchControlsView: View {
         } else if stopwatch.status == PeriodStatus.active {
             HStack {
                 Spacer()
-                Button(action: {stopwatch.newLap()}) {
+                Button(action: {
+                    stopwatch.newLap()
+                    haptic.impactOccurred()
+                }) {
                     Text("Lap").font(.system(size:20))
                         .frame(maxWidth: .infinity)
                 }
@@ -48,7 +54,10 @@ struct StopWatchControlsView: View {
                     .foregroundColor(Color.black)
                     .background(Color.white)
                     .cornerRadius(12)
-                Button(action: {stopwatch.pause()}) {
+                Button(action: {
+                    stopwatch.pause()
+                    haptic.impactOccurred()
+                }) {
                     Text("Pause").font(.system(size:20))
                         .frame(maxWidth: .infinity)
                 }
@@ -63,7 +72,10 @@ struct StopWatchControlsView: View {
         } else if stopwatch.status == PeriodStatus.paused {
             HStack {
                 Spacer()
-                Button(action: {stopwatch.reset()}) {
+                Button(action: {
+                    stopwatch.reset()
+                    haptic.impactOccurred()
+                }) {
                     Text("Reset").font(.system(size:20))
                         .frame(maxWidth: .infinity)
                 }
@@ -71,7 +83,10 @@ struct StopWatchControlsView: View {
                     .foregroundColor(Color.white)
                     .background(Color.red)
                     .cornerRadius(12)
-                Button(action: {stopwatch.resume()}) {
+                Button(action: {
+                    stopwatch.resume()
+                    haptic.impactOccurred()
+                }) {
                     Text("Resume").font(.system(size:20))
                         .frame(maxWidth: .infinity)
                 }
