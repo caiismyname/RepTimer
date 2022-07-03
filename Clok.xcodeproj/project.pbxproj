@@ -64,7 +64,7 @@
 		270304162858097500763C06 /* TimerContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerContainerView.swift; sourceTree = "<group>"; };
 		27096B52284CF471007E7FB6 /* PeriodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodModel.swift; sourceTree = "<group>"; };
 		27096B54284D06CC007E7FB6 /* LapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LapModel.swift; sourceTree = "<group>"; };
-		271B600B2845220D00BA0F5D /* RepTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		271B600B2845220D00BA0F5D /* Clok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		271B600E2845220D00BA0F5D /* RepTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTimerApp.swift; sourceTree = "<group>"; };
 		271B60102845220D00BA0F5D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		271B60122845220E00BA0F5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 		271B60022845220D00BA0F5D = {
 			isa = PBXGroup;
 			children = (
-				271B600D2845220D00BA0F5D /* RepTimer */,
+				271B600D2845220D00BA0F5D /* clok */,
 				271B601E2845220E00BA0F5D /* RepTimerTests */,
 				271B60282845220E00BA0F5D /* RepTimerUITests */,
 				271B600C2845220D00BA0F5D /* Products */,
@@ -155,14 +155,14 @@
 		271B600C2845220D00BA0F5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				271B600B2845220D00BA0F5D /* RepTimer.app */,
+				271B600B2845220D00BA0F5D /* Clok.app */,
 				271B601B2845220E00BA0F5D /* RepTimerTests.xctest */,
 				271B60252845220E00BA0F5D /* RepTimerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		271B600D2845220D00BA0F5D /* RepTimer */ = {
+		271B600D2845220D00BA0F5D /* clok */ = {
 			isa = PBXGroup;
 			children = (
 				27E3F73B2867A0E500DECF15 /* done.caf */,
@@ -173,7 +173,7 @@
 				271B60122845220E00BA0F5D /* Assets.xcassets */,
 				271B60142845220E00BA0F5D /* Preview Content */,
 			);
-			path = RepTimer;
+			path = clok;
 			sourceTree = "<group>";
 		};
 		271B60142845220E00BA0F5D /* Preview Content */ = {
@@ -288,7 +288,7 @@
 			);
 			name = RepTimer;
 			productName = RepTimer;
-			productReference = 271B600B2845220D00BA0F5D /* RepTimer.app */;
+			productReference = 271B600B2845220D00BA0F5D /* Clok.app */;
 			productType = "com.apple.product-type.application";
 		};
 		271B601A2845220E00BA0F5D /* RepTimerTests */ = {
@@ -350,7 +350,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 271B60062845220D00BA0F5D /* Build configuration list for PBXProject "RepTimer" */;
+			buildConfigurationList = 271B60062845220D00BA0F5D /* Build configuration list for PBXProject "Clok" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -582,10 +582,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"RepTimer/Preview Content\"";
-				DEVELOPMENT_TEAM = 9UR2WR6VNL;
+				DEVELOPMENT_ASSET_PATHS = "\"clok/Preview Content\"";
+				DEVELOPMENT_TEAM = 365K6R64X6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -600,11 +601,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = caiismyname.RepTimer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.caiismyname.apps.ios.clok;
+				PRODUCT_NAME = Clok;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -613,10 +615,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"RepTimer/Preview Content\"";
-				DEVELOPMENT_TEAM = 9UR2WR6VNL;
+				DEVELOPMENT_ASSET_PATHS = "\"clok/Preview Content\"";
+				DEVELOPMENT_TEAM = 365K6R64X6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -631,11 +634,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = caiismyname.RepTimer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.caiismyname.apps.ios.clok;
+				PRODUCT_NAME = Clok;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -714,7 +718,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		271B60062845220D00BA0F5D /* Build configuration list for PBXProject "RepTimer" */ = {
+		271B60062845220D00BA0F5D /* Build configuration list for PBXProject "Clok" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				271B602D2845220E00BA0F5D /* Debug */,

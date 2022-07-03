@@ -10,8 +10,8 @@ import SwiftUI
 
 struct StopWatchContainerView: View {
     @ObservedObject var controller: StopwatchesController
-    @State var isDetailPopupShowing = false
-    @State var popoverStopwatchIdx = 0
+//    @State var isDetailPopupShowing = false
+//    @State var popoverStopwatchIdx = controller.isDetailPopupShowing
     @State var isHistoryPopupShowing = false
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
@@ -43,8 +43,8 @@ struct StopWatchContainerView: View {
                         MultipleStopWatchView(stopwatch: controller.stopwatches[idx])
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            self.popoverStopwatchIdx = idx
-                            self.isDetailPopupShowing = true
+                            controller.popoverStopwatchIdx = idx
+                            controller.isDetailPopupShowing = true
                         }
                     }
                     .onDelete { indexSet in
@@ -53,8 +53,8 @@ struct StopWatchContainerView: View {
                     }
                 }
                 .listStyle(.plain)
-                .popover(isPresented: self.$isDetailPopupShowing) {
-                    SingleStopWatchView(stopwatch: controller.stopwatches[popoverStopwatchIdx])
+                .popover(isPresented: $controller.isDetailPopupShowing) {
+                    SingleStopWatchView(stopwatch: controller.stopwatches[controller.popoverStopwatchIdx])
                     .padding()
                 }
             }

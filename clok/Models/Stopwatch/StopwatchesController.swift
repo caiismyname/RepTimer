@@ -6,15 +6,36 @@
 //
 
 import Foundation
+import UIKit
 
 class StopwatchesController: Codable, ObservableObject {
     @Published var stopwatches: [SingleStopWatch]
     var pastStopwatches: [SingleStopWatch]
+    @Published var isDetailPopupShowing = false
+    @Published var popoverStopwatchIdx = 0
     private let dataFileName = "Stopwatches" // The archived file name, name saved to Documents folder.
     
     init() {
         self.stopwatches = [SingleStopWatch()] // no resetCallback on this one...
         self.pastStopwatches = []
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(screenshotHandler), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+    }
+    
+    @objc func screenshotHandler() {
+        if isDetailPopupShowing && stopwatches[popoverStopwatchIdx].status == PeriodStatus.active {
+            stopwatches[popoverStopwatchIdx].newLap()
+            return
+        }
+        
+        if stopwatches.count == 1 {
+            guard let s = stopwatches.first else {
+                return
+            }
+            if s.status == PeriodStatus.active {
+                s.newLap()
+            }
+        }
     }
     
     func resetCallback() {
