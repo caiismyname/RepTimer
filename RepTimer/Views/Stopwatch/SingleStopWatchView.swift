@@ -84,6 +84,7 @@ struct SingleStopWatchView: View {
             .font(.system(size: 20, weight: .regular , design: .monospaced))
             .minimumScaleFactor(0.01)
             .padding([.leading, .trailing], 15)
+            
             StopWatchControlsView(stopwatch: stopwatch)
             Spacer()
         }

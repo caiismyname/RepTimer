@@ -24,20 +24,17 @@ class StopwatchesController: Codable, ObservableObject {
             }
         }
         
-        pastStopwatches.sort() { lhs, rhs in
-            return lhs.createDate > rhs.createDate
-        }
-    
-        stopwatches = stopwatches.map { s in
-            if s.status != PeriodStatus.ended {
-                return s
+        pastStopwatchMaintenance()
+       
+        stopwatches = stopwatches.map {
+            if $0.status != PeriodStatus.ended {
+                return $0
             } else {
                 let newStopwatch = SingleStopWatch()
                 newStopwatch.resetCallback = {self.resetCallback()}
                 return newStopwatch
             }
         }
-        
     }
     
     func newStopwatch() {
@@ -49,6 +46,22 @@ class StopwatchesController: Codable, ObservableObject {
     func startAllTimers() {
         for stopwatch in stopwatches {
             stopwatch.startTimer()
+        }
+    }
+    
+    func pastStopwatchMaintenance() {
+        pastStopwatches.sort() { lhs, rhs in
+            return lhs.createDate > rhs.createDate
+        }
+        
+        if pastStopwatches.count > 20 {
+            pastStopwatches = pastStopwatches.dropLast(pastStopwatches.count - 20)
+        }
+    }
+    
+    func setAllResetCallbacks() {
+        for stopwatch in stopwatches {
+            stopwatch.resetCallback = {self.resetCallback()}
         }
     }
     
