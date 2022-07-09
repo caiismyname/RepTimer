@@ -24,25 +24,19 @@ struct StopWatchContainerView: View {
                     if !isScreenLocked {
                         isSettingsPopupShowing = true
                     }
-                }) {
-                    Image(systemName: "gearshape.circle")
-                }
-                Spacer()
+                }) {Image(systemName: "gearshape.circle")}
                 Button(action: {
                     if !isScreenLocked {
                         isHistoryPopupShowing = true
                     }
-                }) {
-                    Image(systemName: "list.bullet.circle")
-                }
+                }) {Image(systemName: "list.bullet.circle")}
+                Spacer()
                 Button(action: {
                     if !isScreenLocked {
                         controller.newStopwatch()
                         haptic.impactOccurred()
                     }
-                }) {
-                    Image(systemName: "plus.circle")
-                }
+                }) {Image(systemName: "plus.circle")}
             }
             .font(.system(size: 35))
             .padding(10)
