@@ -10,30 +10,51 @@ import SwiftUI
 
 struct StopWatchContainerView: View {
     @ObservedObject var controller: StopwatchesController
-//    @State var isDetailPopupShowing = false
-//    @State var popoverStopwatchIdx = controller.isDetailPopupShowing
+    @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLocked: Bool = false
+    @State var isSettingsPopupShowing = false
     @State var isHistoryPopupShowing = false
+    
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
+    let screenLockHaptic = UINotificationFeedbackGenerator()
 
     var body: some View {
         VStack (alignment: .trailing) {
             HStack {
-                Button(action: {isHistoryPopupShowing = true}) {
+                Button(action: {
+                    if !isScreenLocked {
+                        isSettingsPopupShowing = true
+                    }
+                }) {
+                    Image(systemName: "gearshape.circle")
+                }
+                Spacer()
+                Button(action: {
+                    if !isScreenLocked {
+                        isHistoryPopupShowing = true
+                    }
+                }) {
                     Image(systemName: "list.bullet.circle")
                 }
                 Button(action: {
-                    controller.newStopwatch()
-                    haptic.impactOccurred()
+                    if !isScreenLocked {
+                        controller.newStopwatch()
+                        haptic.impactOccurred()
+                    }
                 }) {
                     Image(systemName: "plus.circle")
                 }
             }
             .font(.system(size: 35))
-            .padding(.trailing, 20)
+            .padding(10)
             .popover(isPresented: self.$isHistoryPopupShowing) {
                 StopWatchHistoryView(controller: controller)
                 .padding()
             }
+            .popover(isPresented: self.$isSettingsPopupShowing) {
+                StopwatchSettingsView()
+                .padding()
+            }
+            
 
             if (controller.stopwatches.count == 1) {
                 SingleStopWatchView(stopwatch: controller.stopwatches[0])
@@ -43,13 +64,17 @@ struct StopWatchContainerView: View {
                         MultipleStopWatchView(stopwatch: controller.stopwatches[idx])
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            controller.popoverStopwatchIdx = idx
-                            controller.isDetailPopupShowing = true
+                            if !isScreenLocked {
+                                controller.popoverStopwatchIdx = idx
+                                controller.isDetailPopupShowing = true
+                            }
                         }
                     }
                     .onDelete { indexSet in
-                        controller.stopwatches[indexSet.first!].reset() // using .first because there should only be one value in the indexSet
-                        controller.stopwatches.remove(atOffsets: indexSet)
+                        if !isScreenLocked {
+                            controller.stopwatches[indexSet.first!].reset() // using .first because there should only be one value in the indexSet
+                            controller.stopwatches.remove(atOffsets: indexSet)
+                        }
                     }
                 }
                 .listStyle(.plain)
@@ -59,6 +84,16 @@ struct StopWatchContainerView: View {
                 }
             }
         }
+        .overlay(isScreenLocked ? RoundedRectangle(cornerRadius: 20).stroke(Color.red, lineWidth: 2) : nil)
+        .onTapGesture(count: 5, perform: {
+            isScreenLocked = !isScreenLocked
+            screenLockHaptic.notificationOccurred(.error)
+            if isScreenLocked {
+                UIApplication.shared.isIdleTimerDisabled = true
+            } else {
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        })
     }
 }
 

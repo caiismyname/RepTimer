@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StopWatchControlsView: View {
     @ObservedObject var stopwatch: SingleStopWatch
+    @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLock: Bool = false
     let buttonPadding = CGFloat(10)
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
 
@@ -26,8 +27,10 @@ struct StopWatchControlsView: View {
                     .background(Color.red)
                     .cornerRadius(12)
                 Button(action: {
-                    stopwatch.start()
-                    haptic.impactOccurred()
+                    if !isScreenLock {
+                        stopwatch.start()
+                        haptic.impactOccurred()
+                    }
                 }) {
                     Text("Start").font(.system(size:20))
                         .frame(maxWidth: .infinity)
@@ -44,8 +47,10 @@ struct StopWatchControlsView: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    stopwatch.newLap()
-                    haptic.impactOccurred()
+                    if !isScreenLock {
+                        stopwatch.newLap()
+                        haptic.impactOccurred()
+                    }
                 }) {
                     Text("Lap").font(.system(size:20))
                         .frame(maxWidth: .infinity)
@@ -55,8 +60,10 @@ struct StopWatchControlsView: View {
                     .background(Color.white)
                     .cornerRadius(12)
                 Button(action: {
-                    stopwatch.pause()
-                    haptic.impactOccurred()
+                    if !isScreenLock {
+                        stopwatch.pause()
+                        haptic.impactOccurred()
+                    }
                 }) {
                     Text("Pause").font(.system(size:20))
                         .frame(maxWidth: .infinity)
@@ -73,8 +80,10 @@ struct StopWatchControlsView: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    stopwatch.reset()
-                    haptic.impactOccurred()
+                    if !isScreenLock {
+                        stopwatch.reset()
+                        haptic.impactOccurred()
+                    }
                 }) {
                     Text("Reset").font(.system(size:20))
                         .frame(maxWidth: .infinity)
@@ -84,8 +93,10 @@ struct StopWatchControlsView: View {
                     .background(Color.red)
                     .cornerRadius(12)
                 Button(action: {
-                    stopwatch.resume()
-                    haptic.impactOccurred()
+                    if !isScreenLock {
+                        stopwatch.resume()
+                        haptic.impactOccurred()
+                    }
                 }) {
                     Text("Resume").font(.system(size:20))
                         .frame(maxWidth: .infinity)

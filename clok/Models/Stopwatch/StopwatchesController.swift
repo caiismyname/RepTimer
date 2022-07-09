@@ -14,6 +14,8 @@ class StopwatchesController: Codable, ObservableObject {
     @Published var isDetailPopupShowing = false
     @Published var popoverStopwatchIdx = 0
     private let dataFileName = "Stopwatches" // The archived file name, name saved to Documents folder.
+    let successHaptic = UINotificationFeedbackGenerator()
+    let defaults = UserDefaults.standard
     
     init() {
         self.stopwatches = [SingleStopWatch()] // no resetCallback on this one...
@@ -23,17 +25,28 @@ class StopwatchesController: Codable, ObservableObject {
     }
     
     @objc func screenshotHandler() {
-        if isDetailPopupShowing && stopwatches[popoverStopwatchIdx].status == PeriodStatus.active {
-            stopwatches[popoverStopwatchIdx].newLap()
+        guard defaults.bool(forKey: StopwatchSettings.LAP_VIA_SCREENSHOT.rawValue) else {
             return
         }
         
+        // Allow functionality if, out of multiple stopwatches, one is in detail view
+        if isDetailPopupShowing && stopwatches[popoverStopwatchIdx].status == PeriodStatus.active {
+            stopwatches[popoverStopwatchIdx].newLap()
+            successHaptic.notificationOccurred(.warning)
+            return
+        }
+        
+        // Allow functionality if there's only one stopwatch
         if stopwatches.count == 1 {
             guard let s = stopwatches.first else {
                 return
             }
-            if s.status == PeriodStatus.active {
+            if s.status == PeriodStatus.inactive {
+                s.start()
+                successHaptic.notificationOccurred(.warning)
+            } else if s.status == PeriodStatus.active {
                 s.newLap()
+                successHaptic.notificationOccurred(.warning)
             }
         }
     }

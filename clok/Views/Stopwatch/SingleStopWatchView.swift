@@ -37,7 +37,7 @@ struct SingleStopWatchView: View {
                     .minimumScaleFactor(0.01)
                     .padding(.leading, 8)
                 }
-            } else { // Historial view
+            } else { // Historical view
                 // Start datetime
                 Text(stopwatch.createDate.formatted())
                 .font(.system(size: 25, weight: .regular , design: .monospaced))
@@ -97,9 +97,9 @@ struct RepTimeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             SingleStopWatchView(stopwatch: SingleStopWatch())
-                .previewInterfaceOrientation(.portrait)
+//                .previewInterfaceOrientation(.portrait)
                 .previewDevice("iPhone 8")
-                .preferredColorScheme(.dark)
+//                .preferredColorScheme(.dark)
         }
     }
 }
