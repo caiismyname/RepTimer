@@ -49,7 +49,7 @@ class SingleTimer: ObservableObject {
         RunLoop.main.add(timer, forMode: .common)
         
         // Temp for ease of building
-        start()
+//        start()
     }
     
     @objc func update() throws {

@@ -12,12 +12,10 @@ struct ContentView: View {
     @ObservedObject var stopwatchesController: StopwatchesController
     
     var body: some View {
-//        TabContainerView(
-//            timelineController: timelineController,
-//            stopwatchesController: stopwatchesController
-//        )
-//        .preferredColorScheme(.dark)
-        StopWatchContainerView(controller: stopwatchesController)
+        TabContainerView(
+            timelineController: timelineController,
+            stopwatchesController: stopwatchesController
+        )
         .preferredColorScheme(.dark)
     }
 }

@@ -19,10 +19,9 @@ class DownUpTimer: ObservableObject {
     @Published var timer = SingleTimer(timeRemaining: 100, name: "")
     @Published var stopwatch = SingleStopWatch()
     @Published var status = DownUpTimerStatus.inactive
-    @Published var timerDuration: TimeInterval
+    @Published var timerDuration = 0.0
     
-    init(timerDuration: TimeInterval) {
-        self.timerDuration = timerDuration
+    init() {
         timer = SingleTimer(timeRemaining: timerDuration, name: "")
         timer.doneCallback = {self.doneTimerCallback()}
     }

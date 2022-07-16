@@ -11,22 +11,27 @@ import SwiftUI
 struct TabContainerView: View {
     @ObservedObject var timelineController: TimelineController
     @ObservedObject var stopwatchesController: StopwatchesController
+    @StateObject var downUpTimerController = DownUpTimer()
     
     var body: some View {
         TabView {
             StopWatchContainerView(controller: stopwatchesController)
             .tabItem {
                 Image(systemName: "stopwatch")
-                .font(.system(size: 30))
                 Text("Stopwatch")
             }
-            TimerContainerView(timelineController: timelineController)
-            .tabItem {
-                Image(systemName: "timer")
-                .font(.system(size: 30))
-                Text("Timer")
-            }
+//            TimerContainerView(timelineController: timelineController)
+//            .tabItem {
+//                Image(systemName: "timer")
+//                Text("Timers")
+//            }
+            DownUpTimerView(controller: downUpTimerController)
+                .tabItem {
+                    Image(systemName: "arrow.counterclockwise.circle")
+                    Text("Repeat TImer")
+                }
         }
+        .font(.system(size: 30))
     }
 }
 
@@ -40,6 +45,7 @@ struct TabView_Previews: PreviewProvider {
                 stopwatchesController: stopwatchesController
             )
             .previewInterfaceOrientation(.portrait)
+            .preferredColorScheme(.dark)
             .previewDevice("iPhone 13 Pro")
         }
     }
