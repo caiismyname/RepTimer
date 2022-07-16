@@ -13,13 +13,15 @@ struct StopWatchControlsView: View {
     @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLock: Bool = false
     let buttonPadding = CGFloat(10)
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
+    let fontSize = 30.0
 
     var body: some View {
         if stopwatch.status == PeriodStatus.inactive {
             HStack {
                 Spacer()
                 Button(action: {}) {
-                    Text("Reset").font(.system(size:20))
+                    Image(systemName: "trash")
+                        .font(.system(size: fontSize))
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)
@@ -32,7 +34,8 @@ struct StopWatchControlsView: View {
                         haptic.impactOccurred()
                     }
                 }) {
-                    Text("Start").font(.system(size:20))
+                    Image(systemName: "play.fill")
+                        .font(.system(size: fontSize))
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)
@@ -52,7 +55,8 @@ struct StopWatchControlsView: View {
                         haptic.impactOccurred()
                     }
                 }) {
-                    Text("Lap").font(.system(size:20))
+                    Image(systemName: "flag.2.crossed")
+                        .font(.system(size: fontSize))
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)
@@ -65,7 +69,8 @@ struct StopWatchControlsView: View {
                         haptic.impactOccurred()
                     }
                 }) {
-                    Text("Pause").font(.system(size:20))
+                    Image(systemName: "pause.fill")
+                        .font(.system(size: fontSize))
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)
@@ -85,7 +90,8 @@ struct StopWatchControlsView: View {
                         haptic.impactOccurred()
                     }
                 }) {
-                    Text("Reset").font(.system(size:20))
+                    Image(systemName: "trash")
+                        .font(.system(size: fontSize))
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)
@@ -98,7 +104,8 @@ struct StopWatchControlsView: View {
                         haptic.impactOccurred()
                     }
                 }) {
-                    Text("Resume").font(.system(size:20))
+                    Image(systemName: "play.fill")
+                        .font(.system(size: fontSize))
                         .frame(maxWidth: .infinity)
                 }
                     .padding(buttonPadding)

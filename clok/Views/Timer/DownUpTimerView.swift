@@ -19,18 +19,12 @@ struct DownUpTimerView: View {
                 HStack {
                     if controller.status == DownUpTimerStatus.inactive {
                         Text("\(keyboard.value.formattedTimeNoMilliNoLeadingZero)")
-                    } else if controller.status == DownUpTimerStatus.counting_down {
-                        Image(systemName: "arrow.down.circle.fill")
-                    } else if controller.status == DownUpTimerStatus.counting_up {
-                        Image(systemName: "arrow.up.circle")
                     }
                 }
                 .font(Font.monospaced(.system(size: 80))())
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
                 .padding()
-                
-                Spacer()
                 
                 // Input keyboard / visualization
                 if controller.status == DownUpTimerStatus.inactive {
@@ -118,9 +112,10 @@ struct DUVisualization: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @ObservedObject var duModel: DownUpTimer
     let circleWidth = 20.0
+    let fontSize = 80.0
     
     var body: some View {
-        Group {
+        GeometryReader { gp in
             ZStack {
                 Circle().stroke(Color.gray, lineWidth: circleWidth)
                 Circle()
@@ -134,9 +129,17 @@ struct DUVisualization: View {
                     DUStopwatchView(model: stopwatch)
                     .padding()
                 }
+                
+                if duModel.status == DownUpTimerStatus.counting_down {
+                    Image(systemName: "arrow.down.circle.fill")
+                    .position(x: fontSize / 2, y: fontSize / 2)
+                } else if duModel.status == DownUpTimerStatus.counting_up {
+                    Image(systemName: "arrow.up.circle")
+                    .position(x: fontSize / 2, y: fontSize / 2)
+                }
             }
         }
-        .font(Font.monospaced(.system(size: 80))())
+        .font(Font.monospaced(.system(size: fontSize))())
         .minimumScaleFactor(0.1)
     }
 }

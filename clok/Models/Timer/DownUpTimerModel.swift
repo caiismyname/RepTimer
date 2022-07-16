@@ -51,7 +51,6 @@ class DownUpTimer: ObservableObject {
     }
     
     func doneTimerCallback() {
-        print("DownUpTimer callback called")
         self.status = DownUpTimerStatus.counting_up
         stopwatch.start()
     }
