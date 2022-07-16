@@ -20,19 +20,23 @@ struct MultipleStopWatchView: View {
                 Text("Started at \(stopwatch.createDate.formatted())")
                 .font(.system(size: 15, weight: .regular , design: .monospaced))
                 .minimumScaleFactor(0.01)
+                .lineLimit(1)
             } else {
                 Text(" ")
                 .font(.system(size: 15, weight: .regular , design: .monospaced))
                 .minimumScaleFactor(0.01)
+                .lineLimit(1)
             }
             
             Text(stopwatch.displayFormatted)
             .font(.system(size: 50, weight: .regular , design: .monospaced))
             .minimumScaleFactor(0.01)
+            .lineLimit(1)
             
             Text("\(stopwatch.laps.count) laps")
                 .font(Font.monospaced(.system(size: secondaryTextSize))())
                 .padding(.leading, 7)
+                .lineLimit(1)
             StopWatchControlsView(stopwatch: stopwatch)
         }
     }

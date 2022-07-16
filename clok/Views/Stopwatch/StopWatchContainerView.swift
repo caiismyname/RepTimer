@@ -64,7 +64,8 @@ struct StopWatchContainerView: View {
                             }
                         }
                     }
-                    .onDelete { indexSet in
+                    .onDelete
+                    { indexSet in
                         if !isScreenLocked {
                             controller.stopwatches[indexSet.first!].reset() // using .first because there should only be one value in the indexSet
                             controller.stopwatches.remove(atOffsets: indexSet)

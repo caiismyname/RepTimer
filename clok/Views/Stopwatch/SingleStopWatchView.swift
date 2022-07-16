@@ -30,11 +30,13 @@ struct SingleStopWatchView: View {
                     Text(lap.displayFormatted)
                     .font(Font.monospaced(.system(size: 70))())
                     .minimumScaleFactor(0.01)
+                    .lineLimit(1)
                     .padding(.leading, 8)
                 } else {
                     Text("00:00.00")
                     .font(.system(size: 70, weight: .regular , design: .monospaced))
                     .minimumScaleFactor(0.01)
+                    .lineLimit(1)
                     .padding(.leading, 8)
                 }
             } else { // Historical view
@@ -42,12 +44,14 @@ struct SingleStopWatchView: View {
                 Text(stopwatch.createDate.formatted())
                 .font(.system(size: 25, weight: .regular , design: .monospaced))
                 .minimumScaleFactor(0.1)
+                .lineLimit(1)
                 .padding(.leading, 10)
                 
                 // Total time
                 Text(stopwatch.duration.formattedTimeTwoMilliLeadingZero)
                 .font(Font.monospaced(.system(size: 70))())
                 .minimumScaleFactor(0.1)
+                .lineLimit(1)
                 .padding(.leading, 8)
             }
             
@@ -99,7 +103,7 @@ struct RepTimeView_Previews: PreviewProvider {
             SingleStopWatchView(stopwatch: SingleStopWatch())
 //                .previewInterfaceOrientation(.portrait)
                 .previewDevice("iPhone 8")
-//                .preferredColorScheme(.dark)
+                .preferredColorScheme(.dark)
         }
     }
 }

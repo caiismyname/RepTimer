@@ -27,7 +27,10 @@ struct DownUpTimerView: View {
                 }
                 .font(Font.monospaced(.system(size: 80))())
                 .minimumScaleFactor(0.1)
+                .lineLimit(1)
                 .padding()
+                
+                Spacer()
                 
                 // Input keyboard / visualization
                 if controller.status == DownUpTimerStatus.inactive {
@@ -49,13 +52,17 @@ struct DownUpTimerView: View {
 struct DUControlsView: View {
     @ObservedObject var controller: DownUpTimer
     @ObservedObject var keyboard: TimeInputKeyboardModel
+    let haptic = UIImpactFeedbackGenerator(style: .heavy)
     var outerHeight: Double
     var outerWidth: Double
     
     var body: some View {
         HStack {
             if controller.status != DownUpTimerStatus.inactive {
-                Button(action: {controller.stop()}) {
+                Button(action: {
+                    controller.stop()
+                    haptic.impactOccurred()
+                }) {
                     Image(systemName: "stop.circle")
                 }
                 .frame(maxWidth: outerWidth / 10, maxHeight: outerHeight / 9)
@@ -71,6 +78,7 @@ struct DUControlsView: View {
                     controller.timerDuration = keyboard.value
                 }
                 controller.reset()
+                haptic.impactOccurred()
             }) {
                 Image(systemName:
                     controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.counterclockwise.circle"
@@ -92,6 +100,7 @@ struct DUTimerView: View {
     
     var body: some View {
         Text(model.timeRemaining.formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond)
+        .lineLimit(1)
     }
 }
 
@@ -100,6 +109,7 @@ struct DUStopwatchView: View {
     
     var body: some View {
         Text(model.duration.formattedTimeNoMilliNoLeadingZero)
+        .lineLimit(1)
     }
 }
 
@@ -119,8 +129,10 @@ struct DUVisualization: View {
                     .rotationEffect(Angle(degrees: 270.0))
                 if duModel.status == DownUpTimerStatus.counting_down {
                     DUTimerView(model: timer)
+                    .padding()
                 } else if duModel.status == DownUpTimerStatus.counting_up {
                     DUStopwatchView(model: stopwatch)
+                    .padding()
                 }
             }
         }
