@@ -52,7 +52,11 @@ extension TimeInterval {
     
     var formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond: String {
         let displayHours = self.hours == 0 ? "" : String(self.hours) + ":"
-        return displayHours + String(self.minutes) + ":" + (self.seconds + 1).withLeadingZero
+        return displayHours +
+        String(self.seconds == 59 ? self.minutes + 1 : self.minutes)
+        + ":" +
+        (self.miliseconds == 0 ? self.seconds :
+            self.seconds == 59 ? 0 : self.seconds + 1).withLeadingZero
     }
 }
 

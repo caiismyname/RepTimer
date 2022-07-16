@@ -112,6 +112,7 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
         }
     }
     
+    // Doesn't actually clear the stopwatch, just triggers the reset handler. Built this way so the history page can save the stopwatch, then replace it in the list of active stopwatches
     func reset() {
         status = PeriodStatus.ended
         self.resetCallback()

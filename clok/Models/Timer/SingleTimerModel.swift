@@ -18,6 +18,8 @@ class SingleTimer: ObservableObject {
     let id: UUID = UUID()
     var name: String
     var avplayer: AVAudioPlayer? // This needs to be an instance var otherwise the player disappears before the audio finishes playing
+    var doneCallback = {}
+    var notifID: String = ""
     
     init(timeRemaining: TimeInterval, name: String) {
         self.timeRemaining = timeRemaining
@@ -46,7 +48,7 @@ class SingleTimer: ObservableObject {
         )
         RunLoop.main.add(timer, forMode: .common)
         
-        // Temp
+        // Temp for ease of building
         start()
     }
     
@@ -64,6 +66,8 @@ class SingleTimer: ObservableObject {
             
             // TODO: only play when in foreground — better solution might be to handle the notification when app is active
             avplayer!.play()
+            
+            self.doneCallback()
             
             return
         }
@@ -87,10 +91,10 @@ class SingleTimer: ObservableObject {
         content.categoryIdentifier = "TIMER_END"
         
         // Create the request
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        self.notifID = UUID().uuidString
+        let request = UNNotificationRequest(identifier: notifID, content: content, trigger: trigger)
         
-        print("notif id \(uuidString)")
+        print("notif id \(notifID)")
 
         // Schedule the request with the system.
 //        let notificationCenter = UNUserNotificationCenter.current()
@@ -104,14 +108,20 @@ class SingleTimer: ObservableObject {
         let center = UNUserNotificationCenter.current()
         print(center)
         center.add(request, withCompletionHandler: { x in print(x)})
-    }
-    
-    
+    }    
     
     func start() {
         lastPollTime = Date()
         setNotification()
         status = TimerStatus.active
+    }
+    
+    func stop() {
+        status = TimerStatus.inactive
+        // Remove notification
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notifID])
+        // Stop the cron
+        self.timer.invalidate()
     }
     
 //    func playEndSound() throws {
