@@ -11,6 +11,15 @@ class TimeInputKeyboardModel: ObservableObject {
     @Published var value: TimeInterval = TimeInterval(0)
     var input = Int(0)
     
+    init (value: Double = 0.0) {
+        setValue(value: value)
+    }
+    
+    func setValue(value: Double) {
+        self.value = value
+        self.input = Int(value)
+    }
+    
     func addDigit(digit: String) {
         switch digit {
         case "<":

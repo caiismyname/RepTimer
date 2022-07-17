@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var timelineController: TimelineController
+    @ObservedObject var timersController: TimersController
     @ObservedObject var stopwatchesController: StopwatchesController
     
     var body: some View {
         TabContainerView(
-            timelineController: timelineController,
+            timersController: timersController,
             stopwatchesController: stopwatchesController
         )
         .preferredColorScheme(.dark)
@@ -22,10 +22,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let timeline = TimelineController()
+        let timers = TimersController()
         let stopwatches = StopwatchesController()
         ContentView(
-            timelineController: timeline,
+            timersController: timers,
             stopwatchesController: stopwatches
         )
         .previewDevice("iPhone 13 Pro")

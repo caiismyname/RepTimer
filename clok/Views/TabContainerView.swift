@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 struct TabContainerView: View {
-    @ObservedObject var timelineController: TimelineController
+    @ObservedObject var timersController: TimersController
     @ObservedObject var stopwatchesController: StopwatchesController
-    @StateObject var downUpTimerController = DownUpTimer()
     
     var body: some View {
         TabView {
@@ -25,7 +24,7 @@ struct TabContainerView: View {
 //                Image(systemName: "timer")
 //                Text("Timers")
 //            }
-            DownUpTimerView(controller: downUpTimerController)
+            DownUpTimerView(controller: timersController.downupTimer)
                 .tabItem {
                     Image(systemName: "arrow.counterclockwise.circle")
                     Text("Repeat TImer")
@@ -37,11 +36,11 @@ struct TabContainerView: View {
 
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
-        let timelineController = TimelineController()
+        let timelineController = TimersController()
         let stopwatchesController = StopwatchesController()
         Group {
             TabContainerView(
-                timelineController: timelineController,
+                timersController: timelineController,
                 stopwatchesController: stopwatchesController
             )
             .previewInterfaceOrientation(.portrait)

@@ -9,13 +9,17 @@ import Foundation
 import UserNotifications
 import AVFoundation
 
-class SingleTimer: ObservableObject {
+class SingleTimer: ObservableObject, Codable {
     @Published var status: TimerStatus = TimerStatus.inactive
     @Published var timeRemaining: TimeInterval
     let duration: TimeInterval
+    var startTime = Date()
     var timer: Timer = Timer()
+    var scheduledEndTime: Date {
+        startTime + duration
+    }
     var lastPollTime = Date()
-    let id: UUID = UUID()
+    var id: UUID = UUID()
     var name: String
     var avplayer: AVAudioPlayer? // This needs to be an instance var otherwise the player disappears before the audio finishes playing
     var doneCallback = {}
@@ -39,14 +43,7 @@ class SingleTimer: ObservableObject {
             self.avplayer = nil
         }
         
-        timer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(0.03),
-            target: self,
-            selector: (#selector(update)),
-            userInfo: nil,
-            repeats: true
-        )
-        RunLoop.main.add(timer, forMode: .common)
+        startSystemTimer()
         
         // Temp for ease of building
 //        start()
@@ -57,6 +54,11 @@ class SingleTimer: ObservableObject {
         guard status == TimerStatus.active else {
             return
         }
+        
+        // Recalculate `timeRemaining`
+        let now = Date()
+        let delta = now.timeIntervalSince(lastPollTime)
+        timeRemaining -= delta
         
         // Timer is done
         guard timeRemaining > 0.05 else {
@@ -71,11 +73,6 @@ class SingleTimer: ObservableObject {
             
             return
         }
-        
-        // Recalculate `timeRemaining`
-        let now = Date()
-        let delta = now.timeIntervalSince(lastPollTime)
-        timeRemaining -= delta
         
         // Reset lastPollTime
         lastPollTime = now
@@ -111,9 +108,22 @@ class SingleTimer: ObservableObject {
     }    
     
     func start() {
-        lastPollTime = Date()
+        let now = Date()
+        lastPollTime = now
+        startTime = now
         setNotification()
         status = TimerStatus.active
+    }
+    
+    func startSystemTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: TimeInterval(0.03),
+            target: self,
+            selector: (#selector(update)),
+            userInfo: nil,
+            repeats: true
+        )
+        RunLoop.main.add(timer, forMode: .common)
     }
     
     func stop() {
@@ -131,6 +141,59 @@ class SingleTimer: ObservableObject {
 //            print("Audio failed")
 //        }
 //    }
+    
+    // MARK: — Codable
+    private enum CoderKeys: String, CodingKey {
+        case status
+        case timeRemaining
+        case startTime
+        case duration
+        case lastPollTime
+        case id
+        case name
+        case notifID
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CoderKeys.self)
+        try container.encode(status, forKey: .status)
+        try container.encode(timeRemaining, forKey: .timeRemaining)
+        try container.encode(startTime, forKey: .startTime)
+        try container.encode(duration, forKey: .duration)
+        try container.encode(lastPollTime, forKey: .lastPollTime)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(notifID, forKey: .notifID)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CoderKeys.self)
+        status = try values.decode(TimerStatus.self, forKey: .status)
+        timeRemaining = try values.decode(TimeInterval.self, forKey: .timeRemaining)
+        startTime = try values.decode(Date.self, forKey: .startTime)
+        duration = try values.decode(TimeInterval.self, forKey: .duration)
+        lastPollTime = try values.decode(Date.self, forKey: .lastPollTime)
+        id = try values.decode(UUID.self, forKey: .id)
+        name = try values.decode(String.self, forKey: .name)
+        notifID = try values.decode(String.self, forKey: .notifID)
+        
+        if status != TimerStatus.inactive {
+            startSystemTimer()
+        }
+        
+        // Set up audio player
+        do {
+            guard let soundFileURL = Bundle.main.path(forResource: "done", ofType: "caf") else {
+                print("no url")
+                return
+            }
+            self.avplayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: soundFileURL))
+        } catch {
+            print("audio player setup error")
+            
+            self.avplayer = nil
+        }
+    }
 }
 
 extension SingleTimer: Hashable {
@@ -143,7 +206,7 @@ extension SingleTimer: Hashable {
     }
 }
 
-enum TimerStatus {
+enum TimerStatus: Codable {
     case inactive
     case active
     case ended

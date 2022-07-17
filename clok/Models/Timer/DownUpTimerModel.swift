@@ -9,21 +9,22 @@ import Foundation
 import UserNotifications
 import AVFoundation
 
-enum DownUpTimerStatus {
+enum DownUpTimerStatus: Codable {
     case inactive
     case counting_down
     case counting_up
 }
 
-class DownUpTimer: ObservableObject {
+class DownUpTimer: ObservableObject, Codable {
     @Published var timer = SingleTimer(timeRemaining: 100, name: "")
     @Published var stopwatch = SingleStopWatch()
     @Published var status = DownUpTimerStatus.inactive
     @Published var timerDuration = 0.0
+    @Published var keyboard = TimeInputKeyboardModel(value: 0.0)
     
     init() {
         timer = SingleTimer(timeRemaining: timerDuration, name: "")
-        timer.doneCallback = {self.doneTimerCallback()}
+        setTimerCallback()
     }
     
     // Start and reset technically do the same thing
@@ -47,11 +48,60 @@ class DownUpTimer: ObservableObject {
     
     func initTimer() {
         timer = SingleTimer(timeRemaining: self.timerDuration, name: "")
-        timer.doneCallback = {self.doneTimerCallback()}
+        setTimerCallback()
     }
     
     func doneTimerCallback() {
         self.status = DownUpTimerStatus.counting_up
         stopwatch.start()
+    }
+    
+    func startSystemTimers() {
+        keyboard.setValue(value: timerDuration)
+        
+        guard self.status != DownUpTimerStatus.inactive else {
+            return
+        }
+        
+        if Date() > timer.scheduledEndTime {
+            if self.status == DownUpTimerStatus.counting_down {
+                self.status = DownUpTimerStatus.counting_up
+                self.stopwatch.start(startTime: timer.scheduledEndTime)
+            } else {
+                self.stopwatch.start()
+            }
+        } else {
+            self.status = DownUpTimerStatus.counting_down
+            setTimerCallback()
+            self.timer.startSystemTimer()
+        }
+    }
+    
+    func setTimerCallback() {
+        self.timer.doneCallback = {self.doneTimerCallback()}
+    }
+    
+    // MARK: — Codable
+    private enum CoderKeys: String, CodingKey {
+        case timer
+        case stopwatch
+        case status
+        case timerDuration
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CoderKeys.self)
+        try container.encode(timer, forKey: .timer)
+        try container.encode(stopwatch, forKey: .stopwatch)
+        try container.encode(status, forKey: .status)
+        try container.encode(timerDuration, forKey: .timerDuration)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CoderKeys.self)
+        timer = try values.decode(SingleTimer.self, forKey: .timer)
+        stopwatch = try values.decode(SingleStopWatch.self, forKey: .stopwatch)
+        status = try values.decode(DownUpTimerStatus.self, forKey: .status)
+        timerDuration = try values.decode(TimeInterval.self, forKey: .timerDuration)
     }
 }

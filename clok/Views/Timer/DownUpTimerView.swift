@@ -10,7 +10,6 @@ import SwiftUI
 
 struct DownUpTimerView: View {
     @ObservedObject var controller: DownUpTimer
-    @StateObject var keyboard = TimeInputKeyboardModel()
     
     var body: some View {
         GeometryReader {geo in
@@ -18,17 +17,14 @@ struct DownUpTimerView: View {
                 // Timer display
                 HStack {
                     if controller.status == DownUpTimerStatus.inactive {
-                        Text("\(keyboard.value.formattedTimeNoMilliNoLeadingZero)")
+                        DUTimeInputView(keyboard: controller.keyboard)
                     }
                 }
-                .font(Font.monospaced(.system(size: 80))())
-                .minimumScaleFactor(0.1)
-                .lineLimit(1)
                 .padding()
                 
                 // Input keyboard / visualization
                 if controller.status == DownUpTimerStatus.inactive {
-                    TimeInputKeyboardView(model: keyboard)
+                    TimeInputKeyboardView(model: controller.keyboard)
                 } else {
                     DUVisualization(timer: controller.timer, stopwatch:  controller.stopwatch, duModel: controller)
                 }
@@ -36,7 +32,7 @@ struct DownUpTimerView: View {
                 Spacer()
                 
                 // Controls
-                DUControlsView(controller: controller, keyboard: keyboard, outerHeight: geo.size.height, outerWidth: geo.size.width)
+                DUControlsView(controller: controller, keyboard: controller.keyboard, outerHeight: geo.size.height, outerWidth: geo.size.width)
             }
         }
         .padding()
@@ -107,6 +103,17 @@ struct DUStopwatchView: View {
     }
 }
 
+struct DUTimeInputView: View {
+    @ObservedObject var keyboard: TimeInputKeyboardModel
+    
+    var body: some View {
+        Text(keyboard.value.formattedTimeNoMilliNoLeadingZero)
+        .font(Font.monospaced(.system(size: 80))())
+        .minimumScaleFactor(0.1)
+        .lineLimit(1)
+    }
+}
+
 struct DUVisualization: View {
     @ObservedObject var timer: SingleTimer
     @ObservedObject var stopwatch: SingleStopWatch
@@ -118,11 +125,12 @@ struct DUVisualization: View {
         GeometryReader { gp in
             ZStack {
                 Circle().stroke(Color.gray, lineWidth: circleWidth)
-                Circle()
+                if duModel.status == DownUpTimerStatus.counting_down {
+                    Circle()
                     .trim(from: 0.0, to: Double(timer.timeRemaining / timer.duration))
                     .stroke(style: StrokeStyle(lineWidth: circleWidth, lineCap:.round))
                     .rotationEffect(Angle(degrees: 270.0))
-                if duModel.status == DownUpTimerStatus.counting_down {
+                    
                     DUTimerView(model: timer)
                     .padding()
                 } else if duModel.status == DownUpTimerStatus.counting_up {

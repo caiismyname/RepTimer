@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TimerTimelineView: View {
-    @ObservedObject var controller: TimelineController
+    @ObservedObject var controller: TimersController
     @State var createTimerPopoverShowing = false
     let verticalFidelity = 20.0
     
@@ -66,7 +66,7 @@ struct TimerTimelineView: View {
 
 struct TimerTimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        let controller = TimelineController()
+        let controller = TimersController()
         Group {
             TimerTimelineView(controller: controller)
                 .previewInterfaceOrientation(.portrait)

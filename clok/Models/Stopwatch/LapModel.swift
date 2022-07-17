@@ -38,8 +38,8 @@ class Lap: Period, Identifiable, Codable {
         lastPollTime = now
     }
     
-    func start() {
-        lastPollTime = Date()
+    func start(startTime: Date = Date()) {
+        lastPollTime = startTime
         status = PeriodStatus.active
     }
     

@@ -16,7 +16,6 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
     var resetCallback = {}
     @Published var duration: TimeInterval
     @Published var status: PeriodStatus
-    
     @Published var laps: [Lap] = []
     var timer: Timer = Timer()
     
@@ -70,10 +69,9 @@ class SingleStopWatch: Period, ObservableObject, Identifiable, Codable {
         }
     }
   
-    func start() {
-        let now = Date()
-        lastPollTime = now
-        createDate = now
+    func start(startTime: Date = Date()) {
+        lastPollTime = startTime
+        createDate = startTime
         status = PeriodStatus.active
         
         newLap(startTime: lastPollTime)

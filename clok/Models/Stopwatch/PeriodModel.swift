@@ -14,7 +14,7 @@ protocol Period {
     var status: PeriodStatus {get set}
     
     func update()
-    func start()
+    func start(startTime: Date)
     func pause()
     func resume()
 }
