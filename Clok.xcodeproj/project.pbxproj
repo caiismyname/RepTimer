@@ -32,6 +32,7 @@
 		27740A9E28611DAB00514A13 /* TimeInputKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */; };
 		27740AA028611E8100514A13 /* TimeInputKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9F28611E8100514A13 /* TimeInputKeyView.swift */; };
 		27740AA228611EC500514A13 /* TimeInputKeyboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */; };
+		278149BD2884A5E900511D3D /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278149BC2884A5E900511D3D /* DateExtensions.swift */; };
 		2789A9D02879D13F009710C3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789A9CF2879D13F009710C3 /* ViewExtensions.swift */; };
 		279936412880B71C009EC53D /* DownUpTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936402880B71C009EC53D /* DownUpTimerView.swift */; };
 		279936432880EFF6009EC53D /* DownUpTimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936422880EFF6009EC53D /* DownUpTimerModel.swift */; };
@@ -91,6 +92,7 @@
 		27740A9F28611E8100514A13 /* TimeInputKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyView.swift; sourceTree = "<group>"; };
 		27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardModel.swift; sourceTree = "<group>"; };
 		278149BB28849D3C00511D3D /* RepTimer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RepTimer-Info.plist"; sourceTree = "<group>"; };
+		278149BC2884A5E900511D3D /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		2789A9CF2879D13F009710C3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		279936402880B71C009EC53D /* DownUpTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownUpTimerView.swift; sourceTree = "<group>"; };
 		279936422880EFF6009EC53D /* DownUpTimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownUpTimerModel.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */,
 				27E3F7452871D22400DECF15 /* BindingOnUpdateExtension.swift */,
 				2789A9CF2879D13F009710C3 /* ViewExtensions.swift */,
+				278149BC2884A5E900511D3D /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				27096B55284D06CC007E7FB6 /* LapModel.swift in Sources */,
 				27E3F7422871CBC000DECF15 /* StopwatchSettingsView.swift in Sources */,
 				27740A942858133C00514A13 /* TimersControllerModel.swift in Sources */,
+				278149BD2884A5E900511D3D /* DateExtensions.swift in Sources */,
 				2789A9D02879D13F009710C3 /* ViewExtensions.swift in Sources */,
 				27740A8E285810C400514A13 /* SingleTimerModel.swift in Sources */,
 				270304132858061600763C06 /* TabContainerView.swift in Sources */,

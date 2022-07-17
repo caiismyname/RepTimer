@@ -47,7 +47,7 @@ extension TimeInterval {
     
     var formattedTimeNoMilliNoLeadingZero: String {
         let displayHours = self.hours == 0 ? "" : String(self.hours) + ":"
-        return displayHours + String(self.minutes) + ":" + self.seconds.withLeadingZero
+        return displayHours + String(self.minutes.withLeadingZero) + ":" + self.seconds.withLeadingZero
     }
     
     var formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond: String {
