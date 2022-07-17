@@ -19,15 +19,15 @@ struct TabContainerView: View {
                 Image(systemName: "stopwatch")
                 Text("Stopwatch")
             }
-//            TimerContainerView(timelineController: timelineController)
-//            .tabItem {
-//                Image(systemName: "timer")
-//                Text("Timers")
-//            }
+            TimerContainerView(timelineController: timersController)
+            .tabItem {
+                Image(systemName: "timer")
+                Text("Timers")
+            }
             DownUpTimerView(controller: timersController.downupTimer)
                 .tabItem {
                     Image(systemName: "arrow.counterclockwise.circle")
-                    Text("Repeat TImer")
+                    Text("Repeat Timer")
                 }
         }
         .font(.system(size: 30))

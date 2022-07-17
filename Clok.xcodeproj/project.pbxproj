@@ -90,6 +90,7 @@
 		27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardView.swift; sourceTree = "<group>"; };
 		27740A9F28611E8100514A13 /* TimeInputKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyView.swift; sourceTree = "<group>"; };
 		27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardModel.swift; sourceTree = "<group>"; };
+		278149BB28849D3C00511D3D /* RepTimer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RepTimer-Info.plist"; sourceTree = "<group>"; };
 		2789A9CF2879D13F009710C3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		279936402880B71C009EC53D /* DownUpTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownUpTimerView.swift; sourceTree = "<group>"; };
 		279936422880EFF6009EC53D /* DownUpTimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownUpTimerModel.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		271B60022845220D00BA0F5D = {
 			isa = PBXGroup;
 			children = (
+				278149BB28849D3C00511D3D /* RepTimer-Info.plist */,
 				271B600D2845220D00BA0F5D /* clok */,
 				271B601E2845220E00BA0F5D /* RepTimerTests */,
 				271B60282845220E00BA0F5D /* RepTimerUITests */,
@@ -605,13 +607,15 @@
 				DEVELOPMENT_TEAM = 365K6R64X6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RepTimer-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Clok;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -638,13 +642,15 @@
 				DEVELOPMENT_TEAM = 365K6R64X6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RepTimer-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Clok;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct RepTimerApp: App {
-//    @StateObject private var store = RepStore()
     @StateObject private var timersController = TimersController()
     @StateObject private var stopwatchesController = StopwatchesController()
     @Environment(\.scenePhase) private var scenePhase // Used for detecting when this scene is backgrounded and isn't currently visible.
@@ -40,7 +39,6 @@ struct RepTimerApp: App {
                 }
                 
                 timersController.loadDownUpTimer { result in
-                    print("loading DownUp")
                     switch result {
                     case .success(let values):
                         self.timersController.downupTimer = values["downupTimer"]!
@@ -50,22 +48,6 @@ struct RepTimerApp: App {
                     }
                 }
             }
-//                RepStore.save(rep: store.stopwatch) {result in
-//                    if case .failure(let error) = result {
-//                         fatalError(error.localizedDescription)
-//                     }
-//                }
-//
-//            .onAppear {
-//                RepStore.load{ result in
-//                    switch result {
-//                        case .failure(let error):
-//                            fatalError(error.localizedDescription)
-//                        case .success(let rep):
-//                            store.stopwatch = rep
-//                    }
-//                }
-//            }
         }
     }
 }

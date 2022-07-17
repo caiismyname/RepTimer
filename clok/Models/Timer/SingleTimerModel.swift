@@ -30,21 +30,6 @@ class SingleTimer: ObservableObject, Codable {
         self.duration = timeRemaining
         self.name = name
         
-        // Set up audio player
-        do {
-            guard let soundFileURL = Bundle.main.path(forResource: "done", ofType: "caf") else {
-                print("no url")
-                return
-            }
-            self.avplayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: soundFileURL))
-        } catch {
-            print("audio player setup error")
-            
-            self.avplayer = nil
-        }
-        
-        startSystemTimer()
-        
         // Temp for ease of building
 //        start()
     }
@@ -62,15 +47,7 @@ class SingleTimer: ObservableObject, Codable {
         
         // Timer is done
         guard timeRemaining > 0.05 else {
-            status = TimerStatus.ended
-            timeRemaining = 0.0
-            self.timer.invalidate()
-            
-            // TODO: only play when in foreground — better solution might be to handle the notification when app is active
-            avplayer!.play()
-            
-            self.doneCallback()
-            
+            end()
             return
         }
         
@@ -82,37 +59,67 @@ class SingleTimer: ObservableObject, Codable {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.duration, repeats: false)
         let content = UNMutableNotificationContent()
         content.title = self.name
-        content.body = "Your \(self.name) timer (\(self.duration.formattedTimeNoMilliLeadingZero)) is done."
+        content.body = "Your\(self.name == "" ? " " : self.name)timer (\(self.duration.formattedTimeNoMilliNoLeadingZero)) is done."
         content.sound = UNNotificationSound.default
-        content.userInfo = ["timerId": self.id]
-        content.categoryIdentifier = "TIMER_END"
+//        content.userInfo = ["timerId": self.id]
+//        content.categoryIdentifier = "TIMER_END"
         
         // Create the request
         self.notifID = UUID().uuidString
         let request = UNNotificationRequest(identifier: notifID, content: content, trigger: trigger)
-        
-        print("notif id \(notifID)")
 
         // Schedule the request with the system.
-//        let notificationCenter = UNUserNotificationCenter.current()
-//        notificationCenter.add(request) { (error) in
-//           if error != nil {
-//               print("error scheduling notif")
-//              print(error)
-//           }
-//        }
+        UNUserNotificationCenter.current().add(request) { (error) in
+           if error != nil {
+               print("Error scheduling notif: \(error)")
+           } else {
+               print("Notification \(self.notifID) scheduled")
+           }
+        }
         
-        let center = UNUserNotificationCenter.current()
-        print(center)
-        center.add(request, withCompletionHandler: { x in print(x)})
-    }    
+        // Schedule the sound
+        do {
+            try scheduleEndSound()
+        } catch {
+            print("Error scheduling audio")
+        }
+    }
+    
+    func foregroundDoneHandler() {
+        end()
+        self.doneCallback()
+    }
+    
+    func backgroundDoneHandler() {
+        end()
+        self.doneCallback()
+    }
+    
+    func scheduleEndSound() throws {
+        do {
+            guard let soundFileURL = Bundle.main.path(forResource: "done", ofType: "caf") else {
+                print("no url")
+                return
+            }
+            
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.duckOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+            self.avplayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: soundFileURL))
+            self.avplayer!.play(atTime: self.avplayer!.deviceCurrentTime + self.duration)
+        } catch {
+            print("audio player setup error")
+            self.avplayer = nil
+        }
+    }
     
     func start() {
         let now = Date()
         lastPollTime = now
         startTime = now
-        setNotification()
         status = TimerStatus.active
+        
+        setNotification()
+        startSystemTimer()
     }
     
     func startSystemTimer() {
@@ -126,21 +133,23 @@ class SingleTimer: ObservableObject, Codable {
         RunLoop.main.add(timer, forMode: .common)
     }
     
+    // Handles stopping the timer before it's done
     func stop() {
         status = TimerStatus.inactive
         // Remove notification
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notifID])
+        // Cancel the audio playback
+        self.avplayer!.stop()
         // Stop the cron
         self.timer.invalidate()
     }
     
-//    func playEndSound() throws {
-//            player.play()
-//            print("played")
-//        } catch {
-//            print("Audio failed")
-//        }
-//    }
+    // Handles cleaning up the timer after it's done
+    func end() {
+        status = TimerStatus.ended
+        timeRemaining = 0.0
+        self.timer.invalidate()
+    }
     
     // MARK: — Codable
     private enum CoderKeys: String, CodingKey {

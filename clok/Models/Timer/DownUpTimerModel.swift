@@ -16,15 +16,13 @@ enum DownUpTimerStatus: Codable {
 }
 
 class DownUpTimer: ObservableObject, Codable {
-    @Published var timer = SingleTimer(timeRemaining: 100, name: "")
+    @Published var timer = SingleTimer(timeRemaining: 100, name: "") // Placeholder timer, will be replaced when `reset()` is called
     @Published var stopwatch = SingleStopWatch()
     @Published var status = DownUpTimerStatus.inactive
     @Published var timerDuration = 0.0
     @Published var keyboard = TimeInputKeyboardModel(value: 0.0)
     
     init() {
-        timer = SingleTimer(timeRemaining: timerDuration, name: "")
-        setTimerCallback()
     }
     
     // Start and reset technically do the same thing
