@@ -124,7 +124,7 @@ class SingleTimer: ObservableObject, Codable {
     
     func startSystemTimer() {
         timer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(0.03),
+            timeInterval: TimeInterval(0.02),
             target: self,
             selector: (#selector(update)),
             userInfo: nil,

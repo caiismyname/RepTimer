@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    var displayDate: String {
+    var displayDayDate: String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US")
         formatter.dateFormat = "EEEE M/dd"
@@ -16,12 +16,20 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    var displayDate: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = "M/dd"
+        
+        return formatter.string(from: self)
+    }
+    
     var displayTime: String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US")
-        formatter.dateFormat = "h:mm a"
+        formatter.dateFormat = "h:mma"
         
-        return formatter.string(from: self)
+        return formatter.string(from: self).lowercased()
     }
     
     func isSameDayAs(comp: Date) -> Bool {

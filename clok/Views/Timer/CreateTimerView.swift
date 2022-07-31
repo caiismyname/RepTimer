@@ -42,7 +42,7 @@ struct CreateTimerView: View {
             
             Group {
                 Text((Date() + keyboard.value).displayTime)
-                Text(Date().isSameDayAs(comp: Date() + keyboard.value) ? "" : " " + (Date() + keyboard.value).displayDate)
+                Text(Date().isSameDayAs(comp: Date() + keyboard.value) ? "" : " " + (Date() + keyboard.value).displayDayDate)
             }
             .font(Font.system(size: 20))
             .minimumScaleFactor(0.1)

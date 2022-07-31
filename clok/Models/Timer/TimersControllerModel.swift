@@ -11,7 +11,8 @@ import UserNotifications
 class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     private let dataFileName = "timers" // The archived file name, name saved to Documents folder.
     // Timeline
-    @Published var timers: [SingleTimer] = []
+    @Published var activeTimers: [SingleTimer] = []
+    @Published var completedTimers: [SingleTimer] = []
     @Published var bottomDuration: TimeInterval = TimeInterval(0.0) // The TimeInteral value that denotes "bottom of the screen"
     // DownUp
     @Published var downupTimer: DownUpTimer = DownUpTimer()
@@ -60,13 +61,13 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     
     func addTimer(timeRemaining: TimeInterval, name: String) {
         let newTimer = SingleTimer(timeRemaining: timeRemaining, name: name)
-        timers.append(newTimer)
+        activeTimers.append(newTimer)
         bottomDuration = max(bottomDuration, newTimer.duration)
         newTimer.start()
     }
     
     func getTimerByNotifID(notifID: String) -> SingleTimer? {
-        let matchingTimers = timers.filter { timer in
+        let matchingTimers = activeTimers.filter { timer in
             return (timer.notifID == notifID)
         }
         
@@ -89,6 +90,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
             return
         }
 
+        timerEnded(notifID: response.notification.request.identifier)
         timer.backgroundDoneHandler()
     }
     
@@ -102,7 +104,23 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
             return
         }
         
+        timerEnded(notifID: notification.request.identifier)
         timer.foregroundDoneHandler()
+    }
+    
+    // Moves timer from the active list to the done list
+    func timerEnded(notifID: String) {
+        guard let timer = getTimerByNotifID(notifID: notifID) else {
+            return
+        }
+        
+        self.activeTimers.removeAll(where: {t in t.notifID == notifID})
+        self.completedTimers.append(timer)
+//        objectWillChange.send()
+    }
+    
+    func clearCompletedTimers() {
+        self.completedTimers = []
     }
     
     // MARK: DownUp
