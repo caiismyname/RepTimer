@@ -66,6 +66,22 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         newTimer.start()
     }
     
+    func recomputeBottomDuration() {
+        for timer in self.activeTimers {
+            if timer.duration > bottomDuration {
+                bottomDuration = timer.duration
+            }
+        }
+    }
+    
+    func startSystemTimers() {
+        recomputeBottomDuration()
+
+        for timer in self.activeTimers {
+            timer.startSystemTimer()
+        }
+    }
+    
     func getTimerByNotifID(notifID: String) -> SingleTimer? {
         let matchingTimers = activeTimers.filter { timer in
             return (timer.notifID == notifID)
@@ -123,7 +139,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         self.completedTimers = []
     }
     
-    // MARK: DownUp
+    // MARK: Codable
     
     private func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -148,7 +164,20 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         }
     }
     
+    func saveTimers() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(["activeTimers": activeTimers, "completedTimers": completedTimers]) {
+            do {
+                try encoded.write(to: dataModelURL())
+            } catch {
+                print("Couldn't write to save file: " + error.localizedDescription)
+            }
+        }
+    }
+    
     func loadDownUpTimer(completion: @escaping (Result<[String: DownUpTimer], Error>) -> Void) {
+
+// Uncomment to override saved values
 //        DispatchQueue.main.async {
 //            print("Loading override DownUp")
 //            let firstDownUp = DownUpTimer()
@@ -170,6 +199,38 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
 
                 // Successful loading
                 let results = try JSONDecoder().decode([String: DownUpTimer].self, from: file.availableData)
+                DispatchQueue.main.async {
+                    completion(.success(results))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func loadTimers(completion: @escaping (Result<[String: [SingleTimer]], Error>) -> Void) {
+
+// Uncomment to override saved values
+//        DispatchQueue.main.async {
+//            print("Loading override timers")
+//            completion(.success(["activeTimers": [], "completedTimers": []]))
+//        }
+
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let fileURL = self.dataModelURL()
+                // If loading fails
+                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
+                    DispatchQueue.main.async {
+                        completion(.success(["activeTimers": [], "completedTimers": []]))
+                    }
+                    return
+                }
+
+                // Successful loading
+                let results = try JSONDecoder().decode([String: [SingleTimer]].self, from: file.availableData)
                 DispatchQueue.main.async {
                     completion(.success(results))
                 }

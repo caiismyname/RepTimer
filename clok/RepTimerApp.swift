@@ -23,6 +23,7 @@ struct RepTimerApp: App {
                 if newPhase == .background {
                     stopwatchesController.save()
                     timersController.saveDownUpTimer()
+                    timersController.saveTimers()
                 }
             }
             .onAppear {
@@ -34,7 +35,9 @@ struct RepTimerApp: App {
                         self.stopwatchesController.startAllTimers()
                         self.stopwatchesController.setAllResetCallbacks()
                     case .failure (let error):
-                        fatalError(error.localizedDescription)
+                        self.stopwatchesController.stopwatches = []
+                        self.stopwatchesController.pastStopwatches = []
+//                        fatalError(error.localizedDescription)
                     }
                 }
                 
@@ -44,7 +47,21 @@ struct RepTimerApp: App {
                         self.timersController.downupTimer = values["downupTimer"]!
                         self.timersController.downupTimer.startSystemTimers()
                     case .failure (let error):
+                        self.timersController.downupTimer = DownUpTimer()
+//                        fatalError(error.localizedDescription)
+                    }
+                }
+                
+                timersController.loadTimers { result in
+                    switch result {
+                    case .success(let values):
+                        self.timersController.activeTimers = values["activeTimers"]!
+                        self.timersController.completedTimers = values["completedTimers"]!
+                        self.timersController.startSystemTimers()
+                    case .failure (let error):
                         fatalError(error.localizedDescription)
+                        self.timersController.activeTimers = []
+                        self.timersController.completedTimers = []
                     }
                 }
             }
