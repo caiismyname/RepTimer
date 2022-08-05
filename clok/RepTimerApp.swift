@@ -47,8 +47,8 @@ struct RepTimerApp: App {
                         self.timersController.downupTimer = values["downupTimer"]!
                         self.timersController.downupTimer.startSystemTimers()
                     case .failure (let error):
-                        self.timersController.downupTimer = DownUpTimer()
-//                        fatalError(error.localizedDescription)
+//                        self.timersController.downupTimer = DownUpTimer()
+                        fatalError(error.localizedDescription)
                     }
                 }
                 

@@ -9,7 +9,6 @@ import Foundation
 import UserNotifications
 
 class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
-    private let dataFileName = "timers" // The archived file name, name saved to Documents folder.
     // Timeline
     @Published var activeTimers: [SingleTimer] = []
     @Published var completedTimers: [SingleTimer] = []
@@ -147,7 +146,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         return documentsDirectory
     }
     
-    private func dataModelURL() -> URL {
+    private func dataModelURL(dataFileName: String) -> URL {
         let docURL = documentsDirectory()
         return docURL.appendingPathComponent(dataFileName)
     }
@@ -157,7 +156,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         if let encoded = try? encoder.encode(["downupTimer": downupTimer]) {
             do {
                 // Save the 'downupTimer' data file to the Documents directory.
-                try encoded.write(to: dataModelURL())
+                try encoded.write(to: dataModelURL(dataFileName: "downupTimer"))
             } catch {
                 print("Couldn't write to save file: " + error.localizedDescription)
             }
@@ -168,7 +167,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(["activeTimers": activeTimers, "completedTimers": completedTimers]) {
             do {
-                try encoded.write(to: dataModelURL())
+                try encoded.write(to: dataModelURL(dataFileName: "timers"))
             } catch {
                 print("Couldn't write to save file: " + error.localizedDescription)
             }
@@ -188,7 +187,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
 
         DispatchQueue.global(qos: .background).async {
             do {
-                let fileURL = self.dataModelURL()
+                let fileURL = self.dataModelURL(dataFileName: "downupTimer")
                 // If loading fails
                 guard let file = try? FileHandle(forReadingFrom: fileURL) else {
                     DispatchQueue.main.async {
@@ -220,7 +219,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
 
         DispatchQueue.global(qos: .background).async {
             do {
-                let fileURL = self.dataModelURL()
+                let fileURL = self.dataModelURL(dataFileName: "timers")
                 // If loading fails
                 guard let file = try? FileHandle(forReadingFrom: fileURL) else {
                     DispatchQueue.main.async {

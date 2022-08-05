@@ -26,7 +26,7 @@ struct DownUpTimerView: View {
                 if controller.status == DownUpTimerStatus.inactive {
                     TimeInputKeyboardView(model: controller.keyboard)
                 } else {
-                    DUVisualization(timer: controller.timer, stopwatch:  controller.stopwatch, duModel: controller)
+                    DUVisualization(timer: controller.timer, stopwatch:  controller.stopwatch, controller: controller)
                 }
                 
                 Spacer()
@@ -117,7 +117,7 @@ struct DUTimeInputView: View {
 struct DUVisualization: View {
     @ObservedObject var timer: SingleTimer
     @ObservedObject var stopwatch: SingleStopWatch
-    @ObservedObject var duModel: DownUpTimer
+    @ObservedObject var controller: DownUpTimer
     let circleWidth = 20.0
     let fontSize = 80.0
     
@@ -125,7 +125,7 @@ struct DUVisualization: View {
         GeometryReader { gp in
             ZStack {
                 Circle().stroke(Color.gray, lineWidth: circleWidth)
-                if duModel.status == DownUpTimerStatus.counting_down {
+                if controller.status == DownUpTimerStatus.counting_down {
                     Circle()
                     .trim(from: 0.0, to: Double(timer.timeRemaining / timer.duration))
                     .stroke(style: StrokeStyle(lineWidth: circleWidth, lineCap:.round))
@@ -133,15 +133,15 @@ struct DUVisualization: View {
                     
                     DUTimerView(model: timer)
                     .padding()
-                } else if duModel.status == DownUpTimerStatus.counting_up {
+                } else if controller.status == DownUpTimerStatus.counting_up {
                     DUStopwatchView(model: stopwatch)
                     .padding()
                 }
                 
-                if duModel.status == DownUpTimerStatus.counting_down {
+                if controller.status == DownUpTimerStatus.counting_down {
                     Image(systemName: "arrow.down.circle.fill")
                     .position(x: fontSize / 2, y: fontSize / 2)
-                } else if duModel.status == DownUpTimerStatus.counting_up {
+                } else if controller.status == DownUpTimerStatus.counting_up {
                     Image(systemName: "arrow.up.circle")
                     .position(x: fontSize / 2, y: fontSize / 2)
                 }

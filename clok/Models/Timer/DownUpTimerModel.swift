@@ -21,8 +21,9 @@ class DownUpTimer: ObservableObject, Codable {
     @Published var status = DownUpTimerStatus.inactive
     @Published var timerDuration = 0.0
     @Published var keyboard = TimeInputKeyboardModel(value: 0.0)
-    
+
     init() {
+        // Need a blank init b/c the Codable init overrides
     }
     
     // Start and reset technically do the same thing
@@ -31,10 +32,10 @@ class DownUpTimer: ObservableObject, Codable {
             self.status = DownUpTimerStatus.inactive
             return
         }
+        self.stopwatch = SingleStopWatch() // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
         
         initTimer()
-        timer.start()
-        stopwatch = SingleStopWatch() // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
+        self.timer.start()
         self.status = DownUpTimerStatus.counting_down
     }
     
@@ -45,13 +46,18 @@ class DownUpTimer: ObservableObject, Codable {
     }
     
     func initTimer() {
-        timer = SingleTimer(timeRemaining: self.timerDuration, name: "")
+        self.timer = SingleTimer(timeRemaining: self.timerDuration, name: "")
         setTimerCallback()
     }
     
+    func setTimerCallback() {
+        self.timer.doneCallback = {self.doneTimerCallback()}
+    }
+    
     func doneTimerCallback() {
+        print("done timer callback")
         self.status = DownUpTimerStatus.counting_up
-        stopwatch.start()
+        self.stopwatch.start()
     }
     
     func startSystemTimers() {
@@ -73,10 +79,6 @@ class DownUpTimer: ObservableObject, Codable {
             setTimerCallback()
             self.timer.startSystemTimer()
         }
-    }
-    
-    func setTimerCallback() {
-        self.timer.doneCallback = {self.doneTimerCallback()}
     }
     
     // MARK: — Codable

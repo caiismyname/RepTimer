@@ -47,7 +47,9 @@ class SingleTimer: ObservableObject, Codable {
         
         // Timer is done
         guard timeRemaining > 0.05 else {
+            // TODO it seems problematic that I handle done both here and in the notif handler. This is probls the right place.
             end()
+            self.doneCallback()
             return
         }
         
@@ -71,7 +73,7 @@ class SingleTimer: ObservableObject, Codable {
         // Schedule the request with the system.
         UNUserNotificationCenter.current().add(request) { (error) in
            if error != nil {
-               print("Error scheduling notif: \(error)")
+               print("Error scheduling notif: \(String(describing: error))")
            } else {
                print("Notification \(self.notifID) scheduled")
            }
