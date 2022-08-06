@@ -19,7 +19,7 @@ struct TabContainerView: View {
                 Image(systemName: "stopwatch")
                 Text("Stopwatch")
             }
-            TimerContainerView(timelineController: timersController)
+            TimerTimelineView(controller: timersController)
             .tabItem {
                 Image(systemName: "timer")
                 Text("Timers")

@@ -33,6 +33,8 @@ struct TimerTimelineView: View {
                         .position(x: proxy.size.width / 2, y: (proxy.size.height / 10) * CGFloat(offset))
                     }
                     
+                    TimelineDoneBarView(proxy: proxy, verticalFidelity: verticalFidelity, controller: controller)
+                    
                     // Plot each timer
                     ForEach(controller.activeTimers, id: \.self) { timer in
                         TimelineEntryView(
@@ -42,9 +44,6 @@ struct TimerTimelineView: View {
                             bottomDuration: controller.bottomDuration
                         )
                     }
-                    
-                    TimelineDoneBarView(proxy: proxy, verticalFidelity: verticalFidelity, controller: controller)
-
                 }
                 .contentShape(Rectangle()) // Enables tap gestures to be recognized on non-opaque elements
                 .onTapGesture(count: 2) {
