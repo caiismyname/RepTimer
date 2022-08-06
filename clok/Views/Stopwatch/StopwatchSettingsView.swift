@@ -33,8 +33,8 @@ struct StopwatchSettingsView: View {
             List {
                 Text("Screen lock will keep the screen on and ignore any inputs until it is disabled. Enable/disable screen lock by tapping the screen five times.")
             }
-            
         }
+        .font(.system(size: 18))
     }
 }
 

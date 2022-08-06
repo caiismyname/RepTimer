@@ -23,7 +23,6 @@ struct SingleStopWatchView: View {
                      : stopwatch.duration.formattedTimeOneMilliLeadingZero)
                 .font(.system(size: 40, weight: .regular , design: .monospaced))
                 .minimumScaleFactor(0.01)
-                .padding(.leading, 10)
                 
                 // Current lap
                 if let lap = stopwatch.currentLap() {
@@ -31,13 +30,12 @@ struct SingleStopWatchView: View {
                     .font(Font.monospaced(.system(size: 70))())
                     .minimumScaleFactor(0.01)
                     .lineLimit(1)
-                    .padding(.leading, 8)
+                    .padding(.leading, -6) // Visual alignment
                 } else {
                     Text("00:00.00")
                     .font(.system(size: 70, weight: .regular , design: .monospaced))
                     .minimumScaleFactor(0.01)
                     .lineLimit(1)
-                    .padding(.leading, 8)
                 }
             } else { // Historical view
                 // Start datetime
@@ -45,14 +43,12 @@ struct SingleStopWatchView: View {
                 .font(.system(size: 25, weight: .regular , design: .monospaced))
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
-                .padding(.leading, 10)
                 
                 // Total time
                 Text(stopwatch.duration.formattedTimeTwoMilliLeadingZero)
                 .font(Font.monospaced(.system(size: 70))())
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
-                .padding(.leading, 8)
             }
             
             Spacer()
@@ -87,12 +83,9 @@ struct SingleStopWatchView: View {
             }
             .font(.system(size: 20, weight: .regular , design: .monospaced))
             .minimumScaleFactor(0.01)
-            .padding([.leading, .trailing], 15)
             
             StopWatchControlsView(stopwatch: stopwatch)
-            Spacer()
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
     }
 }
 

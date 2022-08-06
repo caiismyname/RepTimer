@@ -11,6 +11,7 @@ import SwiftUI
 struct TabContainerView: View {
     @ObservedObject var timersController: TimersController
     @ObservedObject var stopwatchesController: StopwatchesController
+    let buttonSize = buttonSizes()
     
     var body: some View {
         TabView {
@@ -30,7 +31,7 @@ struct TabContainerView: View {
                     Text("Repeat Timer")
                 }
         }
-        .font(.system(size: 30))
+        .font(.system(size: buttonSize.fontSize))
     }
 }
 

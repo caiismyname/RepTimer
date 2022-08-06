@@ -16,9 +16,11 @@ struct StopWatchContainerView: View {
     
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
     let screenLockHaptic = UINotificationFeedbackGenerator()
+    let buttonSize = buttonSizes()
 
     var body: some View {
         VStack (alignment: .trailing) {
+            // Row of settings buttons at top
             HStack {
                 Button(action: {
                     if !isScreenLocked {
@@ -38,8 +40,8 @@ struct StopWatchContainerView: View {
                     }
                 }) {Image(systemName: "plus.circle")}
             }
-            .font(.system(size: 35))
-            .padding(10)
+            .font(.system(size: buttonSize.inputIconSize))
+            .padding()
             .popover(isPresented: self.$isHistoryPopupShowing) {
                 StopWatchHistoryView(controller: controller)
                 .padding()
@@ -49,9 +51,10 @@ struct StopWatchContainerView: View {
                 .padding()
             }
             
-
+            // Stopwatch(es)
             if (controller.stopwatches.count == 1) {
                 SingleStopWatchView(stopwatch: controller.stopwatches[0])
+                .padding()
             } else {
                 List {
                     ForEach(controller.stopwatches.indices, id:\.self) { idx in

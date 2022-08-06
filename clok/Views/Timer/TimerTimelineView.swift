@@ -11,6 +11,8 @@ import SwiftUI
 struct TimerTimelineView: View {
     @ObservedObject var controller: TimersController
     @State var createTimerPopoverShowing = false
+    @State var emptyStatePopover = true
+    let sizes = buttonSizes()
     let verticalFidelity = 14.0
 
     func saveNewTimer(name: String, duration: TimeInterval) {
@@ -21,16 +23,19 @@ struct TimerTimelineView: View {
     }
     
     var body: some View {
-        VStack(alignment: .trailing)  {
-            GeometryReader { proxy in
-                ZStack {
-
+        GeometryReader { proxy in
+            ZStack {
+                if (controller.activeTimers.isEmpty && controller.completedTimers.isEmpty) {
+                    CreateTimerView(saveFunc: saveNewTimer)
+                    .padding()
+                } else {
+                    
                     // Background grid
                     ForEach(0...10, id: \.self) {offset in
                         Rectangle()
-                        .fill(Color(UIColor.gray))
-                        .frame(width: proxy.size.width, height: 1)
-                        .position(x: proxy.size.width / 2, y: (proxy.size.height / 10) * CGFloat(offset))
+                            .fill(Color(UIColor.gray))
+                            .frame(width: proxy.size.width, height: 1)
+                            .position(x: proxy.size.width / 2, y: (proxy.size.height / 10) * CGFloat(offset))
                     }
                     
                     TimelineDoneBarView(proxy: proxy, verticalFidelity: verticalFidelity, controller: controller)
@@ -44,23 +49,21 @@ struct TimerTimelineView: View {
                             bottomDuration: controller.bottomDuration
                         )
                     }
+                    
+                    // Plus button
+                    Button(action: {createTimerPopoverShowing = true}) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: sizes.fontSize))
+                    }
+                    .position(x: proxy.size.width - sizes.fontSize, y: proxy.size.height - sizes.fontSize)
+                    .popover(isPresented: $createTimerPopoverShowing) {
+                        CreateTimerView(saveFunc: saveNewTimer)
+                        .padding()
+                    }
                 }
-                .contentShape(Rectangle()) // Enables tap gestures to be recognized on non-opaque elements
-                .onTapGesture(count: 2) {
-                    createTimerPopoverShowing = true
-                }
-                
             }
-            
-            Button(action: {createTimerPopoverShowing = true}) {
-                Image(systemName: "plus.circle")
-                .font(.system(size: 30))
-            }
-            .padding(.trailing, 20)
-            .popover(isPresented: $createTimerPopoverShowing) {
-                CreateTimerView(saveFunc: saveNewTimer)
-                    .padding()
-            }
+            .contentShape(Rectangle()) // Enables tap gestures to be recognized on non-opaque elements
+            .onTapGesture(count: 2) { createTimerPopoverShowing = true}
         }
     }
 }
@@ -93,7 +96,7 @@ struct TimelineEntryView: View {
             HStack {
                 if (timer.name != "") {
                     Text(timer.name)
-                        .font(.system(size:20))
+                        .font(.system(size: 12))
                         .minimumScaleFactor(0.1)
                         .lineLimit(2)
                     Spacer()
@@ -120,6 +123,7 @@ struct TimelineEntryView: View {
 struct TimelineDoneBarView: View {
     let proxy: GeometryProxy
     let verticalFidelity: Double
+    let sizes = buttonSizes()
     let paddingSize = 12.0
     @ObservedObject var controller: TimersController
     @State var doneTimersPresented = false
@@ -145,9 +149,9 @@ struct TimelineDoneBarView: View {
                     Text("\(controller.completedTimers.count) timer" + (controller.completedTimers.count > 1 ? "s" : "") + " done")
                     Spacer()
                 }
-                .padding(paddingSize)
+                .padding()
             }
-            .font(.system(size: 20))
+            .font(.system(size: sizes.fontSize))
             .frame(width: proxy.size.width, height: computeHeight())
             .position(x: proxy.size.width / 2, y: computeHeight() - (2 * paddingSize))
             .onTapGesture(count: 1, perform: {
@@ -159,20 +163,19 @@ struct TimelineDoneBarView: View {
 
 struct TimelineDoneTimersPopover: View {
     @ObservedObject var controller: TimersController
+    let buttonSize = buttonSizes()
     
     var body: some View {
         VStack {
             Button(action: {controller.clearCompletedTimers()}) {
                 Image(systemName: "clear.fill")
-                .font(.system(size: 30))
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
             }
             .foregroundColor(Color.black)
             .background(Color.white)
-            .cornerRadius(12)
+            .cornerRadius(buttonSize.radius)
             
-            List(controller.completedTimers, id: \.self) { timer in
+            List(controller.completedTimers.reversed(), id: \.self) { timer in
                 VStack(alignment: .leading) {
                     HStack {
                         Text("\(timer.duration.formattedTimeNoMilliNoLeadingZero)")

@@ -57,11 +57,12 @@ struct RepTimerApp: App {
                     case .success(let values):
                         self.timersController.activeTimers = values["activeTimers"]!
                         self.timersController.completedTimers = values["completedTimers"]!
+                        self.timersController.findAndMoveCompletedTimers()
                         self.timersController.startSystemTimers()
                     case .failure (let error):
-                        fatalError(error.localizedDescription)
                         self.timersController.activeTimers = []
                         self.timersController.completedTimers = []
+//                        fatalError(error.localizedDescription)
                     }
                 }
             }

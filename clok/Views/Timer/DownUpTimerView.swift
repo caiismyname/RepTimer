@@ -14,6 +14,8 @@ struct DownUpTimerView: View {
     var body: some View {
         GeometryReader {geo in
             VStack {
+                Spacer()
+                
                 // Timer display
                 HStack {
                     if controller.status == DownUpTimerStatus.inactive {
@@ -24,12 +26,11 @@ struct DownUpTimerView: View {
                 
                 // Input keyboard / visualization
                 if controller.status == DownUpTimerStatus.inactive {
+                    Spacer()
                     TimeInputKeyboardView(model: controller.keyboard)
                 } else {
                     DUVisualization(timer: controller.timer, stopwatch:  controller.stopwatch, controller: controller)
                 }
-                
-                Spacer()
                 
                 // Controls
                 DUControlsView(controller: controller, keyboard: controller.keyboard, outerHeight: geo.size.height, outerWidth: geo.size.width)
@@ -43,45 +44,66 @@ struct DUControlsView: View {
     @ObservedObject var controller: DownUpTimer
     @ObservedObject var keyboard: TimeInputKeyboardModel
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
+    let buttonSize = buttonSizes()
     var outerHeight: Double
     var outerWidth: Double
     
+    func bigButtonHeight() -> Double {
+        return outerHeight / 9
+    }
+    
     var body: some View {
         HStack {
-            if controller.status != DownUpTimerStatus.inactive {
+            if controller.status == DownUpTimerStatus.inactive {
+                // Start button
+                Button(action: {
+                    if controller.status == DownUpTimerStatus.inactive {
+                        controller.timerDuration = keyboard.value
+                    }
+                    controller.reset()
+                    haptic.impactOccurred()
+                }) {
+                    Image(systemName:
+                        controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.counterclockwise.circle"
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                }
+                .background(Color.green)
+                .cornerRadius(buttonSize.radius)
+            } else {
+                // Stop button
                 Button(action: {
                     controller.stop()
                     haptic.impactOccurred()
                 }) {
                     Image(systemName: "stop.circle")
+                    .frame(maxWidth: outerWidth / 10, maxHeight: bigButtonHeight())
+                    .padding(30)
                 }
-                .frame(maxWidth: outerWidth / 10, maxHeight: outerHeight / 9)
-                .padding(30)
                 .background(Color.red)
-                .cornerRadius(12)
-                .font(.system(size: 50))
-                .minimumScaleFactor(0.01)
-            }
-            
-            Button(action: {
-                if controller.status == DownUpTimerStatus.inactive {
-                    controller.timerDuration = keyboard.value
+                .cornerRadius(buttonSize.radius)
+                
+                // Reset button
+                Button(action: {
+                    if controller.status == DownUpTimerStatus.inactive {
+                        controller.timerDuration = keyboard.value
+                    }
+                    controller.reset()
+                    haptic.impactOccurred()
+                }) {
+                    Image(systemName:
+                            controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.counterclockwise.circle"
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: bigButtonHeight())
+                    .padding(30)
                 }
-                controller.reset()
-                haptic.impactOccurred()
-            }) {
-                Image(systemName:
-                    controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.counterclockwise.circle"
-                )
+                .background(Color.green)
+                .cornerRadius(buttonSize.radius)
             }
-            .frame(maxWidth: .infinity, maxHeight: outerHeight / 9)
-            .padding(30)
-            .background(Color.green)
-            .cornerRadius(12)
-            .font(.system(size: 100))
-            .minimumScaleFactor(0.01)
         }
         .foregroundColor(Color.white)
+        .font(controller.status == DownUpTimerStatus.inactive ? .system(size: buttonSize.fontSize) : .system(size: 55))
+        .minimumScaleFactor(0.01)
     }
 }
 
@@ -105,10 +127,11 @@ struct DUStopwatchView: View {
 
 struct DUTimeInputView: View {
     @ObservedObject var keyboard: TimeInputKeyboardModel
+    let sizes = buttonSizes()
     
     var body: some View {
         Text(keyboard.value.formattedTimeNoMilliNoLeadingZero)
-        .font(Font.monospaced(.system(size: 80))())
+        .font(Font.monospaced(.system(size: sizes.bigTimeFont))())
         .minimumScaleFactor(0.1)
         .lineLimit(1)
     }
@@ -119,7 +142,7 @@ struct DUVisualization: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @ObservedObject var controller: DownUpTimer
     let circleWidth = 20.0
-    let fontSize = 80.0
+    let sizes = buttonSizes()
     
     var body: some View {
         GeometryReader { gp in
@@ -140,14 +163,14 @@ struct DUVisualization: View {
                 
                 if controller.status == DownUpTimerStatus.counting_down {
                     Image(systemName: "arrow.down.circle.fill")
-                    .position(x: fontSize / 2, y: fontSize / 2)
+                        .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
                 } else if controller.status == DownUpTimerStatus.counting_up {
                     Image(systemName: "arrow.up.circle")
-                    .position(x: fontSize / 2, y: fontSize / 2)
+                    .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
                 }
             }
         }
-        .font(Font.monospaced(.system(size: fontSize))())
+        .font(Font.monospaced(.system(size: sizes.bigTimeFont))())
         .minimumScaleFactor(0.1)
     }
 }

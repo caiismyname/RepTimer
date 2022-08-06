@@ -66,6 +66,10 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     }
     
     func recomputeBottomDuration() {
+        if self.activeTimers.isEmpty {
+            bottomDuration = 0.0
+        }
+        
         for timer in self.activeTimers {
             if timer.duration > bottomDuration {
                 bottomDuration = timer.duration
@@ -131,7 +135,20 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         
         self.activeTimers.removeAll(where: {t in t.notifID == notifID})
         self.completedTimers.append(timer)
-//        objectWillChange.send()
+        self.recomputeBottomDuration()
+    }
+    
+    // Searches for and removes completed timers from the active list
+    func findAndMoveCompletedTimers() {
+        let timersToRemove = self.activeTimers
+            .filter({t in t.status == TimerStatus.ended})
+            .map({t in t.notifID})
+        
+        for timerId in timersToRemove {
+            timerEnded(notifID: timerId)
+        }
+        
+        recomputeBottomDuration()
     }
     
     func clearCompletedTimers() {

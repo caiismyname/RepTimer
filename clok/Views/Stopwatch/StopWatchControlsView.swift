@@ -11,44 +11,36 @@ import SwiftUI
 struct StopWatchControlsView: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLock: Bool = false
-    let buttonPadding = CGFloat(10)
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
-    let fontSize = 30.0
+    let buttonSize = buttonSizes()
 
     var body: some View {
         if stopwatch.status == PeriodStatus.inactive {
             HStack {
-                Spacer()
                 Button(action: {}) {
                     Image(systemName: "trash")
-                        .font(.system(size: fontSize))
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
                 }
-                    .padding(buttonPadding)
-                    .foregroundColor(Color.white)
-                    .background(Color.red)
-                    .cornerRadius(12)
+                .foregroundColor(Color.white)
+                .background(Color.red)
+                .cornerRadius(12)
+                
                 Button(action: {
                     if !isScreenLock {
                         stopwatch.start()
                         haptic.impactOccurred()
                     }
                 }) {
-                    Image(systemName: "play.fill")
-                        .font(.system(size: fontSize))
-                        .frame(maxWidth: .infinity)
+                    Image(systemName: "play.circle")
+                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
                 }
-                    .padding(buttonPadding)
-                    .foregroundColor(Color.white)
-                    .background(Color.green)
-                    .cornerRadius(12)
-                Spacer()
+                .foregroundColor(Color.white)
+                .background(Color.green)
+                .cornerRadius(12)
             }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
-                .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
+            .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
         } else if stopwatch.status == PeriodStatus.active {
             HStack {
-                Spacer()
                 Button(action: {
                     if !isScreenLock {
                         stopwatch.newLap()
@@ -56,10 +48,8 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "flag.2.crossed")
-                        .font(.system(size: fontSize))
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
                 }
-                    .padding(buttonPadding)
                     .foregroundColor(Color.black)
                     .background(Color.white)
                     .cornerRadius(12)
@@ -70,20 +60,15 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "pause.fill")
-                        .font(.system(size: fontSize))
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
                 }
-                    .padding(buttonPadding)
                     .foregroundColor(Color.white)
                     .background(Color.gray)
                     .cornerRadius(12)
-                Spacer()
             }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
-                .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
+            .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
         } else if stopwatch.status == PeriodStatus.paused {
             HStack {
-                Spacer()
                 Button(action: {
                     if !isScreenLock {
                         stopwatch.reset()
@@ -91,10 +76,8 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "trash")
-                        .font(.system(size: fontSize))
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
                 }
-                    .padding(buttonPadding)
                     .foregroundColor(Color.white)
                     .background(Color.red)
                     .cornerRadius(12)
@@ -104,18 +87,14 @@ struct StopWatchControlsView: View {
                         haptic.impactOccurred()
                     }
                 }) {
-                    Image(systemName: "play.fill")
-                        .font(.system(size: fontSize))
-                        .frame(maxWidth: .infinity)
+                    Image(systemName: "play.circle")
+                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
                 }
-                    .padding(buttonPadding)
                     .foregroundColor(Color.white)
                     .background(Color.green)
                     .cornerRadius(12)
-                Spacer()
             }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, alignment: .center)
-                .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
+            .buttonStyle(BorderlessButtonStyle()) // This button style is what enables multiple button in a ListView to be tappable. Dunno why.
         } else if stopwatch.status == PeriodStatus.ended {
             // No controls if the stopwatch has ended
         }

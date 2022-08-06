@@ -24,6 +24,7 @@ struct TimeInputKeyboardView: View {
                 }
             }
         }
+        .frame(height: 225.0)
     }
 }
 
