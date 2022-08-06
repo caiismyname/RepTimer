@@ -99,12 +99,12 @@ class SingleTimer: ObservableObject, Codable {
     
     func scheduleEndSound() throws {
         do {
-            guard let soundFileURL = Bundle.main.path(forResource: "done", ofType: "caf") else {
+            guard let soundFileURL = Bundle.main.path(forResource: "radar", ofType: "caf") else {
                 print("no url")
                 return
             }
             
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.duckOthers])
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
             self.avplayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: soundFileURL))
             self.avplayer!.play(atTime: self.avplayer!.deviceCurrentTime + self.duration)

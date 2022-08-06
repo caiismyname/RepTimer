@@ -35,9 +35,9 @@
 		2789A9D02879D13F009710C3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789A9CF2879D13F009710C3 /* ViewExtensions.swift */; };
 		279936412880B71C009EC53D /* DownUpTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936402880B71C009EC53D /* DownUpTimerView.swift */; };
 		279936432880EFF6009EC53D /* DownUpTimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936422880EFF6009EC53D /* DownUpTimerModel.swift */; };
+		27A42F12289EE4BC007BA2BB /* radar.caf in Resources */ = {isa = PBXBuildFile; fileRef = 27A42F11289EE4BC007BA2BB /* radar.caf */; };
 		27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */; };
 		27E3F7362867722400DECF15 /* timerDoneSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F7352867722400DECF15 /* timerDoneSound.m4a */; };
-		27E3F73C2867A0E500DECF15 /* done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F73B2867A0E500DECF15 /* done.caf */; };
 		27E3F73E2869274B00DECF15 /* StopwatchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73D2869274B00DECF15 /* StopwatchesController.swift */; };
 		27E3F7402870AE2800DECF15 /* StopWatchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73F2870AE2800DECF15 /* StopWatchHistoryView.swift */; };
 		27E3F7422871CBC000DECF15 /* StopwatchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F7412871CBC000DECF15 /* StopwatchSettingsView.swift */; };
@@ -94,9 +94,10 @@
 		2789A9CF2879D13F009710C3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		279936402880B71C009EC53D /* DownUpTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownUpTimerView.swift; sourceTree = "<group>"; };
 		279936422880EFF6009EC53D /* DownUpTimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownUpTimerModel.swift; sourceTree = "<group>"; };
+		27A42F10289EE48F007BA2BB /* radar.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = radar.caf; path = clok/radar.caf; sourceTree = SOURCE_ROOT; };
+		27A42F11289EE4BC007BA2BB /* radar.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = radar.caf; sourceTree = "<group>"; };
 		27E3F73328676B8500DECF15 /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		27E3F7352867722400DECF15 /* timerDoneSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = timerDoneSound.m4a; sourceTree = "<group>"; };
-		27E3F73B2867A0E500DECF15 /* done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = done.caf; sourceTree = "<group>"; };
 		27E3F73D2869274B00DECF15 /* StopwatchesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchesController.swift; sourceTree = "<group>"; };
 		27E3F73F2870AE2800DECF15 /* StopWatchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchHistoryView.swift; sourceTree = "<group>"; };
 		27E3F7412871CBC000DECF15 /* StopwatchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchSettingsView.swift; sourceTree = "<group>"; };
@@ -176,7 +177,7 @@
 		271B600D2845220D00BA0F5D /* clok */ = {
 			isa = PBXGroup;
 			children = (
-				27E3F73B2867A0E500DECF15 /* done.caf */,
+				27A42F11289EE4BC007BA2BB /* radar.caf */,
 				271B603E2845543400BA0F5D /* Extensions */,
 				271B60392845223000BA0F5D /* Views */,
 				271B60382845222300BA0F5D /* Models */,
@@ -206,6 +207,7 @@
 		271B60282845220E00BA0F5D /* RepTimerUITests */ = {
 			isa = PBXGroup;
 			children = (
+				27A42F10289EE48F007BA2BB /* radar.caf */,
 				27E3F7352867722400DECF15 /* timerDoneSound.m4a */,
 				271B60292845220E00BA0F5D /* RepTimerUITests.swift */,
 				271B602B2845220E00BA0F5D /* RepTimerUITestsLaunchTests.swift */,
@@ -391,8 +393,8 @@
 			files = (
 				271B60162845220E00BA0F5D /* Preview Assets.xcassets in Resources */,
 				27E3F7362867722400DECF15 /* timerDoneSound.m4a in Resources */,
-				27E3F73C2867A0E500DECF15 /* done.caf in Resources */,
 				271B60132845220E00BA0F5D /* Assets.xcassets in Resources */,
+				27A42F12289EE4BC007BA2BB /* radar.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
