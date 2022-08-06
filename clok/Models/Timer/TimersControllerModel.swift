@@ -15,6 +15,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     @Published var bottomDuration: TimeInterval = TimeInterval(0.0) // The TimeInteral value that denotes "bottom of the screen"
     // DownUp
     @Published var downupTimer: DownUpTimer = DownUpTimer()
+//    @Published var editTimerID: String = ""
     
     override init() {
         super.init()
@@ -96,6 +97,10 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
             return nil
         }
     }
+    
+//    func getEditTimer() -> SingleTimer? {
+//        return getTimerByNotifID(notifID: editTimerID)
+//    }
                    
     // not sure what this function is, I think it's the background handler?
     func userNotificationCenter(

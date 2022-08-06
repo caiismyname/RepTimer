@@ -11,7 +11,7 @@ import SwiftUI
 struct TimerTimelineView: View {
     @ObservedObject var controller: TimersController
     @State var createTimerPopoverShowing = false
-    @State var emptyStatePopover = true
+//    @State var editTimerPopoverShowing = false
     let sizes = buttonSizes()
     let verticalFidelity = 14.0
 
@@ -44,10 +44,14 @@ struct TimerTimelineView: View {
                     ForEach(controller.activeTimers, id: \.self) { timer in
                         TimelineEntryView(
                             timer: timer,
+                            controller: controller,
                             proxy: proxy,
                             verticalFidelity: verticalFidelity,
                             bottomDuration: controller.bottomDuration
                         )
+                        .onTapGesture(count: 1, perform: {
+                            timer.inEditMode = true
+                        })
                     }
                     
                     // Plus button
@@ -70,6 +74,7 @@ struct TimerTimelineView: View {
 
 struct TimelineEntryView: View {
     @ObservedObject var timer: SingleTimer
+    @ObservedObject var controller: TimersController
     let proxy: GeometryProxy
     let verticalFidelity: Double
     let bottomDuration: Double
@@ -105,9 +110,6 @@ struct TimelineEntryView: View {
                     // Round up so time hits 0:00 when the pill hits the top of the screen
                     Text(timer.timeRemaining.formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond)
                         .font(Font.monospaced(.system(size:20))())
-                } else if (timer.status == TimerStatus.ended) {
-                    Text(timer.timeRemaining.formattedTimeNoMilliNoLeadingZero)
-                        .font(Font.monospaced(.system(size:20))())
                 }
             }
             .padding()
@@ -117,6 +119,12 @@ struct TimelineEntryView: View {
             x: proxy.size.width / 2,
             y: computeYPos()
         )
+        .overlay() {
+            if timer.inEditMode {
+                EditTimerPopover(controller: controller, timer: timer, doneCallback: {timer.inEditMode = false})
+                    .position(x: proxy.size.width / 2, y: computeYPos() - computeHeight() - 10.0)
+            }
+        }
     }
 }
 
@@ -195,7 +203,29 @@ struct TimelineDoneTimersPopover: View {
             }
         }
     }
+}
+
+struct EditTimerPopover: View {
+    @ObservedObject var controller: TimersController
+    @ObservedObject var timer: SingleTimer
+    var doneCallback = {}
+    let sizes = buttonSizes()
     
+    var body: some View {
+        Button(action: {
+            timer.stop()
+            controller.findAndMoveCompletedTimers()
+            doneCallback()
+        }) {
+            Image(systemName: "trash.fill")
+            .padding()
+            .frame(maxHeight: sizes.inputHeight)
+            
+        }
+        .background(.white)
+        .foregroundColor(.red)
+        .cornerRadius(sizes.radius)
+    }
 }
 
 struct TimerTimelineView_Previews: PreviewProvider {

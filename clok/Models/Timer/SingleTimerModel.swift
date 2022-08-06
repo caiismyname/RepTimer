@@ -12,6 +12,7 @@ import AVFoundation
 class SingleTimer: ObservableObject, Codable {
     @Published var status: TimerStatus = TimerStatus.inactive
     @Published var timeRemaining: TimeInterval
+    @Published var inEditMode = false
     let duration: TimeInterval
     var startTime = Date()
     var timer: Timer = Timer()
@@ -29,9 +30,6 @@ class SingleTimer: ObservableObject, Codable {
         self.timeRemaining = timeRemaining
         self.duration = timeRemaining
         self.name = name
-        
-        // Temp for ease of building
-//        start()
     }
     
     @objc func update() throws {
@@ -137,7 +135,7 @@ class SingleTimer: ObservableObject, Codable {
     
     // Handles stopping the timer before it's done
     func stop() {
-        status = TimerStatus.inactive
+        status = TimerStatus.ended
         // Remove notification
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notifID])
         // Cancel the audio playback
