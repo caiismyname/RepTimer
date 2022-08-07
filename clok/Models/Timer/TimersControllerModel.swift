@@ -61,6 +61,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     
     func addTimer(timeRemaining: TimeInterval, name: String) {
         let newTimer = SingleTimer(timeRemaining: timeRemaining, name: name)
+        newTimer.doneCallback = {self.findAndMoveCompletedTimers()}
         activeTimers.append(newTimer)
         bottomDuration = max(bottomDuration, newTimer.duration)
         newTimer.start()
