@@ -11,25 +11,32 @@ import SwiftUI
 struct TabContainerView: View {
     @ObservedObject var timersController: TimersController
     @ObservedObject var stopwatchesController: StopwatchesController
+//    @AppStorage("selectedTabIndex") var selectedTabIndex: Int = 0
     let buttonSize = Sizes()
     
     var body: some View {
+//        TabView(selection: $selectedTabIndex) {
         TabView {
             StopWatchContainerView(controller: stopwatchesController)
-            .tabItem {
-                Image(systemName: "stopwatch")
-                Text("Stopwatch")
-            }
+                .tabItem {
+                    Image(systemName: "stopwatch")
+                    Text("Stopwatch")
+                }
+//                .tag(0)
+            
             TimerTimelineView(controller: timersController)
-            .tabItem {
-                Image(systemName: "timer")
-                Text("Timers")
-            }
+                .tabItem {
+                    Image(systemName: "timer")
+                    Text("Timers")
+                }
+//                .tag(1)
+            
             DownUpTimerView(controller: timersController.downupTimer)
                 .tabItem {
                     Image(systemName: "arrow.counterclockwise.circle")
                     Text("Repeat Timer")
                 }
+//                .tag(2)
         }
         .font(.system(size: buttonSize.fontSize))
     }

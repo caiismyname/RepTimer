@@ -13,7 +13,6 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     @Published var activeTimers: [SingleTimer] = []
     @Published var completedTimers: [SingleTimer] = []
     @Published var bottomDuration: TimeInterval = TimeInterval(0.0) // The TimeInteral value that denotes "bottom of the screen"
-    @Published var handlingCompletedTimer: Bool = false
     // DownUp
     @Published var downupTimer: DownUpTimer = DownUpTimer()
 //    @Published var editTimerID: String = ""
