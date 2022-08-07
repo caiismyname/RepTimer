@@ -16,7 +16,7 @@ struct StopWatchContainerView: View {
     
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
     let screenLockHaptic = UINotificationFeedbackGenerator()
-    let buttonSize = buttonSizes()
+    let buttonSize = Sizes()
 
     var body: some View {
         VStack (alignment: .trailing) {

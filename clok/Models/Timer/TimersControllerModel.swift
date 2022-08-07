@@ -13,6 +13,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     @Published var activeTimers: [SingleTimer] = []
     @Published var completedTimers: [SingleTimer] = []
     @Published var bottomDuration: TimeInterval = TimeInterval(0.0) // The TimeInteral value that denotes "bottom of the screen"
+    @Published var handlingCompletedTimer: Bool = false
     // DownUp
     @Published var downupTimer: DownUpTimer = DownUpTimer()
 //    @Published var editTimerID: String = ""
@@ -59,8 +60,8 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     
     // MARK: Timeline
     
-    func addTimer(timeRemaining: TimeInterval, name: String) {
-        let newTimer = SingleTimer(timeRemaining: timeRemaining, name: name)
+    func addTimer(timeRemaining: TimeInterval, name: String, repeatAlert: Bool) {
+        let newTimer = SingleTimer(timeRemaining: timeRemaining, name: name, repeatAlert: repeatAlert)
         newTimer.doneCallback = {self.findAndMoveCompletedTimers()}
         activeTimers.append(newTimer)
         bottomDuration = max(bottomDuration, newTimer.duration)
@@ -88,7 +89,8 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     }
     
     func getTimerByNotifID(notifID: String) -> SingleTimer? {
-        let matchingTimers = activeTimers.filter { timer in
+        let allTimers = activeTimers + completedTimers
+        let matchingTimers = allTimers.filter { timer in
             return (timer.notifID == notifID)
         }
         
@@ -109,13 +111,14 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        print("notif received in background")
         
         guard let timer = getTimerByNotifID(notifID: response.notification.request.identifier) else {
+            print("Timer not found")
             return
         }
 
         timerEnded(notifID: response.notification.request.identifier)
+        timer.stopPlaying() // Stop the alert audio when notification is tapped
         timer.backgroundDoneHandler()
     }
     

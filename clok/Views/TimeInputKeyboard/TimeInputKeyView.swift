@@ -11,7 +11,7 @@ import SwiftUI
 struct TimeInputKeyView: View {
     @ObservedObject var model: TimeInputKeyboardModel
     var digit: String
-    let sizes = buttonSizes()
+    let sizes = Sizes()
     
     var body: some View {
         Button {

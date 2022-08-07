@@ -11,7 +11,7 @@ import SwiftUI
 struct TabContainerView: View {
     @ObservedObject var timersController: TimersController
     @ObservedObject var stopwatchesController: StopwatchesController
-    let buttonSize = buttonSizes()
+    let buttonSize = Sizes()
     
     var body: some View {
         TabView {

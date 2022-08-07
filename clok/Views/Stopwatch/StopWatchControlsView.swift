@@ -12,7 +12,7 @@ struct StopWatchControlsView: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLock: Bool = false
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
-    let buttonSize = buttonSizes()
+    let buttonSize = Sizes()
 
     var body: some View {
         if stopwatch.status == PeriodStatus.inactive {

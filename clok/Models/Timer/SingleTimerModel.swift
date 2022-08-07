@@ -25,11 +25,13 @@ class SingleTimer: ObservableObject, Codable {
     var avplayer: AVAudioPlayer? // This needs to be an instance var otherwise the player disappears before the audio finishes playing
     var doneCallback = {}
     var notifID: String = ""
+    var repeatAlert: Bool // Defaults to true in the initializer
     
-    init(timeRemaining: TimeInterval, name: String) {
+    init(timeRemaining: TimeInterval, name: String, repeatAlert: Bool = true) {
         self.timeRemaining = timeRemaining
         self.duration = timeRemaining
         self.name = name
+        self.repeatAlert = repeatAlert
     }
     
     @objc func update() throws {
@@ -105,7 +107,10 @@ class SingleTimer: ObservableObject, Codable {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
             self.avplayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: soundFileURL))
-            self.avplayer!.play(atTime: self.avplayer!.deviceCurrentTime + self.duration)
+            if (self.repeatAlert) {
+                self.avplayer?.numberOfLoops = -1
+            }
+            self.avplayer?.play(atTime: self.avplayer!.deviceCurrentTime + self.duration)
         } catch {
             print("audio player setup error")
             self.avplayer = nil
@@ -151,6 +156,10 @@ class SingleTimer: ObservableObject, Codable {
         self.timer.invalidate()
     }
     
+    func stopPlaying() {
+        self.avplayer!.stop()
+    }
+    
     // MARK: — Codable
     private enum CoderKeys: String, CodingKey {
         case status
@@ -161,6 +170,7 @@ class SingleTimer: ObservableObject, Codable {
         case id
         case name
         case notifID
+        case repeatAlert
     }
     
     func encode(to encoder: Encoder) throws {
@@ -173,6 +183,7 @@ class SingleTimer: ObservableObject, Codable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(notifID, forKey: .notifID)
+        try container.encode(repeatAlert, forKey: .repeatAlert)
     }
     
     required init(from decoder: Decoder) throws {
@@ -185,6 +196,13 @@ class SingleTimer: ObservableObject, Codable {
         id = try values.decode(UUID.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
         notifID = try values.decode(String.self, forKey: .notifID)
+        
+        // New fields need defalts set
+        do {
+            repeatAlert = try values.decode(Bool.self, forKey: .repeatAlert)
+        } catch {
+            repeatAlert = true
+        }
         
         if status != TimerStatus.inactive {
             startSystemTimer()

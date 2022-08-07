@@ -11,15 +11,16 @@ import SwiftUI
 struct TimerTimelineView: View {
     @ObservedObject var controller: TimersController
     @State var createTimerPopoverShowing = false
-//    @State var editTimerPopoverShowing = false
-    let sizes = buttonSizes()
+    let sizes = Sizes()
     let verticalFidelity = 14.0
 
-    func saveNewTimer(name: String, duration: TimeInterval) {
-        if duration > 0.0 {
-            controller.addTimer(timeRemaining: duration, name: name)
-            createTimerPopoverShowing = false
+    func saveNewTimer(name: String, duration: TimeInterval, repeatAlert: Bool) {
+        guard duration > 0.0 else {
+            return
         }
+        
+        controller.addTimer(timeRemaining: duration, name: name, repeatAlert: repeatAlert)
+        createTimerPopoverShowing = false
     }
     
     var body: some View {
@@ -131,7 +132,7 @@ struct TimelineEntryView: View {
 struct TimelineDoneBarView: View {
     let proxy: GeometryProxy
     let verticalFidelity: Double
-    let sizes = buttonSizes()
+    let sizes = Sizes()
     let paddingSize = 12.0
     @ObservedObject var controller: TimersController
     @State var doneTimersPresented = false
@@ -171,7 +172,7 @@ struct TimelineDoneBarView: View {
 
 struct TimelineDoneTimersPopover: View {
     @ObservedObject var controller: TimersController
-    let buttonSize = buttonSizes()
+    let buttonSize = Sizes()
     
     var body: some View {
         VStack {
@@ -209,7 +210,7 @@ struct EditTimerPopover: View {
     @ObservedObject var controller: TimersController
     @ObservedObject var timer: SingleTimer
     var doneCallback = {}
-    let sizes = buttonSizes()
+    let sizes = Sizes()
     
     var body: some View {
         Button(action: {

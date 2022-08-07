@@ -44,7 +44,7 @@ struct DUControlsView: View {
     @ObservedObject var controller: DownUpTimer
     @ObservedObject var keyboard: TimeInputKeyboardModel
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
-    let buttonSize = buttonSizes()
+    let buttonSize = Sizes()
     var outerHeight: Double
     var outerWidth: Double
     
@@ -127,7 +127,7 @@ struct DUStopwatchView: View {
 
 struct DUTimeInputView: View {
     @ObservedObject var keyboard: TimeInputKeyboardModel
-    let sizes = buttonSizes()
+    let sizes = Sizes()
     
     var body: some View {
         Text(keyboard.value.formattedTimeNoMilliNoLeadingZero)
@@ -142,7 +142,7 @@ struct DUVisualization: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @ObservedObject var controller: DownUpTimer
     let circleWidth = 20.0
-    let sizes = buttonSizes()
+    let sizes = Sizes()
     
     var body: some View {
         GeometryReader { gp in

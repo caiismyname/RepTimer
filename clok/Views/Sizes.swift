@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct buttonSizes {
+struct Sizes {
     let inputHeight = 60.0
     let inputIconSize = 30.0
     let fontSize = 30.0
+    let smallFontSize = 14.0
     let radius = 12.0
     let bigHeight = 200.0
     
