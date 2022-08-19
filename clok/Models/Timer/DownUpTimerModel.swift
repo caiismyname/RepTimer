@@ -16,7 +16,7 @@ enum DownUpTimerStatus: Codable {
 }
 
 class DownUpTimer: ObservableObject, Codable {
-    @Published var timer = SingleTimer(timeRemaining: 100, name: "") // Placeholder timer, will be replaced when `reset()` is called
+    @Published var timer = SingleTimer(timeRemaining: 100, name: "", repeatAlert: false) // Placeholder timer, will be replaced when `reset()` is called
     @Published var stopwatch = SingleStopWatch()
     @Published var status = DownUpTimerStatus.inactive
     @Published var timerDuration = 0.0
@@ -46,7 +46,7 @@ class DownUpTimer: ObservableObject, Codable {
     }
     
     func initTimer() {
-        self.timer = SingleTimer(timeRemaining: self.timerDuration, name: "")
+        self.timer = SingleTimer(timeRemaining: self.timerDuration, name: "", repeatAlert: false)
         setTimerCallback()
     }
     

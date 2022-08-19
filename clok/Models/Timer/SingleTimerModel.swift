@@ -144,7 +144,7 @@ class SingleTimer: ObservableObject, Codable {
         // Remove notification
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notifID])
         // Cancel the audio playback
-        self.avplayer!.stop()
+        self.avplayer?.stop()
         // Stop the cron
         self.timer.invalidate()
     }
@@ -157,7 +157,7 @@ class SingleTimer: ObservableObject, Codable {
     }
     
     func stopPlaying() {
-        self.avplayer!.stop()
+        self.avplayer?.stop()
     }
     
     // MARK: — Codable
