@@ -91,6 +91,14 @@ struct TimelineEntryView: View {
     func computeYPos() -> Double {
         return (timer.timeRemaining / bottomDuration) * (proxy.size.height - computeHeight()) + (computeHeight() / 2)
     }
+    
+    func computeOverlayYPos() -> Double {
+        if computeYPos() > proxy.size.height / 2 {
+            return computeYPos() - computeHeight() - 10.0
+        } else {
+            return computeYPos() + computeHeight() + 10.0
+        }
+    }
 
     
     var body: some View {
@@ -123,7 +131,7 @@ struct TimelineEntryView: View {
         .overlay() {
             if timer.inEditMode {
                 EditTimerPopover(controller: controller, timer: timer, doneCallback: {timer.inEditMode = false})
-                    .position(x: proxy.size.width / 2, y: computeYPos() - computeHeight() - 10.0)
+                    .position(x: proxy.size.width / 2, y: computeOverlayYPos())
             }
         }
     }
@@ -215,7 +223,7 @@ struct EditTimerPopover: View {
     var body: some View {
         Button(action: {
             timer.stop()
-            controller.findAndMoveCompletedTimers()
+            controller.cleanActiveTimersList()
             doneCallback()
         }) {
             Image(systemName: "trash.fill")

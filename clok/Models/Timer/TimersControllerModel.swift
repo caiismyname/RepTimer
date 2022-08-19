@@ -61,7 +61,7 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     
     func addTimer(timeRemaining: TimeInterval, name: String, repeatAlert: Bool) {
         let newTimer = SingleTimer(timeRemaining: timeRemaining, name: name, repeatAlert: repeatAlert)
-        newTimer.doneCallback = {self.findAndMoveCompletedTimers()}
+        newTimer.doneCallback = {self.cleanActiveTimersList()}
         activeTimers.append(newTimer)
         bottomDuration = max(bottomDuration, newTimer.duration)
         newTimer.start()
@@ -146,15 +146,19 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         self.recomputeBottomDuration()
     }
     
-    // Searches for and removes completed timers from the active list
-    func findAndMoveCompletedTimers() {
-        let timersToRemove = self.activeTimers
+    // Cleans the active timer list (handles `ended` and `canceled` timers)
+    func cleanActiveTimersList() {
+        let endedTimers = self.activeTimers
             .filter({t in t.status == TimerStatus.ended})
             .map({t in t.notifID})
         
-        for timerId in timersToRemove {
+        for timerId in endedTimers {
             timerEnded(notifID: timerId)
         }
+        
+        // Remove canceled timers from the active list, nothing happens to them.
+        self.activeTimers = self.activeTimers
+            .filter({t in t.status != TimerStatus.canceled})
         
         recomputeBottomDuration()
     }

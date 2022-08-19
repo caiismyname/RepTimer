@@ -81,7 +81,7 @@ class SingleTimer: ObservableObject, Codable {
         
         // Schedule the sound
         do {
-            try scheduleEndSound()
+//            try scheduleEndSound()
         } catch {
             print("Error scheduling audio")
         }
@@ -140,11 +140,11 @@ class SingleTimer: ObservableObject, Codable {
     
     // Handles stopping the timer before it's done
     func stop() {
-        status = TimerStatus.ended
+        status = TimerStatus.canceled // Use `canceled` so it doesn't appear in the "done timers" list
         // Remove notification
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notifID])
         // Cancel the audio playback
-        self.avplayer?.stop()
+        stopPlaying()
         // Stop the cron
         self.timer.invalidate()
     }
@@ -237,4 +237,5 @@ enum TimerStatus: Codable {
     case inactive
     case active
     case ended
+    case canceled
 }

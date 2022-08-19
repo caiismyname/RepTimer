@@ -16,7 +16,7 @@ struct TabContainerView: View {
     
     var body: some View {
 //        TabView(selection: $selectedTabIndex) {
-        TabView {
+        TabView() {
             StopWatchContainerView(controller: stopwatchesController)
                 .tabItem {
                     Image(systemName: "stopwatch")
