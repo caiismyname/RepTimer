@@ -81,7 +81,7 @@ class SingleTimer: ObservableObject, Codable {
         
         // Schedule the sound
         do {
-//            try scheduleEndSound()
+            try scheduleEndSound()
         } catch {
             print("Error scheduling audio")
         }

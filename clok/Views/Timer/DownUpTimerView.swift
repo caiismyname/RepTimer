@@ -161,13 +161,23 @@ struct DUVisualization: View {
                     .padding()
                 }
                 
-                if controller.status == DownUpTimerStatus.counting_down {
-                    Image(systemName: "arrow.down.circle.fill")
-                        .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
-                } else if controller.status == DownUpTimerStatus.counting_up {
-                    Image(systemName: "arrow.up.circle")
-                    .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
-                }
+                HStack {
+                    if controller.status == DownUpTimerStatus.counting_down {
+                        Image(systemName: "arrow.down.circle.fill")
+//                            .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
+                    } else if controller.status == DownUpTimerStatus.counting_up {
+                        Image(systemName: "arrow.up.circle")
+//                            .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Cycles: \(controller.resetCount)")
+                        Text("Total: \(controller.totalDurationStopwatch.duration.formattedTimeNoMilliNoLeadingZero)")
+                    }
+                    .font(Font.monospaced(.system(size: sizes.smallFontSize))())
+                }.position(x: gp.size.width / 2, y: sizes.bigTimeFont / 2)
             }
         }
         .font(Font.monospaced(.system(size: sizes.bigTimeFont))())

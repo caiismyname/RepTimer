@@ -142,7 +142,9 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         }
         
         self.activeTimers.removeAll(where: {t in t.notifID == notifID})
-        self.completedTimers.append(timer)
+        if (!self.completedTimers.contains(timer)) { // This check creates idempotence
+            self.completedTimers.append(timer)
+        }
         self.recomputeBottomDuration()
     }
     
@@ -270,3 +272,4 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         }
     }
 }
+

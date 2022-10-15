@@ -21,6 +21,8 @@ class DownUpTimer: ObservableObject, Codable {
     @Published var status = DownUpTimerStatus.inactive
     @Published var timerDuration = 0.0
     @Published var keyboard = TimeInputKeyboardModel(value: 0.0)
+    @Published var resetCount = 0
+    @Published var totalDurationStopwatch = SingleStopWatch()
 
     init() {
         // Need a blank init b/c the Codable init overrides
@@ -34,15 +36,24 @@ class DownUpTimer: ObservableObject, Codable {
         }
         self.stopwatch = SingleStopWatch() // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
         
+        self.timer.stop() // Stop the existing timer
         initTimer()
         self.timer.start()
         self.status = DownUpTimerStatus.counting_down
+        
+        // Maintain session counters
+        self.resetCount = self.resetCount + 1
+        if self.totalDurationStopwatch.status != .active {
+            self.totalDurationStopwatch.start()
+        }
     }
     
     func stop() {
         self.status = DownUpTimerStatus.inactive
-        timer.stop()
-        stopwatch = SingleStopWatch()  // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
+        self.timer.stop()
+        self.stopwatch = SingleStopWatch()  // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
+        self.resetCount = 0
+        self.totalDurationStopwatch = SingleStopWatch()
     }
     
     func initTimer() {
@@ -68,12 +79,14 @@ class DownUpTimer: ObservableObject, Codable {
         }
         
         if Date() > timer.scheduledEndTime {
-            if self.status == DownUpTimerStatus.counting_down {
-                self.status = DownUpTimerStatus.counting_up
-                self.stopwatch.start(startTime: timer.scheduledEndTime)
-            } else {
-                self.stopwatch.start()
-            }
+            self.status = DownUpTimerStatus.counting_up
+            self.stopwatch.start(startTime: timer.scheduledEndTime)
+//            if self.status == DownUpTimerStatus.counting_down {
+//                self.status = DownUpTimerStatus.counting_up
+//                self.stopwatch.start(startTime: timer.scheduledEndTime)
+//            } else {
+//                self.stopwatch.start()
+//            }
         } else {
             self.status = DownUpTimerStatus.counting_down
             setTimerCallback()
