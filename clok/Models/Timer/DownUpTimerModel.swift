@@ -11,6 +11,11 @@ import AVFoundation
 
 enum DownUpTimerStatus: Codable {
     case inactive
+    case active
+    case paused
+}
+
+enum DownUpTimerDirection: Codable {
     case counting_down
     case counting_up
 }
@@ -19,40 +24,79 @@ class DownUpTimer: ObservableObject, Codable {
     @Published var timer = SingleTimer(timeRemaining: 100, name: "", repeatAlert: false) // Placeholder timer, will be replaced when `reset()` is called
     @Published var stopwatch = SingleStopWatch()
     @Published var status = DownUpTimerStatus.inactive
+    @Published var startingDirection = DownUpTimerDirection.counting_down
+    @Published var currentDirection = DownUpTimerDirection.counting_down
     @Published var timerDuration = 0.0
     @Published var keyboard = TimeInputKeyboardModel(value: 0.0)
-    @Published var resetCount = 0
+    @Published var cycleCount = 0
     @Published var totalDurationStopwatch = SingleStopWatch()
-
+    
     init() {
         // Need a blank init b/c the Codable init overrides
     }
     
     // Start and reset technically do the same thing
-    func reset() {
+    func nextPhase() {
         guard self.timerDuration != 0.0 else {
-            self.status = DownUpTimerStatus.inactive
+            self.status = .inactive
             return
         }
-        self.stopwatch = SingleStopWatch() // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
         
-        self.timer.stop() // Stop the existing timer
-        initTimer()
-        self.timer.start()
-        self.status = DownUpTimerStatus.counting_down
+        // On start
+        if cycleCount == 0 {
+            self.status = .active
+            self.currentDirection = self.startingDirection == .counting_up ? .counting_down : .counting_up // Initialize to opposite so upcoming code switches the state to the correct one
+            if self.totalDurationStopwatch.status != .active {
+                self.totalDurationStopwatch.start()
+            }
+        }
         
-        // Maintain session counters
-        self.resetCount = self.resetCount + 1
-        if self.totalDurationStopwatch.status != .active {
-            self.totalDurationStopwatch.start()
+        // Resume from pause
+        if status == .paused {
+            if currentDirection == .counting_up {
+                self.stopwatch.resume()
+                self.currentDirection = .counting_up
+            } else if currentDirection == .counting_down {
+                self.timer.start()
+                self.currentDirection = .counting_down
+            }
+            
+            self.status = .active
+            self.totalDurationStopwatch.resume()
+        } else if currentDirection == .counting_up { // Currently counting up, switch to down
+            self.timer.stop() // Stop the existing timer
+            initTimer()
+            self.timer.start()
+            self.currentDirection = .counting_down
+            
+        } else if currentDirection == .counting_down { // Currently counting down, switch to up
+            self.stopwatch = SingleStopWatch() // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
+            self.stopwatch.start()
+            self.currentDirection = .counting_up
+        }
+        
+        // Maintain session counter (only count when we cycle around)
+        if self.currentDirection == self.startingDirection {
+            self.cycleCount = self.cycleCount + 1
         }
     }
     
-    func stop() {
-        self.status = DownUpTimerStatus.inactive
+    func pause() {
+        if self.currentDirection == .counting_up {
+            self.stopwatch.pause()
+        } else if self.currentDirection == .counting_down {
+            self.timer.pause()
+        }
+        
+        self.status = .paused
+        self.totalDurationStopwatch.pause()
+    }
+    
+    func reset() {
+        self.status = .inactive
         self.timer.stop()
         self.stopwatch = SingleStopWatch()  // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
-        self.resetCount = 0
+        self.cycleCount = 0
         self.totalDurationStopwatch = SingleStopWatch()
     }
     
@@ -66,8 +110,8 @@ class DownUpTimer: ObservableObject, Codable {
     }
     
     func doneTimerCallback() {
-        print("done timer callback")
-        self.status = DownUpTimerStatus.counting_up
+        self.currentDirection = .counting_up
+        self.stopwatch = SingleStopWatch() // "reset" the stopwatch
         self.stopwatch.start()
     }
     
@@ -78,8 +122,8 @@ class DownUpTimer: ObservableObject, Codable {
             return
         }
         
-        if Date() > timer.scheduledEndTime {
-            self.status = DownUpTimerStatus.counting_up
+        if Date() > timer.scheduledEndTime { // Timer has already finished
+            self.currentDirection = .counting_up
             self.stopwatch.start(startTime: timer.scheduledEndTime)
 //            if self.status == DownUpTimerStatus.counting_down {
 //                self.status = DownUpTimerStatus.counting_up
@@ -88,7 +132,7 @@ class DownUpTimer: ObservableObject, Codable {
 //                self.stopwatch.start()
 //            }
         } else {
-            self.status = DownUpTimerStatus.counting_down
+            self.currentDirection = .counting_down
             setTimerCallback()
             self.timer.startSystemTimer()
         }

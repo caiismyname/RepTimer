@@ -16,6 +16,20 @@ struct DownUpTimerView: View {
             VStack {
                 Spacer()
                 
+                if controller.status == .inactive {
+                    // Starting direction control
+                    HStack {
+                        Text("Starting direction")
+                            .font(.system(.body))
+                        Picker("Starting direction", selection: $controller.startingDirection) {
+                            Text("Down").tag(DownUpTimerDirection.counting_down)
+                            Text("Up").tag(DownUpTimerDirection.counting_up)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    .padding()
+                }
+                
                 // Timer display
                 HStack {
                     if controller.status == DownUpTimerStatus.inactive {
@@ -23,6 +37,7 @@ struct DownUpTimerView: View {
                     }
                 }
                 .padding()
+                
                 
                 // Input keyboard / visualization
                 if controller.status == DownUpTimerStatus.inactive {
@@ -60,7 +75,7 @@ struct DUControlsView: View {
                     if controller.status == DownUpTimerStatus.inactive {
                         controller.timerDuration = keyboard.value
                     }
-                    controller.reset()
+                    controller.nextPhase()
                     haptic.impactOccurred()
                 }) {
                     Image(systemName:
@@ -70,29 +85,56 @@ struct DUControlsView: View {
                 }
                 .background(Color.green)
                 .cornerRadius(buttonSize.radius)
-            } else {
+            } else if controller.status == .paused {
                 // Stop button
                 Button(action: {
-                    controller.stop()
+                    controller.reset()
                     haptic.impactOccurred()
                 }) {
-                    Image(systemName: "stop.circle")
+                    Image(systemName: "trash")
+                        .frame(maxWidth: outerWidth / 10, maxHeight: bigButtonHeight())
+                        .padding(30)
+                }
+                .background(Color.red)
+                .cornerRadius(buttonSize.radius)
+                
+                // Next button
+                Button(action: {
+                    if controller.status == DownUpTimerStatus.inactive {
+                        controller.timerDuration = keyboard.value
+                    }
+                    controller.nextPhase()
+                    haptic.impactOccurred()
+                }) {
+                    Image(systemName: "play.circle")
+                        .frame(maxWidth: .infinity, maxHeight: bigButtonHeight())
+                        .padding(30)
+                }
+                .background(Color.green)
+                .cornerRadius(buttonSize.radius)
+            } else if controller.status == .active {
+                // Stop button
+                Button(action: {
+                    controller.pause()
+                    haptic.impactOccurred()
+                }) {
+                    Image(systemName: "pause.circle")
                     .frame(maxWidth: outerWidth / 10, maxHeight: bigButtonHeight())
                     .padding(30)
                 }
                 .background(Color.red)
                 .cornerRadius(buttonSize.radius)
                 
-                // Reset button
+                // Next button
                 Button(action: {
                     if controller.status == DownUpTimerStatus.inactive {
                         controller.timerDuration = keyboard.value
                     }
-                    controller.reset()
+                    controller.nextPhase()
                     haptic.impactOccurred()
                 }) {
                     Image(systemName:
-                            controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.counterclockwise.circle"
+                            controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.forward.to.line"
                     )
                     .frame(maxWidth: .infinity, maxHeight: bigButtonHeight())
                     .padding(30)
@@ -148,7 +190,7 @@ struct DUVisualization: View {
         GeometryReader { gp in
             ZStack {
                 Circle().stroke(Color.gray, lineWidth: circleWidth)
-                if controller.status == DownUpTimerStatus.counting_down {
+                if controller.currentDirection == .counting_down {
                     Circle()
                     .trim(from: 0.0, to: Double(timer.timeRemaining / timer.duration))
                     .stroke(style: StrokeStyle(lineWidth: circleWidth, lineCap:.round))
@@ -156,16 +198,16 @@ struct DUVisualization: View {
                     
                     DUTimerView(model: timer)
                     .padding()
-                } else if controller.status == DownUpTimerStatus.counting_up {
+                } else if controller.currentDirection == .counting_up {
                     DUStopwatchView(model: stopwatch)
                     .padding()
                 }
                 
                 HStack {
-                    if controller.status == DownUpTimerStatus.counting_down {
+                    if controller.currentDirection == .counting_down {
                         Image(systemName: "arrow.down.circle.fill")
 //                            .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
-                    } else if controller.status == DownUpTimerStatus.counting_up {
+                    } else if controller.currentDirection == .counting_up {
                         Image(systemName: "arrow.up.circle")
 //                            .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
                     }
@@ -173,7 +215,7 @@ struct DUVisualization: View {
                     Spacer()
                     
                     VStack(alignment: .leading) {
-                        Text("Cycles: \(controller.resetCount)")
+                        Text("Cycles: \(controller.cycleCount)")
                         Text("Total: \(controller.totalDurationStopwatch.duration.formattedTimeNoMilliNoLeadingZero)")
                     }
                     .font(Font.monospaced(.system(size: sizes.smallFontSize))())

@@ -58,13 +58,11 @@ class SingleTimer: ObservableObject, Codable {
     }
     
     func setNotification() {
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.duration, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.timeRemaining, repeats: false)
         let content = UNMutableNotificationContent()
         content.title = self.name
         content.body = "Your\(self.name == "" ? " " : self.name)timer (\(self.duration.formattedTimeNoMilliNoLeadingZero)) is done."
         content.sound = UNNotificationSound.default
-//        content.userInfo = ["timerId": self.id]
-//        content.categoryIdentifier = "TIMER_END"
         
         // Create the request
         self.notifID = UUID().uuidString
@@ -110,7 +108,7 @@ class SingleTimer: ObservableObject, Codable {
             if (self.repeatAlert) {
                 self.avplayer?.numberOfLoops = -1
             }
-            self.avplayer?.play(atTime: self.avplayer!.deviceCurrentTime + self.duration)
+            self.avplayer?.play(atTime: self.avplayer!.deviceCurrentTime + self.timeRemaining)
         } catch {
             print("audio player setup error")
             self.avplayer = nil
@@ -125,6 +123,15 @@ class SingleTimer: ObservableObject, Codable {
         
         setNotification()
         startSystemTimer()
+    }
+    
+    func pause() {
+        self.status = .paused
+        
+        // Remove notification
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notifID])
+        // Cancel the audio playback
+        stopPlaying()
     }
     
     func startSystemTimer() {
@@ -236,6 +243,7 @@ extension SingleTimer: Hashable {
 enum TimerStatus: Codable {
     case inactive
     case active
+    case paused
     case ended
     case canceled
 }
