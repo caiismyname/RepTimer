@@ -15,7 +15,7 @@ struct SingleStopWatchView: View {
     let colonWidth = 20
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 7) {
             if stopwatch.status != PeriodStatus.ended {  // Normal operation
                 // Total time
                 Text(stopwatch.status == PeriodStatus.paused
@@ -25,18 +25,26 @@ struct SingleStopWatchView: View {
                 .minimumScaleFactor(0.01)
                 
                 // Current lap
-                if let lap = stopwatch.currentLap() {
-                    Text(lap.displayFormatted)
-                    .font(Font.monospaced(.system(size: 70))())
-                    .minimumScaleFactor(0.01)
-                    .lineLimit(1)
-                    .padding(.leading, -6) // Visual alignment
-                } else {
-                    Text("00:00.00")
-                    .font(.system(size: 70, weight: .regular , design: .monospaced))
-                    .minimumScaleFactor(0.01)
-                    .lineLimit(1)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15.0)
+                        .fill(Color.white)
+                        .frame(height: 80.0)
+                    if let lap = stopwatch.currentLap() {
+                        Text(lap.displayFormatted)
+                            .font(.system(size: 65, weight: .regular , design: .monospaced))
+                            .minimumScaleFactor(0.01)
+                            .lineLimit(1)
+                            .foregroundColor(Color.black)
+                            .padding(.leading, -6) // Visual alignment
+                    } else {
+                        Text("00:00.00")
+                            .font(.system(size: 65, weight: .regular , design: .monospaced))
+                            .minimumScaleFactor(0.01)
+                            .lineLimit(1)
+                            .foregroundColor(Color.black)
+                    }
                 }
+                    
             } else { // Historical view
                 // Start datetime
                 Text(stopwatch.createDate.formatted())
