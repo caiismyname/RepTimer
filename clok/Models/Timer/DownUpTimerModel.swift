@@ -35,7 +35,6 @@ class DownUpTimer: ObservableObject, Codable {
         // Need a blank init b/c the Codable init overrides
     }
     
-    // Start and reset technically do the same thing
     func nextPhase() {
         guard self.timerDuration != 0.0 else {
             self.status = .inactive
@@ -55,26 +54,27 @@ class DownUpTimer: ObservableObject, Codable {
         if status == .paused {
             if currentDirection == .counting_up {
                 self.stopwatch.resume()
-                self.currentDirection = .counting_up
             } else if currentDirection == .counting_down {
                 self.timer.start()
-                self.currentDirection = .counting_down
             }
             
-            self.status = .active
             self.totalDurationStopwatch.resume()
+            self.status = .active
         } else if currentDirection == .counting_up { // Currently counting up, switch to down
-            self.timer.stop() // Stop the existing timer
+            self.stopwatch.pause()
+            
             initTimer()
             self.timer.start()
             self.currentDirection = .counting_down
             
+            checkAndIncrementTotalCycleCount()
         } else if currentDirection == .counting_down { // Currently counting down, switch to up
-            self.stopwatch = SingleStopWatch() // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
-            self.stopwatch.start()
-            self.currentDirection = .counting_up
+            self.timer.stop() // This removes the sound/notif from the current timer, which is only necessary if we're stopping it early
+            doneTimerCallback() // This function will increment the totalCycleCount for us
         }
-        
+    }
+    
+    private func checkAndIncrementTotalCycleCount() {
         // Maintain session counter (only count when we cycle around)
         if self.currentDirection == self.startingDirection {
             self.cycleCount = self.cycleCount + 1
@@ -88,8 +88,8 @@ class DownUpTimer: ObservableObject, Codable {
             self.timer.pause()
         }
         
-        self.status = .paused
         self.totalDurationStopwatch.pause()
+        self.status = .paused
     }
     
     func reset() {
@@ -110,9 +110,11 @@ class DownUpTimer: ObservableObject, Codable {
     }
     
     func doneTimerCallback() {
-        self.currentDirection = .counting_up
         self.stopwatch = SingleStopWatch() // "reset" the stopwatch
         self.stopwatch.start()
+        self.currentDirection = .counting_up
+        
+        checkAndIncrementTotalCycleCount()
     }
     
     func startSystemTimers() {

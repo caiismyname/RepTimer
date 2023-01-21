@@ -35,7 +35,6 @@ struct SingleStopWatchView: View {
                             .minimumScaleFactor(0.01)
                             .lineLimit(1)
                             .foregroundColor(Color.black)
-                            .padding(.leading, -6) // Visual alignment
                     } else {
                         Text("00:00.00")
                             .font(.system(size: 65, weight: .regular , design: .monospaced))

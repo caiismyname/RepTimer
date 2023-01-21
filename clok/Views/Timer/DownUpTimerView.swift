@@ -127,7 +127,7 @@ struct DUControlsView: View {
                 
                 // Next button
                 Button(action: {
-                    if controller.status == DownUpTimerStatus.inactive {
+                    if controller.status == .inactive {
                         controller.timerDuration = keyboard.value
                     }
                     controller.nextPhase()

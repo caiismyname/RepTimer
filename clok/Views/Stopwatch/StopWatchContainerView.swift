@@ -54,7 +54,7 @@ struct StopWatchContainerView: View {
             // Stopwatch(es)
             if (controller.stopwatches.count == 1) {
                 SingleStopWatchView(stopwatch: controller.stopwatches[0])
-                    .padding([.leading, .trailing])
+                    .padding([.leading, .trailing, .bottom])
             } else {
                 List {
                     ForEach(controller.stopwatches.indices, id:\.self) { idx in
