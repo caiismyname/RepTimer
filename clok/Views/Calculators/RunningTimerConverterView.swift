@@ -10,50 +10,52 @@ import SwiftUI
 
 struct RunningTimeConverterView: View {
     @ObservedObject var model = RunningTimeConverterModel()
-    @State var editing = false
+    @State var editingBasisTime = false
+    @State var editingDisplayedDistances = false
     let haptic = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    editing = !editing
-                }) {Image(systemName: "gearshape.circle")}
-                Spacer()
-                Text("Running Paces")
-                    .font(.system(size: 25, weight: .heavy , design: .monospaced))
-                Spacer()
+            Button(action: {
+                editingDisplayedDistances = !editingDisplayedDistances
+            }) {
+                Text(editingDisplayedDistances ? "Done" : "Edit")
+                    .font(.system(size: Sizes.calculatorFontSize))
             }
-                .font(.system(size: Sizes.inputIconSize))
+            
+            Text("Running Paces").font(.system(size: 25, weight: .heavy , design: .monospaced))
                 .padding([.leading, .trailing, .top])
             
             Spacer()
             
-            if !editing {
+            if !editingBasisTime {
                 GeometryReader { geo in
                     HStack {
                         Spacer()
-                        List(model.distances.indices, id: \.self) { index in
-                            HStack {
-                                Text("\(model.distances[index].name)")
-                                    .font(.system(size: 20, weight: .bold , design: .monospaced))
-                                    .foregroundColor(model.distances[index].distanceInMeters == model.basisDistance.distanceInMeters ? Color.blue : Color.white)
-                                Spacer()
-                                Text("\(model.distances[index].time.formattedTimeNoMilliNoLeadingZero)")
-                                    .font(.system(size: 20, weight: .regular , design: .monospaced))
-                                    .foregroundColor(model.distances[index].distanceInMeters == model.basisDistance.distanceInMeters ? Color.blue : Color.white)
-                            }
-                            .minimumScaleFactor(0.01)
-                            .frame(minWidth: 0, minHeight: 0, alignment: .center)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                editing = true
-                                model.keyboardModel.value = model.distances[index].time
-                                model.changeBasis(newBasis: model.distances[index])
-                            }
+                        List(
+                            model.distances.indices.filter({ index in
+                                // Only show selected distances normally, or all distances if editing
+                                return editingDisplayedDistances || model.distances[index].selected
+                            }),
+                            id: \.self
+                        ){ index in
+                            RunningPaceCalculatorRow(
+                                distance: model.distances[index],
+                                basisDistance: model.basisDistance,
+                                editingDisplayedDistances: editingDisplayedDistances
+                            )
+                                .onTapGesture {
+                                    if editingDisplayedDistances {
+                                        model.distances[index].selected = !model.distances[index].selected
+                                    } else {
+                                        editingBasisTime = true
+                                        model.keyboardModel.value = model.distances[index].time
+                                        model.changeBasis(newBasis: model.distances[index])
+                                    }
+                                }
                         }
-                        .listStyle(.plain)
-                        .frame(width: geo.size.width * 0.7)
+                            .listStyle(.plain)
+                            .frame(width: geo.size.width * 0.7)
                         Spacer()
                     }
                 }
@@ -65,10 +67,10 @@ struct RunningTimeConverterView: View {
                     TimeInputKeyboardView(model: model.keyboardModel)
                     HStack {
                         Button(action: {
-                            editing = false
+                            editingBasisTime = false
                         }) {
                             Text("Cancel")
-                                .font(.system(size: 20, weight: .regular , design: .monospaced))
+                                .font(.system(size: Sizes.calculatorFontSize, weight: .regular , design: .monospaced))
                                 .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                         }
                             .foregroundColor(Color.black)
@@ -78,10 +80,10 @@ struct RunningTimeConverterView: View {
                             haptic.impactOccurred()
                             model.changeBasisTime(newTime: model.keyboardModel.value)
                             model.recomputeAll()
-                            editing = false
+                            editingBasisTime = false
                         }) {
                             Text("Done")
-                                .font(.system(size: 20, weight: .heavy , design: .monospaced))
+                                .font(.system(size: Sizes.calculatorFontSize, weight: .heavy , design: .monospaced))
                                 .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                         }
                             .foregroundColor(Color.white)
@@ -93,6 +95,40 @@ struct RunningTimeConverterView: View {
             }
         }
     }
+}
+
+struct RunningPaceCalculatorRow: View {
+    @ObservedObject var distance: RunningDistance
+    @ObservedObject var basisDistance: RunningDistance
+    var editingDisplayedDistances: Bool
+    
+    var body: some View {
+        HStack {
+            if editingDisplayedDistances {
+                ZStack {
+                    if distance.selected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(Color.blue)
+                            .font(.system(size: Sizes.calculatorFontSize))
+                    } else {
+                        Circle().strokeBorder(Color.white)
+                    }
+                }
+                    .frame(width:Sizes.calculatorFontSize, height: Sizes.calculatorFontSize)
+            }
+            Text("\(distance.name)")
+                .font(.system(size: Sizes.calculatorFontSize, weight: .bold , design: .monospaced))
+                .foregroundColor(distance.distanceInMeters == basisDistance.distanceInMeters ? Color.blue : Color.white)
+            Spacer()
+            Text("\(distance.time.formattedTimeNoMilliNoLeadingZero)")
+                .font(.system(size: Sizes.calculatorFontSize, weight: .regular , design: .monospaced))
+                .foregroundColor(distance.distanceInMeters == basisDistance.distanceInMeters ? Color.blue : Color.white)
+        }
+        .minimumScaleFactor(0.01)
+        .frame(minWidth: 0, minHeight: 0, alignment: .center)
+        .contentShape(Rectangle())
+    }
+    
 }
 
 struct CalculatorTimeInputView: View {
