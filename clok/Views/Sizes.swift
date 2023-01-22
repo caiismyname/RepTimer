@@ -8,12 +8,12 @@
 import Foundation
 
 struct Sizes {
-    let inputHeight = 60.0
-    let inputIconSize = 30.0
-    let fontSize = 30.0
-    let smallFontSize = 14.0
-    let radius = 12.0
-    let bigHeight = 200.0
+    static let inputHeight = 60.0
+    static let inputIconSize = 30.0
+    static let fontSize = 30.0
+    static let smallFontSize = 14.0
+    static let radius = 12.0
+    static let bigHeight = 200.0
     
-    let bigTimeFont = 80.0
+    static let bigTimeFont = 80.0
 }

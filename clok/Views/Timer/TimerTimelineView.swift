@@ -11,7 +11,6 @@ import SwiftUI
 struct TimerTimelineView: View {
     @ObservedObject var controller: TimersController
     @State var createTimerPopoverShowing = false
-    let sizes = Sizes()
     let verticalFidelity = 14.0
 
     func saveNewTimer(name: String, duration: TimeInterval, repeatAlert: Bool) {
@@ -58,9 +57,9 @@ struct TimerTimelineView: View {
                     // Plus button
                     Button(action: {createTimerPopoverShowing = true}) {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: sizes.fontSize))
+                            .font(.system(size: Sizes.fontSize))
                     }
-                    .position(x: proxy.size.width - sizes.fontSize, y: proxy.size.height - sizes.fontSize)
+                    .position(x: proxy.size.width - Sizes.fontSize, y: proxy.size.height - Sizes.fontSize)
                     .popover(isPresented: $createTimerPopoverShowing) {
                         CreateTimerView(saveFunc: saveNewTimer)
                         .padding()
@@ -168,7 +167,7 @@ struct TimelineDoneBarView: View {
                 }
                 .padding()
             }
-            .font(.system(size: sizes.fontSize))
+            .font(.system(size: Sizes.fontSize))
             .frame(width: proxy.size.width, height: computeHeight())
             .position(x: proxy.size.width / 2, y: computeHeight() - (2 * paddingSize))
             .onTapGesture(count: 1, perform: {
@@ -180,17 +179,16 @@ struct TimelineDoneBarView: View {
 
 struct TimelineDoneTimersPopover: View {
     @ObservedObject var controller: TimersController
-    let buttonSize = Sizes()
     
     var body: some View {
         VStack {
             Button(action: {controller.clearCompletedTimers()}) {
                 Image(systemName: "clear.fill")
-                .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
             }
             .foregroundColor(Color.black)
             .background(Color.white)
-            .cornerRadius(buttonSize.radius)
+            .cornerRadius(Sizes.radius)
             
             List(controller.completedTimers.reversed(), id: \.self) { timer in
                 VStack(alignment: .leading) {
@@ -218,7 +216,6 @@ struct EditTimerPopover: View {
     @ObservedObject var controller: TimersController
     @ObservedObject var timer: SingleTimer
     var doneCallback = {}
-    let sizes = Sizes()
     
     var body: some View {
         Button(action: {
@@ -228,12 +225,12 @@ struct EditTimerPopover: View {
         }) {
             Image(systemName: "trash.fill")
             .padding()
-            .frame(maxHeight: sizes.inputHeight)
+            .frame(maxHeight: Sizes.inputHeight)
             
         }
         .background(.white)
         .foregroundColor(.red)
-        .cornerRadius(sizes.radius)
+        .cornerRadius(Sizes.radius)
     }
 }
 

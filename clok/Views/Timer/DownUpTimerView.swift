@@ -59,7 +59,6 @@ struct DUControlsView: View {
     @ObservedObject var controller: DownUpTimer
     @ObservedObject var keyboard: TimeInputKeyboardModel
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
-    let buttonSize = Sizes()
     var outerHeight: Double
     var outerWidth: Double
     
@@ -81,10 +80,10 @@ struct DUControlsView: View {
                     Image(systemName:
                         controller.status == DownUpTimerStatus.inactive ? "play.circle" : "arrow.counterclockwise.circle"
                     )
-                    .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                    .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                 .background(Color.green)
-                .cornerRadius(buttonSize.radius)
+                .cornerRadius(Sizes.radius)
             } else if controller.status == .paused {
                 // Stop button
                 Button(action: {
@@ -96,7 +95,7 @@ struct DUControlsView: View {
                         .padding(30)
                 }
                 .background(Color.red)
-                .cornerRadius(buttonSize.radius)
+                .cornerRadius(Sizes.radius)
                 
                 // Next button
                 Button(action: {
@@ -111,7 +110,7 @@ struct DUControlsView: View {
                         .padding(30)
                 }
                 .background(Color.green)
-                .cornerRadius(buttonSize.radius)
+                .cornerRadius(Sizes.radius)
             } else if controller.status == .active {
                 // Stop button
                 Button(action: {
@@ -123,7 +122,7 @@ struct DUControlsView: View {
                     .padding(30)
                 }
                 .background(Color.red)
-                .cornerRadius(buttonSize.radius)
+                .cornerRadius(Sizes.radius)
                 
                 // Next button
                 Button(action: {
@@ -140,11 +139,11 @@ struct DUControlsView: View {
                     .padding(30)
                 }
                 .background(Color.green)
-                .cornerRadius(buttonSize.radius)
+                .cornerRadius(Sizes.radius)
             }
         }
         .foregroundColor(Color.white)
-        .font(controller.status == DownUpTimerStatus.inactive ? .system(size: buttonSize.fontSize) : .system(size: 55))
+        .font(controller.status == DownUpTimerStatus.inactive ? .system(size: Sizes.fontSize) : .system(size: 55))
         .minimumScaleFactor(0.01)
     }
 }
@@ -169,11 +168,10 @@ struct DUStopwatchView: View {
 
 struct DUTimeInputView: View {
     @ObservedObject var keyboard: TimeInputKeyboardModel
-    let sizes = Sizes()
     
     var body: some View {
         Text(keyboard.value.formattedTimeNoMilliNoLeadingZero)
-        .font(Font.monospaced(.system(size: sizes.bigTimeFont))())
+        .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
         .minimumScaleFactor(0.1)
         .lineLimit(1)
     }
@@ -184,7 +182,6 @@ struct DUVisualization: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @ObservedObject var controller: DownUpTimer
     let circleWidth = 20.0
-    let sizes = Sizes()
     
     var body: some View {
         GeometryReader { gp in
@@ -218,11 +215,11 @@ struct DUVisualization: View {
                         Text("Cycles: \(controller.cycleCount)")
                         Text("Total: \(controller.totalDurationStopwatch.duration.formattedTimeNoMilliNoLeadingZero)")
                     }
-                    .font(Font.monospaced(.system(size: sizes.smallFontSize))())
-                }.position(x: gp.size.width / 2, y: sizes.bigTimeFont / 2)
+                    .font(Font.monospaced(.system(size: Sizes.smallFontSize))())
+                }.position(x: gp.size.width / 2, y: Sizes.bigTimeFont / 2)
             }
         }
-        .font(Font.monospaced(.system(size: sizes.bigTimeFont))())
+        .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
         .minimumScaleFactor(0.1)
     }
 }

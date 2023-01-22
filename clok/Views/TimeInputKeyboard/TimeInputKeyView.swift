@@ -11,7 +11,6 @@ import SwiftUI
 struct TimeInputKeyView: View {
     @ObservedObject var model: TimeInputKeyboardModel
     var digit: String
-    let sizes = Sizes()
     
     var body: some View {
         Button {
@@ -24,7 +23,7 @@ struct TimeInputKeyView: View {
                     .frame(maxWidth: .infinity)
             default:
                 Text(digit)
-                    .font(Font.monospaced(.system(size: sizes.fontSize))())
+                    .font(Font.monospaced(.system(size: Sizes.fontSize))())
                     .minimumScaleFactor(0.1)
                     .aspectRatio(1.0, contentMode: .fit)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

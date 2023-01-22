@@ -16,7 +16,6 @@ struct StopWatchContainerView: View {
     
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
     let screenLockHaptic = UINotificationFeedbackGenerator()
-    let buttonSize = Sizes()
 
     var body: some View {
         VStack (alignment: .trailing) {
@@ -40,7 +39,7 @@ struct StopWatchContainerView: View {
                     }
                 }) {Image(systemName: "plus.circle")}
             }
-            .font(.system(size: buttonSize.inputIconSize))
+            .font(.system(size: Sizes.inputIconSize))
             .padding([.leading, .trailing, .top])
             .popover(isPresented: self.$isHistoryPopupShowing) {
                 StopWatchHistoryView(controller: controller)

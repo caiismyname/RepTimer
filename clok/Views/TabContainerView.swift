@@ -37,8 +37,14 @@ struct TabContainerView: View {
                     Text("Repeat Timer")
                 }
 //                .tag(2)
+            
+            RunningTimeConverterView()
+                .tabItem {
+                    Image(systemName: "function")
+                    Text("Calculators")
+                }
         }
-        .font(.system(size: buttonSize.fontSize))
+        .font(.system(size: Sizes.fontSize))
     }
 }
 

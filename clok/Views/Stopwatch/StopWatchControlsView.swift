@@ -12,14 +12,13 @@ struct StopWatchControlsView: View {
     @ObservedObject var stopwatch: SingleStopWatch
     @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLock: Bool = false
     let haptic = UIImpactFeedbackGenerator(style: .heavy)
-    let buttonSize = Sizes()
 
     var body: some View {
         if stopwatch.status == PeriodStatus.inactive {
             HStack {
                 Button(action: {}) {
                     Image(systemName: "trash")
-                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                 .foregroundColor(Color.white)
                 .background(Color.red)
@@ -32,7 +31,7 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "play.circle")
-                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                 .foregroundColor(Color.white)
                 .background(Color.green)
@@ -48,7 +47,7 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "flag.2.crossed")
-                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                     .foregroundColor(Color.black)
                     .background(Color.white)
@@ -60,7 +59,7 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "pause.fill")
-                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                     .foregroundColor(Color.white)
                     .background(Color.gray)
@@ -76,7 +75,7 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "trash")
-                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                     .foregroundColor(Color.white)
                     .background(Color.red)
@@ -88,7 +87,7 @@ struct StopWatchControlsView: View {
                     }
                 }) {
                     Image(systemName: "play.circle")
-                        .frame(maxWidth: .infinity, maxHeight: buttonSize.inputHeight)
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                     .foregroundColor(Color.white)
                     .background(Color.green)

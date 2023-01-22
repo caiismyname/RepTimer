@@ -19,7 +19,6 @@ struct CreateTimerView: View {
     @State private var showTimeInput = true
     @State var repeatAlert = true
     var saveFunc: (_ name: String, _ duration: TimeInterval, _ repeatAlert: Bool) -> ()
-    let sizes = Sizes()
 
     var body: some View {
         VStack (alignment: .center) {
@@ -29,7 +28,7 @@ struct CreateTimerView: View {
                     "Timer name",
                     text: $name
                 )
-                .font(Font.system(size: sizes.fontSize))
+                .font(Font.system(size: Sizes.fontSize))
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
                 .onTapGesture {showTimeInput = false}
@@ -38,7 +37,7 @@ struct CreateTimerView: View {
                 // Repeat Alert toggle
                 Toggle(isOn: $repeatAlert) {
                     Text("Repeat sound until stopped")
-                        .font(.system(size: sizes.smallFontSize))
+                        .font(.system(size: Sizes.smallFontSize))
                 }
             }
             
@@ -46,7 +45,7 @@ struct CreateTimerView: View {
             if (showTimeInput) {
                 // Timer duration
                 Text(keyboard.value.formattedTimeNoMilliLeadingZero)
-                .font(Font.monospaced(.system(size: sizes.bigTimeFont))())
+                .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
                 .lineLimit(1)
                 .minimumScaleFactor(0.1)
                 
@@ -55,7 +54,7 @@ struct CreateTimerView: View {
                     Text((Date() + keyboard.value).displayTime)
                     Text(Date().isSameDayAs(comp: Date() + keyboard.value) ? "" : " " + (Date() + keyboard.value).displayDayDate)
                 }
-                .font(Font.system(size: sizes.fontSize))
+                .font(Font.system(size: Sizes.fontSize))
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
                 
@@ -65,11 +64,11 @@ struct CreateTimerView: View {
                 Button(action: {saveFunc(name, keyboard.value, repeatAlert)}) {
                     Image(systemName: "play.circle")
                     .padding()
-                    .frame(maxWidth: .infinity, maxHeight: sizes.inputHeight)
+                    .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
                 .foregroundColor(.black)
                 .background(.white)
-                .cornerRadius(sizes.radius)
+                .cornerRadius(Sizes.radius)
             } else {
                 Spacer()
             }
