@@ -36,20 +36,26 @@ class RunningTimeConverterModel: ObservableObject {
     
     var keyboardModel = TimeInputKeyboardModel(value: 0)
     let distances = [
+        RunningDistance(name: "60m", distanceInMeters: 60.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "100m", distanceInMeters: 100.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "200m", distanceInMeters: 200.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "300m", distanceInMeters: 300.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "400m", distanceInMeters: 400.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "600m", distanceInMeters: 600.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "800m", distanceInMeters: 800.0, time: TimeInterval(0), selected: true),
-        RunningDistance(name: "1000m", distanceInMeters: 1000.0, time: TimeInterval(0), selected: true),
+        RunningDistance(name: "1km (1000m)", distanceInMeters: 1000.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "1200m", distanceInMeters: 1200.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "1500m", distanceInMeters: 1500.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "1600m", distanceInMeters: 1600.0, time: TimeInterval(0), selected: false),
-        RunningDistance(name: "Mile", distanceInMeters: 1609.34, time: TimeInterval(0), selected: true),
+        RunningDistance(name: "3200m", distanceInMeters: 3200.0, time: TimeInterval(0), selected: false),
+        RunningDistance(name: "3km", distanceInMeters: 3000.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "5km", distanceInMeters: 5000.0, time: TimeInterval(0), selected: true),
+        RunningDistance(name: "6km", distanceInMeters: 6000.0, time: TimeInterval(0), selected: false),
+        RunningDistance(name: "8km", distanceInMeters: 8000.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "10km", distanceInMeters: 10000.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "15km", distanceInMeters: 15000.0, time: TimeInterval(0), selected: false),
+        RunningDistance(name: "Mile", distanceInMeters: 1609.34, time: TimeInterval(0), selected: true),
+        RunningDistance(name: "2 Mile", distanceInMeters: 3218.68, time: TimeInterval(0), selected: false),
         RunningDistance(name: "5 Mile", distanceInMeters: 8046.7, time: TimeInterval(0), selected: false),
         RunningDistance(name: "10 Mile", distanceInMeters: 16093.4, time: TimeInterval(0), selected: false),
         RunningDistance(name: "Half", distanceInMeters: 21097.5, time: TimeInterval(0), selected: true),
@@ -62,7 +68,9 @@ class RunningTimeConverterModel: ObservableObject {
     
     func recomputeAll() {
         distances.forEach { distance in
-            distance.recomputeTimeWithBasis(basis: basisDistance)
+            if distance.distanceInMeters != basisDistance.distanceInMeters { //
+                distance.recomputeTimeWithBasis(basis: basisDistance)
+            }
         }
     }
     

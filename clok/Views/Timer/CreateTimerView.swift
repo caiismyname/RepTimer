@@ -44,10 +44,7 @@ struct CreateTimerView: View {
             // Keyboards (time input, timer name, it swaps between them)
             if (showTimeInput) {
                 // Timer duration
-                Text(keyboard.value.formattedTimeNoMilliLeadingZero)
-                .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
-                .lineLimit(1)
-                .minimumScaleFactor(0.1)
+                TimeInputDisplay(keyboard: keyboard)
                 
                 // Projected eng time
                 Group {
@@ -90,6 +87,7 @@ struct CreateTimerView_Previews: PreviewProvider {
             CreateTimerView(saveFunc: {name,duration,repeatAlert in return})
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice("iPhone 13 Pro")
+                .preferredColorScheme(.dark)
             }
         }
 }

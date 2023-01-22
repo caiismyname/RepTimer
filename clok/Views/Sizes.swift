@@ -14,7 +14,7 @@ struct Sizes {
     static let smallFontSize = 14.0
     static let radius = 12.0
     static let bigHeight = 200.0
-    static let bigTimeFont = 80.0
+    static let bigTimeFont = 60.0
     
     // Calculators
     static let calculatorFontSize = 20.0

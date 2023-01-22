@@ -33,7 +33,7 @@ struct DownUpTimerView: View {
                 // Timer display
                 HStack {
                     if controller.status == DownUpTimerStatus.inactive {
-                        DUTimeInputView(keyboard: controller.keyboard)
+                        TimeInputDisplay(keyboard: controller.keyboard)
                     }
                 }
                 .padding()
@@ -162,17 +162,6 @@ struct DUStopwatchView: View {
     
     var body: some View {
         Text(model.duration.formattedTimeNoMilliNoLeadingZero)
-        .lineLimit(1)
-    }
-}
-
-struct DUTimeInputView: View {
-    @ObservedObject var keyboard: TimeInputKeyboardModel
-    
-    var body: some View {
-        Text(keyboard.value.formattedTimeNoMilliNoLeadingZero)
-        .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
-        .minimumScaleFactor(0.1)
         .lineLimit(1)
     }
 }

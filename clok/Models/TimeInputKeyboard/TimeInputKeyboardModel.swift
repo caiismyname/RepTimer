@@ -8,16 +8,17 @@
 import Foundation
 
 class TimeInputKeyboardModel: ObservableObject {
-    @Published var value: TimeInterval = TimeInterval(0)
-    var input = Int(0)
+    @Published var value: TimeInterval = TimeInterval(0) // Converting display value into a sensible number of seconds
+    @Published var input = TimeInterval(0) // Display value, matches what's typed
     
     init (value: Double = 0.0) {
         setValue(value: value)
     }
     
+    // Externally set the value / input.
     func setValue(value: Double) {
         self.value = value
-        self.input = Int(value)
+        self.input = Double(value.formattedTimeNoMilliLeadingZero.filter({ char in char != ":"}))!
     }
     
     func addDigit(digit: String) {
@@ -27,18 +28,18 @@ class TimeInputKeyboardModel: ObservableObject {
         case " ":
             return
         default:
-            input = (input * 10) + Int(digit)!
+            input = (input * 10) + Double(digit)!
             calculateValue()
         }
     }
     
     func backspace() {
-        input = Int(floor(Double(input) / 10))
+        input = floor(input / 10)
         calculateValue()
     }
     
     func calculateValue() {
-        let seconds = input % 100
+        let seconds = Int(input.truncatingRemainder(dividingBy: 100))
         let minutes = Int(floor((Double(input) / 100))) % 100
         let hours = Int(floor((Double(input) / 10000))) % 10000
         
