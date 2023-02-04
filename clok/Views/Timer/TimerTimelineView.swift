@@ -109,9 +109,9 @@ struct TimelineEntryView: View {
             HStack {
                 if (timer.name != "") {
                     Text(timer.name)
-                        .font(.system(size: 12))
+                        .font(.system(size: 20).bold())
                         .minimumScaleFactor(0.1)
-                        .lineLimit(2)
+                        .lineLimit(1)
                     Spacer()
                 }
                 if (timer.status == TimerStatus.active) {

@@ -7,11 +7,7 @@
 
 import Foundation
 
-enum RunningDistances: Codable {
-    case faoo
-}
-
-class RunningDistance: ObservableObject {
+class RunningDistance: ObservableObject, Codable {
     let name: String
     let distanceInMeters: Double
     @Published var time: TimeInterval
@@ -29,13 +25,36 @@ class RunningDistance: ObservableObject {
         let newTime = basisSecondPerMeter * self.distanceInMeters
         self.time = newTime
     }
+    
+    // MARK: — Codable
+    private enum CoderKeys: String, CodingKey {
+        case name
+        case distanceInMeters
+        case time
+        case selected
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CoderKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(distanceInMeters, forKey: .distanceInMeters)
+        try container.encode(time, forKey: .time)
+        try container.encode(selected, forKey: .selected)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CoderKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        distanceInMeters = try values.decode(Double.self, forKey: .distanceInMeters)
+        time = try values.decode(TimeInterval.self, forKey: .time)
+        selected = try values.decode(Bool.self, forKey: .selected)
+    }
 }
 
 class RunningTimeConverterModel: ObservableObject {
-    @Published var basisDistance = RunningDistance(name: "Mile", distanceInMeters: 1609.34, time: TimeInterval(480))
-    
     var keyboardModel = TimeInputKeyboardModel(value: 0)
-    let distances = [
+    @Published var basisDistance = RunningDistance(name: "Mile", distanceInMeters: 1609.34, time: TimeInterval(480))
+    var distances = [
         RunningDistance(name: "60m", distanceInMeters: 60.0, time: TimeInterval(0), selected: false),
         RunningDistance(name: "100m", distanceInMeters: 100.0, time: TimeInterval(0), selected: true),
         RunningDistance(name: "200m", distanceInMeters: 200.0, time: TimeInterval(0), selected: true),
@@ -63,6 +82,7 @@ class RunningTimeConverterModel: ObservableObject {
     ]
     
     init() {
+        loadRunningTimeConverter()
         recomputeAll()
     }
     
@@ -76,9 +96,44 @@ class RunningTimeConverterModel: ObservableObject {
     
     func changeBasis(newBasis: RunningDistance) {
         self.basisDistance = newBasis
+        saveRunningTimeConverter()
     }
     
     func changeBasisTime(newTime: TimeInterval) {
         self.basisDistance.time = newTime
+        saveRunningTimeConverter()
+    }
+    
+    // MARK: — Saving
+    
+    func saveRunningTimeConverter() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(["basisDistance": [basisDistance], "distances": distances]) {
+            do {
+                try encoded.write(to: CodableFileURLGenerator(dataFileName: "runningTimeConverter"))
+            } catch {
+                print("Couldn't write to save file: " + error.localizedDescription)
+            }
+        }
+    }
+    
+    private func loadRunningTimeConverter() {
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let fileURL = CodableFileURLGenerator(dataFileName: "runningTimeConverter")
+                // If loading fails, do nothing since we have defaults
+                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
+                    return
+                }
+                
+                // Successful loading
+                let results = try JSONDecoder().decode([String: [RunningDistance]].self, from: file.availableData)
+                self.basisDistance = results["basisDistance"]![0] // Stored in a list for homogenity of types
+                self.distances = results["distances"]!
+                
+            } catch {
+                return
+            }
+        }
     }
 }

@@ -24,6 +24,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let timers = TimersController()
         let stopwatches = StopwatchesController()
+        
         ContentView(
             timersController: timers,
             stopwatchesController: stopwatches

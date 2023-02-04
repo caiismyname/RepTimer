@@ -24,6 +24,7 @@
 		271B60402845544900BA0F5D /* TimeIntervalFormattingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */; };
 		276F6B49297C679400619A65 /* RunningTimerConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F6B48297C679400619A65 /* RunningTimerConverterView.swift */; };
 		276F6B4C297C68A400619A65 /* RunningTimeConverterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F6B4B297C68A400619A65 /* RunningTimeConverterModel.swift */; };
+		276F6B4E297DC85700619A65 /* CalculatorsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F6B4D297DC85700619A65 /* CalculatorsContainerView.swift */; };
 		27740A8E285810C400514A13 /* SingleTimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A8D285810C400514A13 /* SingleTimerModel.swift */; };
 		27740A902858129B00514A13 /* TimerTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A8F2858129B00514A13 /* TimerTimelineView.swift */; };
 		27740A942858133C00514A13 /* TimersControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A932858133C00514A13 /* TimersControllerModel.swift */; };
@@ -31,6 +32,17 @@
 		27740A9A2860D65700514A13 /* CreateTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A992860D65700514A13 /* CreateTimerView.swift */; };
 		27740A9E28611DAB00514A13 /* TimeInputKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */; };
 		27740AA228611EC500514A13 /* TimeInputKeyboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */; };
+		2780A337298D50E000CF2490 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2780A336298D50E000CF2490 /* WidgetKit.framework */; };
+		2780A339298D50E000CF2490 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2780A338298D50E000CF2490 /* SwiftUI.framework */; };
+		2780A33C298D50E000CF2490 /* Clok_WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A33B298D50E000CF2490 /* Clok_WidgetsBundle.swift */; };
+		2780A33E298D50E000CF2490 /* Clok_WidgetsLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A33D298D50E000CF2490 /* Clok_WidgetsLiveActivity.swift */; };
+		2780A340298D50E000CF2490 /* ClokTimerWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A33F298D50E000CF2490 /* ClokTimerWidgets.swift */; };
+		2780A343298D50E100CF2490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2780A342298D50E100CF2490 /* Assets.xcassets */; };
+		2780A345298D50E100CF2490 /* Clok_Widgets.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2780A341298D50E000CF2490 /* Clok_Widgets.intentdefinition */; };
+		2780A346298D50E100CF2490 /* Clok_Widgets.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2780A341298D50E000CF2490 /* Clok_Widgets.intentdefinition */; };
+		2780A349298D50E100CF2490 /* Clok WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2780A334298D50E000CF2490 /* Clok WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2780A358298D617D00CF2490 /* CodableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A357298D617D00CF2490 /* CodableHelpers.swift */; };
+		2780A359298D617D00CF2490 /* CodableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A357298D617D00CF2490 /* CodableHelpers.swift */; };
 		278149BD2884A5E900511D3D /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278149BC2884A5E900511D3D /* DateExtensions.swift */; };
 		2789A9D02879D13F009710C3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789A9CF2879D13F009710C3 /* ViewExtensions.swift */; };
 		279936412880B71C009EC53D /* DownUpTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936402880B71C009EC53D /* DownUpTimerView.swift */; };
@@ -60,7 +72,28 @@
 			remoteGlobalIDString = 271B600A2845220D00BA0F5D;
 			remoteInfo = RepTimer;
 		};
+		2780A347298D50E100CF2490 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 271B60032845220D00BA0F5D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2780A333298D50E000CF2490;
+			remoteInfo = "Clok WidgetsExtension";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2780A34D298D50E100CF2490 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2780A349298D50E100CF2490 /* Clok WidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2703040C2856A8DD00763C06 /* StopWatchContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchContainerView.swift; sourceTree = "<group>"; };
@@ -83,6 +116,7 @@
 		271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalFormattingExtension.swift; sourceTree = "<group>"; };
 		276F6B48297C679400619A65 /* RunningTimerConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimerConverterView.swift; sourceTree = "<group>"; };
 		276F6B4B297C68A400619A65 /* RunningTimeConverterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimeConverterModel.swift; sourceTree = "<group>"; };
+		276F6B4D297DC85700619A65 /* CalculatorsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorsContainerView.swift; sourceTree = "<group>"; };
 		27740A8D285810C400514A13 /* SingleTimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTimerModel.swift; sourceTree = "<group>"; };
 		27740A8F2858129B00514A13 /* TimerTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTimelineView.swift; sourceTree = "<group>"; };
 		27740A932858133C00514A13 /* TimersControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersControllerModel.swift; sourceTree = "<group>"; };
@@ -90,6 +124,16 @@
 		27740A992860D65700514A13 /* CreateTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTimerView.swift; sourceTree = "<group>"; };
 		27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardView.swift; sourceTree = "<group>"; };
 		27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputKeyboardModel.swift; sourceTree = "<group>"; };
+		2780A334298D50E000CF2490 /* Clok WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Clok WidgetsExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2780A336298D50E000CF2490 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2780A338298D50E000CF2490 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2780A33B298D50E000CF2490 /* Clok_WidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clok_WidgetsBundle.swift; sourceTree = "<group>"; };
+		2780A33D298D50E000CF2490 /* Clok_WidgetsLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clok_WidgetsLiveActivity.swift; sourceTree = "<group>"; };
+		2780A33F298D50E000CF2490 /* ClokTimerWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClokTimerWidgets.swift; sourceTree = "<group>"; };
+		2780A341298D50E000CF2490 /* Clok_Widgets.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Clok_Widgets.intentdefinition; sourceTree = "<group>"; };
+		2780A342298D50E100CF2490 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2780A344298D50E100CF2490 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2780A357298D617D00CF2490 /* CodableHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableHelpers.swift; sourceTree = "<group>"; };
 		278149BB28849D3C00511D3D /* RepTimer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RepTimer-Info.plist"; sourceTree = "<group>"; };
 		278149BC2884A5E900511D3D /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		2789A9CF2879D13F009710C3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -128,6 +172,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2780A331298D50E000CF2490 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2780A339298D50E000CF2490 /* SwiftUI.framework in Frameworks */,
+				2780A337298D50E000CF2490 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -161,6 +214,8 @@
 				271B600D2845220D00BA0F5D /* clok */,
 				271B601E2845220E00BA0F5D /* RepTimerTests */,
 				271B60282845220E00BA0F5D /* RepTimerUITests */,
+				2780A33A298D50E000CF2490 /* Clok Widgets */,
+				2780A335298D50E000CF2490 /* Frameworks */,
 				271B600C2845220D00BA0F5D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,6 +226,7 @@
 				271B600B2845220D00BA0F5D /* Clok.app */,
 				271B601B2845220E00BA0F5D /* RepTimerTests.xctest */,
 				271B60252845220E00BA0F5D /* RepTimerUITests.xctest */,
+				2780A334298D50E000CF2490 /* Clok WidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,6 +275,7 @@
 		271B60382845222300BA0F5D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2780A357298D617D00CF2490 /* CodableHelpers.swift */,
 				276F6B4A297C688D00619A65 /* Calculators */,
 				27740A91285812F700514A13 /* Timer */,
 				27740A922858130200514A13 /* Stopwatch */,
@@ -257,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				276F6B48297C679400619A65 /* RunningTimerConverterView.swift */,
+				276F6B4D297DC85700619A65 /* CalculatorsContainerView.swift */,
 			);
 			path = Calculators;
 			sourceTree = "<group>";
@@ -306,6 +364,28 @@
 			path = TimeInputKeyboard;
 			sourceTree = "<group>";
 		};
+		2780A335298D50E000CF2490 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2780A336298D50E000CF2490 /* WidgetKit.framework */,
+				2780A338298D50E000CF2490 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2780A33A298D50E000CF2490 /* Clok Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				2780A33B298D50E000CF2490 /* Clok_WidgetsBundle.swift */,
+				2780A33D298D50E000CF2490 /* Clok_WidgetsLiveActivity.swift */,
+				2780A33F298D50E000CF2490 /* ClokTimerWidgets.swift */,
+				2780A341298D50E000CF2490 /* Clok_Widgets.intentdefinition */,
+				2780A342298D50E100CF2490 /* Assets.xcassets */,
+				2780A344298D50E100CF2490 /* Info.plist */,
+			);
+			path = "Clok Widgets";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,10 +396,12 @@
 				271B60072845220D00BA0F5D /* Sources */,
 				271B60082845220D00BA0F5D /* Frameworks */,
 				271B60092845220D00BA0F5D /* Resources */,
+				2780A34D298D50E100CF2490 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2780A348298D50E100CF2490 /* PBXTargetDependency */,
 			);
 			name = RepTimer;
 			productName = RepTimer;
@@ -362,6 +444,23 @@
 			productReference = 271B60252845220E00BA0F5D /* RepTimerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		2780A333298D50E000CF2490 /* Clok WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2780A34A298D50E100CF2490 /* Build configuration list for PBXNativeTarget "Clok WidgetsExtension" */;
+			buildPhases = (
+				2780A330298D50E000CF2490 /* Sources */,
+				2780A331298D50E000CF2490 /* Frameworks */,
+				2780A332298D50E000CF2490 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Clok WidgetsExtension";
+			productName = "Clok WidgetsExtension";
+			productReference = 2780A334298D50E000CF2490 /* Clok WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -369,7 +468,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					271B600A2845220D00BA0F5D = {
@@ -382,6 +481,9 @@
 					271B60242845220E00BA0F5D = {
 						CreatedOnToolsVersion = 13.3.1;
 						TestTargetID = 271B600A2845220D00BA0F5D;
+					};
+					2780A333298D50E000CF2490 = {
+						CreatedOnToolsVersion = 14.2;
 					};
 				};
 			};
@@ -401,6 +503,7 @@
 				271B600A2845220D00BA0F5D /* RepTimer */,
 				271B601A2845220E00BA0F5D /* RepTimerTests */,
 				271B60242845220E00BA0F5D /* RepTimerUITests */,
+				2780A333298D50E000CF2490 /* Clok WidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -431,6 +534,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2780A332298D50E000CF2490 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2780A343298D50E100CF2490 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -438,6 +549,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2780A346298D50E100CF2490 /* Clok_Widgets.intentdefinition in Sources */,
+				276F6B4E297DC85700619A65 /* CalculatorsContainerView.swift in Sources */,
 				27096B53284CF471007E7FB6 /* PeriodModel.swift in Sources */,
 				27E3F73428676B8500DECF15 /* HideKeyboardExtension.swift in Sources */,
 				271B603B2845223B00BA0F5D /* SingleStopWatch.swift in Sources */,
@@ -448,6 +561,7 @@
 				27E3F7462871D22400DECF15 /* BindingOnUpdateExtension.swift in Sources */,
 				279936412880B71C009EC53D /* DownUpTimerView.swift in Sources */,
 				27740A902858129B00514A13 /* TimerTimelineView.swift in Sources */,
+				2780A358298D617D00CF2490 /* CodableHelpers.swift in Sources */,
 				2703040D2856A8DD00763C06 /* StopWatchContainerView.swift in Sources */,
 				270304112856B0BA00763C06 /* MultipleStopWatchView.swift in Sources */,
 				279936432880EFF6009EC53D /* DownUpTimerModel.swift in Sources */,
@@ -487,6 +601,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2780A330298D50E000CF2490 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2780A359298D617D00CF2490 /* CodableHelpers.swift in Sources */,
+				2780A33C298D50E000CF2490 /* Clok_WidgetsBundle.swift in Sources */,
+				2780A345298D50E100CF2490 /* Clok_Widgets.intentdefinition in Sources */,
+				2780A340298D50E000CF2490 /* ClokTimerWidgets.swift in Sources */,
+				2780A33E298D50E000CF2490 /* Clok_WidgetsLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -499,6 +625,11 @@
 			isa = PBXTargetDependency;
 			target = 271B600A2845220D00BA0F5D /* RepTimer */;
 			targetProxy = 271B60262845220E00BA0F5D /* PBXContainerItemProxy */;
+		};
+		2780A348298D50E100CF2490 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2780A333298D50E000CF2490 /* Clok WidgetsExtension */;
+			targetProxy = 2780A347298D50E100CF2490 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -620,11 +751,12 @@
 		271B60302845220E00BA0F5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"clok/Preview Content\"";
 				DEVELOPMENT_TEAM = 365K6R64X6;
 				ENABLE_PREVIEWS = YES;
@@ -643,7 +775,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.caiismyname.apps.ios.clok;
 				PRODUCT_NAME = Clok;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -656,11 +788,12 @@
 		271B60312845220E00BA0F5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"clok/Preview Content\"";
 				DEVELOPMENT_TEAM = 365K6R64X6;
 				ENABLE_PREVIEWS = YES;
@@ -679,7 +812,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.caiismyname.apps.ios.clok;
 				PRODUCT_NAME = Clok;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -761,6 +894,66 @@
 			};
 			name = Release;
 		};
+		2780A34B298D50E100CF2490 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 365K6R64X6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Clok Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clok Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.caiismyname.apps.ios.clok.Clok-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2780A34C298D50E100CF2490 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 365K6R64X6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Clok Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Clok Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.caiismyname.apps.ios.clok.Clok-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -796,6 +989,15 @@
 			buildConfigurations = (
 				271B60362845220E00BA0F5D /* Debug */,
 				271B60372845220E00BA0F5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2780A34A298D50E100CF2490 /* Build configuration list for PBXNativeTarget "Clok WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2780A34B298D50E100CF2490 /* Debug */,
+				2780A34C298D50E100CF2490 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

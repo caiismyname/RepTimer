@@ -13,8 +13,6 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
     @Published var activeTimers: [SingleTimer] = []
     @Published var completedTimers: [SingleTimer] = []
     @Published var bottomDuration: TimeInterval = TimeInterval(0.0) // The TimeInteral value that denotes "bottom of the screen"
-    // DownUp
-    @Published var downupTimer: DownUpTimer = DownUpTimer()
 //    @Published var editTimerID: String = ""
     
     override init() {
@@ -182,18 +180,6 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
         return docURL.appendingPathComponent(dataFileName)
     }
 
-    func saveDownUpTimer() {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(["downupTimer": downupTimer]) {
-            do {
-                // Save the 'downupTimer' data file to the Documents directory.
-                try encoded.write(to: dataModelURL(dataFileName: "downupTimer"))
-            } catch {
-                print("Couldn't write to save file: " + error.localizedDescription)
-            }
-        }
-    }
-    
     func saveTimers() {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(["activeTimers": activeTimers, "completedTimers": completedTimers]) {
@@ -201,41 +187,6 @@ class TimersController: NSObject, ObservableObject, UNUserNotificationCenterDele
                 try encoded.write(to: dataModelURL(dataFileName: "timers"))
             } catch {
                 print("Couldn't write to save file: " + error.localizedDescription)
-            }
-        }
-    }
-    
-    func loadDownUpTimer(completion: @escaping (Result<[String: DownUpTimer], Error>) -> Void) {
-
-// Uncomment to override saved values
-//        DispatchQueue.main.async {
-//            print("Loading override DownUp")
-//            let firstDownUp = DownUpTimer()
-//            firstDownUp.setTimerCallback()
-//            completion(.success(["downupTimer": firstDownUp]))
-//        }
-//
-
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let fileURL = self.dataModelURL(dataFileName: "downupTimer")
-                // If loading fails
-                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
-                    DispatchQueue.main.async {
-                        completion(.success(["downupTimer": DownUpTimer()]))
-                    }
-                    return
-                }
-
-                // Successful loading
-                let results = try JSONDecoder().decode([String: DownUpTimer].self, from: file.availableData)
-                DispatchQueue.main.async {
-                    completion(.success(results))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
             }
         }
     }

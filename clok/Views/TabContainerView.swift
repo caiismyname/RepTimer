@@ -31,13 +31,14 @@ struct TabContainerView: View {
                 }
 //                .tag(1)
             
-            DownUpTimerView(controller: timersController.downupTimer)
+            DownUpTimerView()
                 .tabItem {
                     Image(systemName: "arrow.counterclockwise.circle")
                     Text("Repeat Timer")
                 }
 //                .tag(2)
             
+//            CalculatorsContainerView()
             RunningTimeConverterView()
                 .tabItem {
                     Image(systemName: "function")

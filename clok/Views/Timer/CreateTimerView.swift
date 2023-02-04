@@ -22,7 +22,8 @@ struct CreateTimerView: View {
 
     var body: some View {
         VStack (alignment: .center) {
-            List {
+            Spacer()
+            Group {
                 // Name input
                 TextField(
                     "Timer name",
@@ -40,32 +41,33 @@ struct CreateTimerView: View {
                         .font(.system(size: Sizes.smallFontSize))
                 }
             }
+                .padding()
             
             // Keyboards (time input, timer name, it swaps between them)
             if (showTimeInput) {
+//                // Projected end time
+//                Group {
+//                    Text((Date() + keyboard.value).displayTime)
+//                    Text(Date().isSameDayAs(comp: Date() + keyboard.value) ? "" : " " + (Date() + keyboard.value).displayDayDate)
+//                }
+//                    .font(Font.system(size: Sizes.fontSize))
+//                    .minimumScaleFactor(0.1)
+//                    .lineLimit(1)
+//
                 // Timer duration
                 TimeInputDisplay(keyboard: keyboard)
-                
-                // Projected eng time
-                Group {
-                    Text((Date() + keyboard.value).displayTime)
-                    Text(Date().isSameDayAs(comp: Date() + keyboard.value) ? "" : " " + (Date() + keyboard.value).displayDayDate)
-                }
-                .font(Font.system(size: Sizes.fontSize))
-                .minimumScaleFactor(0.1)
-                .lineLimit(1)
                 
                 Spacer()
                 
                 TimeInputKeyboardView(model: keyboard)
                 Button(action: {saveFunc(name, keyboard.value, repeatAlert)}) {
                     Image(systemName: "play.circle")
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: Sizes.inputHeight)
                 }
-                .foregroundColor(.black)
-                .background(.white)
-                .cornerRadius(Sizes.radius)
+                    .foregroundColor(.black)
+                    .background(.white)
+                    .cornerRadius(Sizes.radius)
             } else {
                 Spacer()
             }

@@ -9,14 +9,15 @@ import Foundation
 import SwiftUI
 
 struct DownUpTimerView: View {
-    @ObservedObject var controller: DownUpTimer
+    @ObservedObject var controller = DownUpTimer()
+    @Environment(\.scenePhase) private var scenePhase // Used for detecting when this scene is backgrounded and isn't currently visible.
+    
     
     var body: some View {
         GeometryReader {geo in
             VStack {
-                Spacer()
-                
                 if controller.status == .inactive {
+                    Spacer()
                     // Starting direction control
                     HStack {
                         Text("Starting direction")
@@ -51,7 +52,12 @@ struct DownUpTimerView: View {
                 DUControlsView(controller: controller, keyboard: controller.keyboard, outerHeight: geo.size.height, outerWidth: geo.size.width)
             }
         }
-        .padding()
+            .padding()
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .background {
+                    controller.save()
+                }
+            }
     }
 }
 
@@ -142,9 +148,9 @@ struct DUControlsView: View {
                 .cornerRadius(Sizes.radius)
             }
         }
-        .foregroundColor(Color.white)
-        .font(controller.status == DownUpTimerStatus.inactive ? .system(size: Sizes.fontSize) : .system(size: 55))
-        .minimumScaleFactor(0.01)
+            .foregroundColor(Color.white)
+            .font(controller.status == DownUpTimerStatus.inactive ? .system(size: Sizes.fontSize) : .system(size: Sizes.bigTimeFont)) // Controls the button font sizes
+            .minimumScaleFactor(0.01)
     }
 }
 
@@ -153,7 +159,8 @@ struct DUTimerView: View {
     
     var body: some View {
         Text(model.timeRemaining.formattedTimeNoMilliNoLeadingZeroRoundUpOneSecond)
-        .lineLimit(1)
+            .bold()
+            .lineLimit(1)
     }
 }
 
@@ -162,7 +169,8 @@ struct DUStopwatchView: View {
     
     var body: some View {
         Text(model.duration.formattedTimeNoMilliNoLeadingZero)
-        .lineLimit(1)
+            .bold()
+            .lineLimit(1)
     }
 }
 
@@ -174,38 +182,63 @@ struct DUVisualization: View {
     
     var body: some View {
         GeometryReader { gp in
-            ZStack {
-                Circle().stroke(Color.gray, lineWidth: circleWidth)
-                if controller.currentDirection == .counting_down {
-                    Circle()
-                    .trim(from: 0.0, to: Double(timer.timeRemaining / timer.duration))
-                    .stroke(style: StrokeStyle(lineWidth: circleWidth, lineCap:.round))
-                    .rotationEffect(Angle(degrees: 270.0))
-                    
-                    DUTimerView(model: timer)
-                    .padding()
-                } else if controller.currentDirection == .counting_up {
-                    DUStopwatchView(model: stopwatch)
-                    .padding()
-                }
-                
+            VStack {
                 HStack {
                     if controller.currentDirection == .counting_down {
                         Image(systemName: "arrow.down.circle.fill")
-//                            .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
                     } else if controller.currentDirection == .counting_up {
                         Image(systemName: "arrow.up.circle")
-//                            .position(x: sizes.bigTimeFont / 2, y: sizes.bigTimeFont / 2)
                     }
                     
                     Spacer()
                     
-                    VStack(alignment: .leading) {
-                        Text("Cycles: \(controller.cycleCount)")
-                        Text("Total: \(controller.totalDurationStopwatch.duration.formattedTimeNoMilliNoLeadingZero)")
+                    Text("Cycles: \(controller.cycleCount)")
+                        .font(.system(size: Sizes.fontSize))
+                }
+                .padding([.top], 0)
+                
+                ZStack {
+                    Circle().stroke(Color.gray, lineWidth: circleWidth)
+                    if controller.currentDirection == .counting_down {
+                        Circle()
+                            .trim(from: 0.0, to: Double(timer.timeRemaining / timer.duration))
+                            .stroke(style: StrokeStyle(lineWidth: circleWidth, lineCap:.round))
+                            .rotationEffect(Angle(degrees: 270.0))
+                        
+                        VStack {
+                            DUTimerView(model: timer)
+                            HStack {
+                                Image(systemName: "stopwatch")
+                                Text("\(controller.totalDurationStopwatch.duration.formattedTimeNoMilliNoLeadingZero)")
+                            }
+                            .font(Font.monospaced(.system(size: Sizes.fontSize))())
+                        }
+                        .padding()
+                    } else if controller.currentDirection == .counting_up {
+                        VStack {
+                            DUStopwatchView(model: controller.stopwatch)
+                            HStack {
+                                Image(systemName: "stopwatch")
+                                Text("\(controller.totalDurationStopwatch.duration.formattedTimeNoMilliNoLeadingZero)")
+                            }
+                            .font(Font.monospaced(.system(size: Sizes.fontSize))())
+                        }
+                        .padding()
                     }
-                    .font(Font.monospaced(.system(size: Sizes.smallFontSize))())
-                }.position(x: gp.size.width / 2, y: Sizes.bigTimeFont / 2)
+                    
+                    //                HStack {
+                    //                    if controller.currentDirection == .counting_down {
+                    //                        Image(systemName: "arrow.down.circle.fill")
+                    //                    } else if controller.currentDirection == .counting_up {
+                    //                        Image(systemName: "arrow.up.circle")
+                    //                    }
+                    //
+                    //                    Spacer()
+                    //
+                    //                    Text("Cycles: \(controller.cycleCount)")
+                    //                        .font(.system(size: Sizes.fontSize))
+                    //                }.position(x: gp.size.width / 2, y: Sizes.bigTimeFont / 2)
+                }
             }
         }
         .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
@@ -216,11 +249,10 @@ struct DUVisualization: View {
 struct DownUpTimerView_Previews: PreviewProvider {
     static var previews: some View {
         let model = DownUpTimer()
-        Group {
-            DownUpTimerView(controller: model)
-                .previewInterfaceOrientation(.portrait)
-                .previewDevice("iPhone 13")
-                .preferredColorScheme(.dark)
-        }
+        
+        DownUpTimerView(controller: model)
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+            .previewInterfaceOrientation(.portrait)
+            .preferredColorScheme(.dark)
     }
 }

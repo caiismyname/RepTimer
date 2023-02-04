@@ -61,7 +61,7 @@ class SingleTimer: ObservableObject, Codable {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.timeRemaining, repeats: false)
         let content = UNMutableNotificationContent()
         content.title = self.name
-        content.body = "Your\(self.name == "" ? " " : self.name)timer (\(self.duration.formattedTimeNoMilliNoLeadingZero)) is done."
+        content.body = "Your\(self.name == "" ? " " : " \(self.name) ")timer (\(self.duration.formattedTimeNoMilliNoLeadingZero)) is done."
         content.sound = UNNotificationSound.default
         
         // Create the request

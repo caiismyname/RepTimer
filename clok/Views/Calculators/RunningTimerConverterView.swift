@@ -22,6 +22,9 @@ struct RunningTimeConverterView: View {
                         if !editingBasisTime {
                             Button(action: {
                                 editingDisplayedDistances = !editingDisplayedDistances
+                                if !editingDisplayedDistances { // On "save" of edits, write new files to JSON
+                                    model.saveRunningTimeConverter()
+                                }
                             }) {
                                 Text(editingDisplayedDistances ? "Done" : "Edit")
                                     .font(.system(size: Sizes.calculatorFontSize))
@@ -130,7 +133,7 @@ struct RunningPaceCalculatorRow: View {
                 }
                 
                 Text("\(distance.name)")
-                    .font(.system(size: Sizes.calculatorFontSize, weight: .bold , design: .monospaced))
+                    .font(.system(size: Sizes.calculatorFontSize, weight: .bold))
                     .foregroundColor(distance.distanceInMeters == basisDistance.distanceInMeters ? Color.blue : Color.white)
                 Spacer()
                 Text("\(distance.time.formattedTimeNoMilliNoMinutesLeadingZero)")

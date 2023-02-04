@@ -26,13 +26,14 @@ class DownUpTimer: ObservableObject, Codable {
     @Published var status = DownUpTimerStatus.inactive
     @Published var startingDirection = DownUpTimerDirection.counting_down
     @Published var currentDirection = DownUpTimerDirection.counting_down
-    @Published var timerDuration = 0.0
+    @Published var timerDuration = 0.0 // How long the timer should be set for each rep
     @Published var keyboard = TimeInputKeyboardModel(value: 0.0)
     @Published var cycleCount = 0
     @Published var totalDurationStopwatch = SingleStopWatch()
     
     init() {
         // Need a blank init b/c the Codable init overrides
+        load()
     }
     
     func nextPhase() {
@@ -72,6 +73,8 @@ class DownUpTimer: ObservableObject, Codable {
             self.timer.stop() // This removes the sound/notif from the current timer, which is only necessary if we're stopping it early
             doneTimerCallback() // This function will increment the totalCycleCount for us
         }
+        
+        save()
     }
     
     private func checkAndIncrementTotalCycleCount() {
@@ -90,6 +93,7 @@ class DownUpTimer: ObservableObject, Codable {
         
         self.totalDurationStopwatch.pause()
         self.status = .paused
+        save()
     }
     
     func reset() {
@@ -98,6 +102,8 @@ class DownUpTimer: ObservableObject, Codable {
         self.stopwatch = SingleStopWatch()  // Stopwatch's own reset func is mostly just a callback handler. Easier to just replace it here
         self.cycleCount = 0
         self.totalDurationStopwatch = SingleStopWatch()
+        
+        save()
     }
     
     func initTimer() {
@@ -124,20 +130,22 @@ class DownUpTimer: ObservableObject, Codable {
             return
         }
         
-        if Date() > timer.scheduledEndTime { // Timer has already finished
-            self.currentDirection = .counting_up
-            self.stopwatch.start(startTime: timer.scheduledEndTime)
-//            if self.status == DownUpTimerStatus.counting_down {
-//                self.status = DownUpTimerStatus.counting_up
-//                self.stopwatch.start(startTime: timer.scheduledEndTime)
-//            } else {
-//                self.stopwatch.start()
-//            }
+        if currentDirection == .counting_up {
+            self.stopwatch.startTimer() 
         } else {
-            self.currentDirection = .counting_down
-            setTimerCallback()
-            self.timer.startSystemTimer()
+            // If we passed the end of the timer while in background
+            if Date() > timer.scheduledEndTime {
+                self.stopwatch = SingleStopWatch()
+                self.stopwatch.start(startTime: timer.scheduledEndTime)
+                self.currentDirection = .counting_up
+                checkAndIncrementTotalCycleCount()
+            } else {
+                setTimerCallback()
+                self.timer.startSystemTimer()
+            }
         }
+        
+        self.totalDurationStopwatch.start()
     }
     
     // MARK: — Codable
@@ -146,6 +154,10 @@ class DownUpTimer: ObservableObject, Codable {
         case stopwatch
         case status
         case timerDuration
+        case startingDirection
+        case currentDirection
+        case cycleCount
+        case totalDurationStopwatch
     }
     
     func encode(to encoder: Encoder) throws {
@@ -154,6 +166,10 @@ class DownUpTimer: ObservableObject, Codable {
         try container.encode(stopwatch, forKey: .stopwatch)
         try container.encode(status, forKey: .status)
         try container.encode(timerDuration, forKey: .timerDuration)
+        try container.encode(startingDirection, forKey: .startingDirection)
+        try container.encode(currentDirection, forKey: .currentDirection)
+        try container.encode(cycleCount, forKey: .cycleCount)
+        try container.encode(totalDurationStopwatch, forKey: .totalDurationStopwatch)
     }
     
     required init(from decoder: Decoder) throws {
@@ -162,5 +178,59 @@ class DownUpTimer: ObservableObject, Codable {
         stopwatch = try values.decode(SingleStopWatch.self, forKey: .stopwatch)
         status = try values.decode(DownUpTimerStatus.self, forKey: .status)
         timerDuration = try values.decode(TimeInterval.self, forKey: .timerDuration)
+        startingDirection = try values.decode(DownUpTimerDirection.self, forKey: .startingDirection)
+        currentDirection = try values.decode(DownUpTimerDirection.self, forKey: .currentDirection)
+        cycleCount = try values.decode(Int.self, forKey: .cycleCount)
+        totalDurationStopwatch = try values.decode(SingleStopWatch.self, forKey: .totalDurationStopwatch)
+    }
+    
+    func save() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(["downupTimer": self]) {
+            do {
+                // Save the 'downupTimer' data file to the Documents directory.
+                try encoded.write(to: CodableFileURLGenerator(dataFileName: "downupTimer"))
+                print("Saved DownUp Timer")
+            } catch {
+                print("Couldn't write to save file: " + error.localizedDescription)
+            }
+        } else {
+            print("Error saving DownUp Timer")
+        }
+    }
+    
+    func load() {
+        print("Loading DownUp Timer")
+        DispatchQueue.main.async {
+            do {
+                let fileURL = CodableFileURLGenerator(dataFileName: "downupTimer")
+                // If loading fails, do nothing since we have defaults
+                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
+                    print("Error reading DownUp Timer save file")
+                    return
+                }
+                
+                // Successful file reading. Decode the info into the object
+                let result = try JSONDecoder().decode([String: DownUpTimer].self, from: file.availableData)
+                
+                // Replace self with all the properties of the loaded version, with default values matching init()
+                let loaded = result["downupTimer"]
+                self.timer = loaded?.timer ?? SingleTimer(timeRemaining: loaded?.timerDuration ?? 100, name: "")
+                self.stopwatch = loaded?.stopwatch ?? SingleStopWatch()
+                self.status = loaded?.status ?? .inactive
+                self.timerDuration = loaded?.timerDuration ?? TimeInterval(0.0)
+                self.startingDirection = loaded?.startingDirection ?? .counting_down
+                self.currentDirection = loaded?.currentDirection ?? .counting_down
+                self.cycleCount = loaded?.cycleCount ?? 0
+                self.totalDurationStopwatch = loaded?.totalDurationStopwatch ?? SingleStopWatch()
+                
+                self.startSystemTimers()
+                
+            } catch {
+                print("Error loading DownUp Timer")
+                print("    \(error)")
+                return
+            }
+        }
     }
 }

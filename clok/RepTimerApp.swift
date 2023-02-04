@@ -22,7 +22,6 @@ struct RepTimerApp: App {
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .background {
                     stopwatchesController.save()
-                    timersController.saveDownUpTimer()
                     timersController.saveTimers()
                 }
             }
@@ -38,17 +37,6 @@ struct RepTimerApp: App {
                         self.stopwatchesController.stopwatches = []
                         self.stopwatchesController.pastStopwatches = []
 //                        fatalError(error.localizedDescription)
-                    }
-                }
-                
-                timersController.loadDownUpTimer { result in
-                    switch result {
-                    case .success(let values):
-                        self.timersController.downupTimer = values["downupTimer"]!
-                        self.timersController.downupTimer.startSystemTimers()
-                    case .failure (let error):
-//                        self.timersController.downupTimer = DownUpTimer()
-                        fatalError(error.localizedDescription)
                     }
                 }
                 
