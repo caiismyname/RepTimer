@@ -177,6 +177,23 @@ struct DUStopwatchView: View {
     }
 }
 
+struct DUDirectionIndicator: View {
+    var direction: DownUpTimerDirection
+    var status: DownUpTimerStatus
+    
+    var body: some View {
+        if status == .active {
+            if direction == .counting_down {
+                Image(systemName: "arrow.down.circle.fill")
+            } else if direction == .counting_up {
+                Image(systemName: "arrow.up.circle")
+            }
+        } else if status == .paused {
+            Image(systemName: "pause.circle.fill")
+        }
+    }
+}
+
 struct DUVisualization: View {
     @ObservedObject var timer: SingleTimer
     @ObservedObject var stopwatch: SingleStopWatch
@@ -187,11 +204,10 @@ struct DUVisualization: View {
         GeometryReader { gp in
             VStack {
                 HStack {
-                    if controller.currentDirection == .counting_down {
-                        Image(systemName: "arrow.down.circle.fill")
-                    } else if controller.currentDirection == .counting_up {
-                        Image(systemName: "arrow.up.circle")
-                    }
+                    DUDirectionIndicator(
+                        direction: controller.currentDirection,
+                        status: controller.status
+                    )
                     
                     Spacer()
                     

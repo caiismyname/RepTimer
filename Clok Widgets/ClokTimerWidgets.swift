@@ -34,16 +34,26 @@ struct TimerWidgetProvider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [TimerWidgetEntry] = []
         if let loadedTimer = DownUpTimer.loadFromFile() {
-            // Generate a timeline consisting of five entries an hour apart, starting from the current date.
             let currentDate = Date()
-            for hourOffset in 0 ..< 5 {
-                let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+            
+            // Generate entry for current segment
+            let entry = TimerWidgetEntry(
+                date: Date(),
+                configuration: configuration,
+                targetDate: loadedTimer.currentDirection == .counting_up ? loadedTimer.stopwatch.createDate : loadedTimer.timer.scheduledEndTime,
+                direction: loadedTimer.currentDirection,
+                status: loadedTimer.status
+            )
+            entries.append(entry)
+            
+            // If counting down, generate an entry for when it switches
+            if loadedTimer.currentDirection == .counting_down {
                 let entry = TimerWidgetEntry(
-                    date: entryDate,
+                    date: loadedTimer.timer.scheduledEndTime,
                     configuration: configuration,
-                    targetDate: loadedTimer.currentDirection == .counting_up ? loadedTimer.stopwatch.createDate : loadedTimer.timer.scheduledEndTime,
-                    direction: loadedTimer.currentDirection,
-                    status: loadedTimer.status
+                    targetDate: loadedTimer.timer.scheduledEndTime,
+                    direction: DownUpTimerDirection.counting_up,
+                    status: DownUpTimerStatus.active
                 )
                 entries.append(entry)
             }
@@ -62,22 +72,75 @@ struct TimerWidgetEntry: TimelineEntry {
     let status: DownUpTimerStatus
 }
 
-struct TimerWidgetEntryView : View {
+struct DUSmallWidgetView: View {
     var entry: TimerWidgetProvider.Entry
-//    var downupController: DownUpTimer
-
+    
     var body: some View {
-        if entry.status == .active {
-            if entry.direction == .counting_up {
-                Text(entry.targetDate, style: .timer)
-            } else {
-                Text(entry.targetDate, style: .timer)
+        if entry.status != .inactive {
+            VStack(alignment: .center) {
+                DUDirectionIndicator(direction: entry.direction, status: entry.status)
+                
+                Group {
+                    if entry.status == .active {
+                        Text(entry.targetDate, style: .timer)
+                    } else {
+                        Text("Timer paused")
+                    }
+                }
+                    .padding([.leading, .trailing])
+            }
+                .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
+                .minimumScaleFactor(0.1)
+                .lineLimit(1)
+        } else {
+            Text("No timer\nrunning")
+                .padding()
+        }
+    }
+}
+
+
+struct DUMediumWidgetView: View {
+    var entry: TimerWidgetProvider.Entry
+    
+    var body: some View {
+        if entry.status != .inactive {
+            VStack(alignment: .center) {
+                HStack(alignment: .center) {
+                    Spacer()
+                    DUDirectionIndicator(direction: entry.direction, status: entry.status)
+                    
+                    if entry.status == .active {
+                        Text(entry.targetDate, style: .timer)
+                    } else {
+                        Text("Timer paused")
+                    }
+                }
+                .font(Font.monospaced(.system(size: Sizes.bigTimeFont))())
+                .minimumScaleFactor(0.1)
+                .lineLimit(1)
             }
         } else {
-            Text("No timer running")
+            Text("No timer\nrunning")
+                .padding()
         }
-        
-//        DUVisualization(timer: downupController.timer, stopwatch: downupController.stopwatch, controller: downupController)
+    }
+}
+
+
+
+
+struct DownupWidgetView : View {
+    @Environment(\.widgetFamily) var family: WidgetFamily
+    var entry: TimerWidgetProvider.Entry
+
+    @ViewBuilder
+    var body: some View {
+        switch family {
+        case .systemSmall: DUSmallWidgetView(entry: entry)
+        case .systemMedium: DUMediumWidgetView(entry: entry)
+        default: DUSmallWidgetView(entry: entry)
+        }
     }
 }
 
@@ -90,16 +153,37 @@ struct TimerWidget: Widget {
             intent: ConfigurationIntent.self,
             provider: TimerWidgetProvider()
         ) { entry in
-            TimerWidgetEntryView(entry: entry)
+            DownupWidgetView(entry: entry)
         }
-        .configurationDisplayName("Timer")
-        .description("Shows your 4 active timers closest to completion")
+        .configurationDisplayName("Repeat Timer")
+        .description("Displays the currently running interval timer")
     }
 }
 
-//struct TimerWidget_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TimerWidgetEntryView(entry: TimerWidgetEntry(date: Date(), configuration: ConfigurationIntent()))
-//            .previewContext(WidgetPreviewContext(family: .systemSmall))
-//    }
-//}
+struct TimerWidget_Previews: PreviewProvider {
+    static var previews: some View {
+        DownupWidgetView(
+            entry: TimerWidgetEntry(
+                date: Date(),
+                configuration: ConfigurationIntent(),
+                targetDate: Date().addingTimeInterval(90),
+                direction: .counting_down,
+                status: .active
+            )
+        )
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .previewDisplayName("Small")
+        
+        DownupWidgetView(
+            entry: TimerWidgetEntry(
+                date: Date(),
+                configuration: ConfigurationIntent(),
+                targetDate: Date().addingTimeInterval(90),
+                direction: .counting_down,
+                status: .active
+            )
+        )
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .previewDisplayName("Medium")
+    }
+}
