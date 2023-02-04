@@ -43,6 +43,25 @@
 		2780A349298D50E100CF2490 /* Clok WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2780A334298D50E000CF2490 /* Clok WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2780A358298D617D00CF2490 /* CodableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A357298D617D00CF2490 /* CodableHelpers.swift */; };
 		2780A359298D617D00CF2490 /* CodableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2780A357298D617D00CF2490 /* CodableHelpers.swift */; };
+		2780A35A298E8D9300CF2490 /* TimersControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A932858133C00514A13 /* TimersControllerModel.swift */; };
+		2780A35B298E8D9300CF2490 /* DownUpTimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936422880EFF6009EC53D /* DownUpTimerModel.swift */; };
+		2780A35C298E8D9300CF2490 /* PeriodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27096B52284CF471007E7FB6 /* PeriodModel.swift */; };
+		2780A35D298E8D9300CF2490 /* LapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27096B54284D06CC007E7FB6 /* LapModel.swift */; };
+		2780A35E298E8D9300CF2490 /* SingleStopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603A2845223B00BA0F5D /* SingleStopWatch.swift */; };
+		2780A35F298E8D9300CF2490 /* StopwatchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73D2869274B00DECF15 /* StopwatchesController.swift */; };
+		2780A360298E8D9300CF2490 /* SingleTimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A8D285810C400514A13 /* SingleTimerModel.swift */; };
+		2780A361298E8EE600CF2490 /* DownUpTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936402880B71C009EC53D /* DownUpTimerView.swift */; };
+		2780A362298E8F5600CF2490 /* TimeInputKeyboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740AA128611EC500514A13 /* TimeInputKeyboardModel.swift */; };
+		2780A363298E8F6100CF2490 /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A42F13289EEF36007BA2BB /* Sizes.swift */; };
+		2780A364298E8FA900CF2490 /* StopwatchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F7412871CBC000DECF15 /* StopwatchSettingsView.swift */; };
+		2780A365298E8FCD00CF2490 /* TimeInputKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A9D28611DAB00514A13 /* TimeInputKeyboardView.swift */; };
+		2780A366298E8FE300CF2490 /* TimeIntervalFormattingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603F2845544900BA0F5D /* TimeIntervalFormattingExtension.swift */; };
+		2780A367298E8FE300CF2490 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789A9CF2879D13F009710C3 /* ViewExtensions.swift */; };
+		2780A368298E8FE300CF2490 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278149BC2884A5E900511D3D /* DateExtensions.swift */; };
+		2780A369298EC9A900CF2490 /* SingleStopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271B603C2845229600BA0F5D /* SingleStopWatchView.swift */; };
+		2780A36A298EC9A900CF2490 /* StopWatchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F73F2870AE2800DECF15 /* StopWatchHistoryView.swift */; };
+		2780A36C298EC9A900CF2490 /* StopWatchControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27740A95285AC36C00514A13 /* StopWatchControlsView.swift */; };
+		2780A36D298EC9A900CF2490 /* MultipleStopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270304102856B0BA00763C06 /* MultipleStopWatchView.swift */; };
 		278149BD2884A5E900511D3D /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278149BC2884A5E900511D3D /* DateExtensions.swift */; };
 		2789A9D02879D13F009710C3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789A9CF2879D13F009710C3 /* ViewExtensions.swift */; };
 		279936412880B71C009EC53D /* DownUpTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279936402880B71C009EC53D /* DownUpTimerView.swift */; };
@@ -134,6 +153,8 @@
 		2780A342298D50E100CF2490 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2780A344298D50E100CF2490 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2780A357298D617D00CF2490 /* CodableHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableHelpers.swift; sourceTree = "<group>"; };
+		2780A36E298ECBE200CF2490 /* RepTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RepTimer.entitlements; sourceTree = "<group>"; };
+		2780A36F298ECBFC00CF2490 /* Clok WidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Clok WidgetsExtension.entitlements"; sourceTree = "<group>"; };
 		278149BB28849D3C00511D3D /* RepTimer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RepTimer-Info.plist"; sourceTree = "<group>"; };
 		278149BC2884A5E900511D3D /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		2789A9CF2879D13F009710C3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -210,6 +231,8 @@
 		271B60022845220D00BA0F5D = {
 			isa = PBXGroup;
 			children = (
+				2780A36F298ECBFC00CF2490 /* Clok WidgetsExtension.entitlements */,
+				2780A36E298ECBE200CF2490 /* RepTimer.entitlements */,
 				278149BB28849D3C00511D3D /* RepTimer-Info.plist */,
 				271B600D2845220D00BA0F5D /* clok */,
 				271B601E2845220E00BA0F5D /* RepTimerTests */,
@@ -234,12 +257,12 @@
 		271B600D2845220D00BA0F5D /* clok */ = {
 			isa = PBXGroup;
 			children = (
-				27A42F11289EE4BC007BA2BB /* radar.caf */,
-				271B603E2845543400BA0F5D /* Extensions */,
+				271B600E2845220D00BA0F5D /* RepTimerApp.swift */,
 				271B60392845223000BA0F5D /* Views */,
 				271B60382845222300BA0F5D /* Models */,
-				271B600E2845220D00BA0F5D /* RepTimerApp.swift */,
+				271B603E2845543400BA0F5D /* Extensions */,
 				271B60122845220E00BA0F5D /* Assets.xcassets */,
+				27A42F11289EE4BC007BA2BB /* radar.caf */,
 				271B60142845220E00BA0F5D /* Preview Content */,
 			);
 			path = clok;
@@ -287,13 +310,13 @@
 		271B60392845223000BA0F5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				27A42F13289EEF36007BA2BB /* Sizes.swift */,
 				271B60102845220D00BA0F5D /* ContentView.swift */,
 				270304122858061600763C06 /* TabContainerView.swift */,
 				270304152858096600763C06 /* Timer */,
 				270304142858095600763C06 /* Stopwatch */,
 				27740AA3286120E800514A13 /* TimeInputKeyboard */,
 				276F6B47297C678600619A65 /* Calculators */,
-				27A42F13289EEF36007BA2BB /* Sizes.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -605,11 +628,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2780A366298E8FE300CF2490 /* TimeIntervalFormattingExtension.swift in Sources */,
+				2780A368298E8FE300CF2490 /* DateExtensions.swift in Sources */,
+				2780A36C298EC9A900CF2490 /* StopWatchControlsView.swift in Sources */,
+				2780A35C298E8D9300CF2490 /* PeriodModel.swift in Sources */,
+				2780A360298E8D9300CF2490 /* SingleTimerModel.swift in Sources */,
+				2780A36D298EC9A900CF2490 /* MultipleStopWatchView.swift in Sources */,
+				2780A361298E8EE600CF2490 /* DownUpTimerView.swift in Sources */,
+				2780A36A298EC9A900CF2490 /* StopWatchHistoryView.swift in Sources */,
 				2780A359298D617D00CF2490 /* CodableHelpers.swift in Sources */,
+				2780A362298E8F5600CF2490 /* TimeInputKeyboardModel.swift in Sources */,
 				2780A33C298D50E000CF2490 /* Clok_WidgetsBundle.swift in Sources */,
+				2780A363298E8F6100CF2490 /* Sizes.swift in Sources */,
+				2780A35F298E8D9300CF2490 /* StopwatchesController.swift in Sources */,
 				2780A345298D50E100CF2490 /* Clok_Widgets.intentdefinition in Sources */,
+				2780A365298E8FCD00CF2490 /* TimeInputKeyboardView.swift in Sources */,
+				2780A367298E8FE300CF2490 /* ViewExtensions.swift in Sources */,
+				2780A35B298E8D9300CF2490 /* DownUpTimerModel.swift in Sources */,
+				2780A35E298E8D9300CF2490 /* SingleStopWatch.swift in Sources */,
 				2780A340298D50E000CF2490 /* ClokTimerWidgets.swift in Sources */,
 				2780A33E298D50E000CF2490 /* Clok_WidgetsLiveActivity.swift in Sources */,
+				2780A35D298E8D9300CF2490 /* LapModel.swift in Sources */,
+				2780A35A298E8D9300CF2490 /* TimersControllerModel.swift in Sources */,
+				2780A369298EC9A900CF2490 /* SingleStopWatchView.swift in Sources */,
+				2780A364298E8FA900CF2490 /* StopwatchSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +796,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RepTimer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -791,6 +834,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RepTimer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -900,6 +944,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Clok WidgetsExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -914,7 +959,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.caiismyname.apps.ios.clok.Clok-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -930,6 +975,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Clok WidgetsExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -944,7 +990,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.caiismyname.apps.ios.clok.Clok-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

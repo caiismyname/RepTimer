@@ -8,6 +8,7 @@
 import Foundation
 import UserNotifications
 import AVFoundation
+import WidgetKit
 
 enum DownUpTimerStatus: Codable {
     case inactive
@@ -200,37 +201,38 @@ class DownUpTimer: ObservableObject, Codable {
     }
     
     func load() {
-        print("Loading DownUp Timer")
-        DispatchQueue.main.async {
-            do {
-                let fileURL = CodableFileURLGenerator(dataFileName: "downupTimer")
-                // If loading fails, do nothing since we have defaults
-                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
-                    print("Error reading DownUp Timer save file")
-                    return
-                }
-                
-                // Successful file reading. Decode the info into the object
-                let result = try JSONDecoder().decode([String: DownUpTimer].self, from: file.availableData)
-                
-                // Replace self with all the properties of the loaded version, with default values matching init()
-                let loaded = result["downupTimer"]
-                self.timer = loaded?.timer ?? SingleTimer(timeRemaining: loaded?.timerDuration ?? 100, name: "")
-                self.stopwatch = loaded?.stopwatch ?? SingleStopWatch()
-                self.status = loaded?.status ?? .inactive
-                self.timerDuration = loaded?.timerDuration ?? TimeInterval(0.0)
-                self.startingDirection = loaded?.startingDirection ?? .counting_down
-                self.currentDirection = loaded?.currentDirection ?? .counting_down
-                self.cycleCount = loaded?.cycleCount ?? 0
-                self.totalDurationStopwatch = loaded?.totalDurationStopwatch ?? SingleStopWatch()
-                
-                self.startSystemTimers()
-                
-            } catch {
-                print("Error loading DownUp Timer")
-                print("    \(error)")
-                return
+        if let loaded = DownUpTimer.loadFromFile() {
+            // Replace self with all the properties of the loaded version
+            self.timer = loaded.timer
+            self.stopwatch = loaded.stopwatch
+            self.status = loaded.status
+            self.timerDuration = loaded.timerDuration
+            self.startingDirection = loaded.startingDirection
+            self.currentDirection = loaded.currentDirection
+            self.cycleCount = loaded.cycleCount
+            self.totalDurationStopwatch = loaded.totalDurationStopwatch
+            
+            self.startSystemTimers()
+        }
+    }
+    
+    static func loadFromFile() -> DownUpTimer? {
+        do {
+            print("Loading DownUp Timer from file")
+            let fileURL = CodableFileURLGenerator(dataFileName: "downupTimer")
+            // If loading fails, do nothing since we have defaults
+            guard let file = try? FileHandle(forReadingFrom: fileURL) else {
+                print("Error reading DownUp Timer save file")
+                return nil
             }
+            
+            // Successful file reading. Decode the info into the object
+            let result = try JSONDecoder().decode([String: DownUpTimer].self, from: file.availableData)
+            return result["downupTimer"]
+        } catch {
+            print("Error loading DownUp Timer")
+            print("    \(error)")
+            return nil
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WidgetKit
 
 struct DownUpTimerView: View {
     @ObservedObject var controller = DownUpTimer()
@@ -56,6 +57,8 @@ struct DownUpTimerView: View {
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .background {
                     controller.save()
+//                    WidgetCenter.shared.reloadTimelines(ofKind: "TimerWidgets")
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
             }
     }

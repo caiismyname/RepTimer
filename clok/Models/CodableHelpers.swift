@@ -8,7 +8,13 @@
 import SwiftUI
 
 func CodableFileURLGenerator(dataFileName: String) -> URL {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    let docURL = paths[0]
-    return docURL.appendingPathComponent(dataFileName)
+    if let docURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.clok") {
+        print("got the shared container")
+        return docURL.appendingPathComponent(dataFileName)
+    } else {
+        print("not shared container")
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let docURL = paths[0]
+        return docURL.appendingPathComponent(dataFileName)
+    }
 }

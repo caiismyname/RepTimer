@@ -8,11 +8,6 @@
 import Foundation
 import SwiftUI
 
-enum StopwatchSettings: String {
-    case LAP_VIA_SCREENSHOT
-    case SCREEN_LOCK
-}
-
 struct StopwatchSettingsView: View {
 //    @ObservedObject var model = StopwatchSettingsModel()
     @AppStorage(StopwatchSettings.SCREEN_LOCK.rawValue) var isScreenLock: Bool = false

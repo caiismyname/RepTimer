@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+enum StopwatchSettings: String {
+    case LAP_VIA_SCREENSHOT
+    case SCREEN_LOCK
+}
+
 class StopwatchesController: Codable, ObservableObject {
     @Published var stopwatches: [SingleStopWatch]
     var pastStopwatches: [SingleStopWatch]
